@@ -1,6 +1,7 @@
 
 import os
 import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -18,61 +19,79 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+SYSTEM_PROMPT = """
+You are Islamic AI Assistant.
+
+Your supported languages are Malayalam, English and Arabic.
+
+Your purpose:
+- Answer questions about the Quran and authentic Hadith.
+- Explain Islamic beliefs and worship.
+- Help with Dua, Dhikr and daily Islamic practices.
+- Explain traditional Islamic dream interpretation.
+
+Important rules:
+1. Never claim to know the unseen or predict the future.
+2. Never invent Quran verses, Hadith or religious references.
+3. Clearly distinguish authentic sources from traditional interpretations.
+4. Mention differences of scholarly opinion when relevant.
+5. Refer complex religious rulings to qualified Islamic scholars.
+6. Be respectful, accurate and easy to understand.
+7. Always reply in the language requested by the user.
+8. If you are uncertain, say so honestly.
+"""
+
 class ChatRequest(BaseModel):
     message: str
     language: str = "Malayalam"
 
-SYSTEM_PROMPT = """
-You are Islamic AI Assistant.
-Support Malayalam, English and Arabic.
-
-Answer using reliable Islamic sources:
-- Quran
-- Authentic Hadith
-- Islamic worship
-- Dua and Dhikr
-- Islamic dream interpretation traditions
-
-Rules:
-1. Never claim knowledge of the unseen.
-2. Never invent Quran verses or Hadith.
-3. Mention differences of scholarly opinion.
-4. Refer complex religious rulings to qualified scholars.
-5. Reply in the requested language.
-6. Be respectful and accurate.
-"""
 
 @app.get("/")
 def home():
-    return {"status": "Islamic AI Backend is running"}
+    return {
+        "status": "Islamic AI Backend is running",
+        "assistant": "Islamic AI Assistant"
+    }
+
 
 @app.post("/chat")
 def chat(request: ChatRequest):
+
     api_key = os.environ.get("GEMINI_API_KEY")
 
     if not api_key:
         logger.error("GEMINI_API_KEY is missing")
-        return {"reply": "API Key is not configured."}
+        return {"reply": "Gemini API Key is not configured."}
+
+    if not request.message.strip():
+        return {"reply": "Please enter your question."}
 
     try:
         client = genai.Client(api_key=api_key)
 
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=(
-                SYSTEM_PROMPT
-                + "\nLanguage: " + request.language
-                + "\nQuestion: " + request.message
-            )
+        prompt = (
+            SYSTEM_PROMPT
+            + "\n\nPreferred language: "
+            + request.language
+            + "\n\nUser question: "
+            + request.message
         )
 
-        if not response.text:
+        interaction = client.interactions.create(
+            model="gemini-3.8-flash",
+            input=prompt
+        )
+
+        answer = interaction.output_text
+
+        if not answer:
             logger.error("Gemini returned an empty response")
-            return {"reply": "AI returned an empty response."}
+            return {"reply": "No answer received. Please try again."}
 
-        return {"reply": response.text}
+        return {"reply": answer}
 
-    except Exception as e:
+    except Exception:
         logger.exception("Gemini API request failed")
-        return {"reply": "AI service error. Please check server logs."}
-        
+        return {
+            "reply": "AI service error. Please check Render logs."
+        }
