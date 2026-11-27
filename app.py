@@ -1,17 +1,25 @@
 
 import os
 import logging
-import time
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from google import genai
 
+# -----------------------------
+# Application setup
+# -----------------------------
+
 logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger("islamic-ai")
 
-app = FastAPI(title="Islamic AI Assistant")
+app = FastAPI(
+    title="Islamic AI Assistant",
+    description="Multilingual Islamic AI Assistant",
+    version="1.0.0"
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,101 +28,146 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# -----------------------------
+# Gemini configuration
+# -----------------------------
+
+MODEL_NAME = "gemini-3.5-flash-lite"
+
+API_KEY = os.environ.get("GEMINI_API_KEY")
+
+client = genai.Client(api_key=API_KEY) if API_KEY else None
+
+# -----------------------------
+# Islamic AI instructions
+# -----------------------------
+
 SYSTEM_PROMPT = """
 You are Islamic AI Assistant.
 
-Support Malayalam, English and Arabic.
+Your purpose is to provide helpful Islamic information
+in Malayalam, English and Arabic.
 
-Your purpose:
-- Quran and authentic Hadith explanations
-- Islamic beliefs and worship
-- Dua and Dhikr
-- Islamic daily guidance
-- Traditional Islamic dream interpretation
+LANGUAGE:
+- Reply in the language requested by the user.
+- Support Malayalam, English and Arabic.
+- Use simple and understandable language.
 
-Important rules:
-1. Never claim knowledge of the unseen.
-2. Never predict the future.
-3. Never invent Quran verses or Hadith.
-4. Distinguish authentic sources from traditional interpretations.
-5. Mention scholarly differences when relevant.
-6. Refer complex religious rulings to qualified scholars.
-7. Reply in the user's requested language.
-8. Be respectful and accurate.
-9. If uncertain, say so honestly.
+ISLAMIC GUIDANCE:
+- Give answers based on the Quran and authentic Hadith.
+- Mention Surah names and verse numbers when known.
+- Mention Hadith collections and references when known.
+- Never invent Quran verses or Hadith references.
+- Clearly distinguish established Islamic teachings
+  from scholarly opinions.
+- For complex Fatwa questions, recommend consulting
+  a qualified Islamic scholar.
+- Respect differences between recognised Islamic schools.
+
+DREAM INTERPRETATION:
+- Explain traditional Islamic dream interpretation
+  cautiously.
+- Historical interpretations may be mentioned as
+  traditional views, not certain facts.
+- Never claim to know the unseen or predict the future.
+- Explain that dreams can have different meanings
+  and should not be used as the basis for major decisions.
+- Do not attribute unsupported interpretations
+  to Prophet Muhammad (peace be upon him).
+
+BEHAVIOUR:
+- Be respectful, polite and helpful.
+- Do not insult any religion or community.
+- If you do not know an answer, say so honestly.
+- Do not make up religious references.
+- Keep answers clear and organised.
 """
 
-class ChatRequest(BaseModel):
-    message: str
-    language: str = "Malayalam"
+# -----------------------------
+# Request model
+# -----------------------------
 
+class ChatRequest(BaseModel):
+    message: str = Field(min_length=1, max_length=10000)
+    language: str = Field(default="Malayalam", max_length=30)
+
+
+# -----------------------------
+# Home endpoint
+# -----------------------------
 
 @app.get("/")
 def home():
     return {
-        "status": "Islamic AI Backend is running",
-        "assistant": "Islamic AI Assistant"
+        "status": "online",
+        "name": "Islamic AI Assistant",
+        "version": "1.0.0",
+        "model": MODEL_NAME
     }
 
+
+# -----------------------------
+# Health endpoint
+# -----------------------------
+
+@app.get("/health")
+def health():
+    return {
+        "status": "healthy",
+        "api_key_configured": client is not None
+    }
+
+
+# -----------------------------
+# Chat endpoint
+# -----------------------------
 
 @app.post("/chat")
 def chat(request: ChatRequest):
 
-    api_key = os.environ.get("GEMINI_API_KEY")
-
-    if not api_key:
-        return {"reply": "Gemini API Key is not configured."}
-
-    if not request.message.strip():
-        return {"reply": "Please enter your question."}
-
-    try:
-        client = genai.Client(api_key=api_key)
-
-        prompt = (
-            SYSTEM_PROMPT
-            + "\n\nPreferred language: "
-            + request.language
-            + "\n\nUser question: "
-            + request.message
+    if client is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Gemini API key is not configured."
         )
 
-        last_error = None
+    prompt = f"""
+{SYSTEM_PROMPT}
 
-        for attempt in range(3):
-            try:
-                result = client.interactions.create(
-                    model="gemini-3.5-flash-lite",
-                    input=prompt
-                )
+Preferred response language: {request.language}
 
-                answer = result.output_text
+User question:
+{request.message}
+"""
 
-                if answer:
-                    return {"reply": answer}
+    try:
+        response = client.models.generate_content(
+            model=MODEL_NAME,
+            contents=prompt
+        )
 
-                return {"reply": "No answer received. Please try again."}
+        answer = response.text
 
-            except Exception as e:
-                last_error = e
-                logger.warning(
-                    "Gemini attempt %s failed: %s",
-                    attempt + 1,
-                    str(e)
-                )
-
-                if attempt < 2:
-                    time.sleep(2 ** attempt)
-
-        logger.error("All Gemini attempts failed: %s", str(last_error))
+        if not answer:
+            raise HTTPException(
+                status_code=502,
+                detail="The AI returned an empty response."
+            )
 
         return {
-            "reply": "AI is temporarily busy. Please try again shortly."
+            "reply": answer,
+            "language": request.language,
+            "model": MODEL_NAME
         }
+
+    except HTTPException:
+        raise
 
     except Exception:
-        logger.exception("Gemini setup failed")
-        return {
-            "reply": "AI service error. Please check server logs."
-        }
+        logger.exception("Gemini API request failed")
+
+        raise HTTPException(
+            status_code=503,
+            detail="AI service is temporarily unavailable. Please try again."
+        )
         
