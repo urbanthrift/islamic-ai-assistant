@@ -4,9 +4,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071b17">
 <title>Islamic AI | Premium Assistant</title>
+
 <style>
 *{box-sizing:border-box}
+
 body{
  margin:0;
  font-family:Arial,sans-serif;
@@ -17,6 +20,7 @@ body{
  display:flex;
  justify-content:center;
 }
+
 .app{
  width:100%;
  max-width:650px;
@@ -29,19 +33,24 @@ body{
  padding:20px;
  box-shadow:0 15px 50px #0008;
 }
+
 header{text-align:center;padding:18px 5px}
+
 .logo{
  font-size:48px;
  color:#e5c778;
  text-shadow:0 0 20px #d8b96c66;
 }
+
 h1{
  color:#e5c778;
  letter-spacing:3px;
  margin:10px 0;
  font-size:27px;
 }
+
 .sub{color:#b9c9c0;font-size:13px}
+
 .status{
  display:inline-block;
  margin-top:12px;
@@ -51,6 +60,7 @@ h1{
  padding:6px 12px;
  border-radius:20px;
 }
+
 .toolbar{
  display:flex;
  justify-content:space-between;
@@ -58,6 +68,7 @@ h1{
  gap:10px;
  margin-bottom:12px;
 }
+
 select,.clear{
  background:#214238;
  color:#fff;
@@ -66,7 +77,9 @@ select,.clear{
  padding:11px;
  font-size:13px;
 }
+
 .clear{cursor:pointer;color:#e5c778}
+
 #chat{
  flex:1;
  min-height:300px;
@@ -77,6 +90,7 @@ select,.clear{
  gap:13px;
  padding:15px 3px;
 }
+
 .msg{
  padding:14px 16px;
  border-radius:17px;
@@ -86,23 +100,27 @@ select,.clear{
  white-space:pre-wrap;
  overflow-wrap:anywhere;
 }
+
 .bot{
  background:#1d4436;
  border:1px solid #456c55;
  align-self:flex-start;
  border-bottom-left-radius:4px;
 }
+
 .user{
  background:linear-gradient(135deg,#d8b96c,#b18b3f);
  color:#15251d;
  align-self:flex-end;
  border-bottom-right-radius:4px;
 }
+
 .controls{
  display:flex;
  gap:9px;
  margin-top:12px;
 }
+
 input{
  flex:1;
  min-width:0;
@@ -114,6 +132,7 @@ input{
  font-size:15px;
  outline:none;
 }
+
 button.send{
  background:linear-gradient(135deg,#e5c778,#b99a53);
  border:0;
@@ -123,7 +142,25 @@ button.send{
  color:#15251d;
  cursor:pointer;
 }
+
 button:disabled{opacity:.5;cursor:not-allowed}
+
+#micBtn{
+ font-size:20px;
+ min-width:48px;
+ cursor:pointer;
+ background:#214238;
+ color:#e5c778;
+ border:1px solid #597b64;
+ border-radius:12px;
+}
+
+#micBtn.listening{
+ background:#b83232;
+ color:white;
+ border-color:#ff7777;
+}
+
 .note{
  text-align:center;
  font-size:11px;
@@ -131,10 +168,13 @@ button:disabled{opacity:.5;cursor:not-allowed}
  margin-top:17px;
  line-height:1.6;
 }
+
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{
- background:#b99a53;border-radius:10px
+ background:#b99a53;
+ border-radius:10px;
 }
+
 @media(max-width:480px){
  body{padding:8px}
  .app{padding:14px;border-radius:18px}
@@ -155,11 +195,12 @@ button:disabled{opacity:.5;cursor:not-allowed}
 </header>
 
 <div class="toolbar">
- <select id="lang">
+ <select id="lang" aria-label="Select language">
   <option value="Malayalam">മലയാളം</option>
   <option value="English">English</option>
   <option value="Arabic">العربية</option>
  </select>
+
  <button class="clear" id="clearBtn" type="button">
   Clear Chat
  </button>
@@ -178,9 +219,15 @@ button:disabled{opacity:.5;cursor:not-allowed}
 </div>
 
 <form id="form" class="controls">
+ <button type="button" id="micBtn" aria-label="Voice input">
+  🎤
+ </button>
+
  <input id="question"
   placeholder="നിങ്ങളുടെ ചോദ്യം എഴുതുക..."
-  autocomplete="off" required>
+  autocomplete="off"
+  required>
+
  <button class="send" id="sendBtn" type="submit">
   Send
  </button>
@@ -203,6 +250,7 @@ const chat=document.getElementById("chat");
 const lang=document.getElementById("lang");
 const sendBtn=document.getElementById("sendBtn");
 const clearBtn=document.getElementById("clearBtn");
+const micBtn=document.getElementById("micBtn");
 
 const welcome = `السلام عليكم ورحمة الله وبركاته
 
@@ -223,6 +271,7 @@ function addMessage(message,type){
  return div;
 }
 
+// Send message to Gemini AI
 form.addEventListener("submit",async function(e){
  e.preventDefault();
 
@@ -231,10 +280,14 @@ form.addEventListener("submit",async function(e){
 
  addMessage(message,"user");
  input.value="";
+
  sendBtn.disabled=true;
+ micBtn.disabled=true;
  sendBtn.textContent="...";
 
- const loading=addMessage("AI മറുപടി തയ്യാറാക്കുന്നു... 🌙","bot");
+ const loading=addMessage(
+  "AI മറുപടി തയ്യാറാക്കുന്നു... 🌙","bot"
+ );
 
  try{
   const response=await fetch(API_URL,{
@@ -260,16 +313,77 @@ form.addEventListener("submit",async function(e){
    "കുറച്ച് കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക.";
  }finally{
   sendBtn.disabled=false;
+  micBtn.disabled=false;
   sendBtn.textContent="Send";
   input.focus();
   chat.scrollTop=chat.scrollHeight;
  }
 });
 
+// Clear conversation
 clearBtn.addEventListener("click",function(){
  chat.innerHTML="";
  addMessage(welcome,"bot");
 });
+
+// Voice input
+const SpeechRecognition =
+ window.SpeechRecognition ||
+ window.webkitSpeechRecognition;
+
+if(SpeechRecognition){
+
+ const recognition=new SpeechRecognition();
+
+ recognition.continuous=false;
+ recognition.interimResults=false;
+
+ micBtn.addEventListener("click",function(){
+
+  if(micBtn.disabled)return;
+
+  recognition.lang =
+   lang.value==="Malayalam" ? "ml-IN" :
+   lang.value==="Arabic" ? "ar-SA" : "en-IN";
+
+  try{
+   recognition.start();
+  }catch(error){
+   console.log("Voice recognition could not start",error);
+  }
+ });
+
+ recognition.onstart=function(){
+  micBtn.classList.add("listening");
+  micBtn.textContent="🔴";
+ };
+
+ recognition.onresult=function(event){
+  input.value=event.results[0][0].transcript;
+  input.focus();
+ };
+
+ recognition.onerror=function(event){
+  if(event.error==="not-allowed"){
+   alert("Please allow microphone permission in your browser.");
+  }else{
+   alert("Voice recognition error. Please try again.");
+  }
+ };
+
+ recognition.onend=function(){
+  micBtn.classList.remove("listening");
+  micBtn.textContent="🎤";
+ };
+
+}else{
+
+ micBtn.addEventListener("click",function(){
+  alert("Voice input is not supported in this browser. Please try Chrome.");
+ });
+
+}
 </script>
+
 </body>
 </html>
