@@ -5,199 +5,99 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#061d18">
-<title>DeenAI - Learn Ask Grow</title>
-
+<title>DeenAI - Learn • Ask • Grow</title>
 <style>
-:root{
- --bg:#061d18;--panel:#0c2921;--panel2:#10372b;
- --gold:#d9b45c;--gold2:#f5dfa0;--white:#f7f3e8;
- --muted:#a8b9ad;--border:rgba(217,180,92,.2)
-}
+:root{--bg:#061d18;--panel:#0c2921;--panel2:#10372b;--gold:#d9b45c;--gold2:#f5dfa0;--white:#f7f3e8;--muted:#a8b9ad;--border:rgba(217,180,92,.2)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,sans-serif}
 button,input,select{font:inherit}
 button{cursor:pointer}
 .app{display:flex;min-height:100vh}
-.sidebar{
- width:265px;background:#041610;padding:22px;
- border-right:1px solid var(--border);
- display:flex;flex-direction:column;gap:18px
-}
-.brand{display:flex;align-items:center;gap:12px}
-.brand img{width:62px;height:62px;object-fit:contain;border-radius:14px}
-.brand h2{margin:0;color:var(--gold2);font-size:22px}
+.sidebar{width:250px;background:#041610;padding:18px;display:flex;flex-direction:column;gap:15px;border-right:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:55px;height:55px;object-fit:contain}
+.brand h2{margin:0;color:var(--gold2)}
 .brand small{color:var(--muted)}
-.new-btn,.gold-btn{
- background:linear-gradient(135deg,#e8ca7c,#b68a35);
- color:#10251b;border:0;border-radius:12px;padding:13px;font-weight:bold
-}
-.section-label{color:var(--gold);font-size:12px;letter-spacing:2px;margin-top:12px}
-.history-list{display:flex;flex-direction:column;gap:7px}
-.history-item{
- display:flex;align-items:center;gap:5px;background:transparent;
- border:1px solid transparent;border-radius:9px;padding:9px;
- color:var(--white);text-align:left
-}
+.new-btn,.gold-btn{background:linear-gradient(135deg,#e8ca7c,#b68a35);color:#10251b;border:0;border-radius:11px;padding:13px;font-weight:bold}
+.section-label{color:var(--gold);font-size:12px;letter-spacing:2px}
+.history-list{display:flex;flex-direction:column;gap:6px;overflow:auto;max-height:45vh}
+.history-item{display:flex;align-items:center;gap:5px;background:transparent;border:1px solid transparent;border-radius:9px;padding:9px;color:var(--white)}
 .history-item.active,.history-item:hover{background:var(--panel);border-color:var(--border)}
-.history-item span{flex:1;overflow:hidden;text-overflow:ellipsis}
-.history-item button{background:none;color:#d9a8a0;border:0;padding:4px}
+.history-item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
+.history-item button{background:none;color:#d9a8a0;border:0}
 .sidebar-footer{margin-top:auto;color:var(--muted);font-size:12px}
-.main{flex:1;min-width:0;padding:25px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.topbar h2{margin:0;color:var(--gold2)}
-select{
- background:var(--panel);color:var(--white);border:1px solid var(--border);
- border-radius:10px;padding:10px;max-width:100%
-}
-.hero{
- margin:25px 0;padding:30px 20px;text-align:center;
- border:1px solid var(--border);border-radius:20px;
- background:radial-gradient(circle at top,#174c38,#0b261d 65%)
-}
+.main{flex:1;min-width:0;padding:22px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.topbar h2{margin:0;color:var(--gold2);font-size:19px}
+select{background:var(--panel);color:var(--white);border:1px solid var(--border);border-radius:10px;padding:10px;max-width:100%}
+.hero{margin:22px 0;padding:28px 15px;text-align:center;border:1px solid var(--border);border-radius:20px;background:radial-gradient(circle at top,#174c38,#0b261d 65%)}
 .hero .crescent{font-size:35px;color:var(--gold)}
-.hero h1{font-family:Georgia,serif;color:var(--gold2);font-size:35px;margin:10px}
-.hero p{color:var(--muted);margin:8px}
-.hero .tagline{color:var(--gold);letter-spacing:3px;font-size:12px}
-.features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}
-.feature{
- background:var(--panel);border:1px solid var(--border);border-radius:15px;
- padding:17px 10px;text-align:center;color:var(--white);transition:.2s
-}
-.feature:hover{background:var(--panel2);transform:translateY(-2px)}
-.feature .emoji{font-size:27px;display:block;margin-bottom:9px}
+.hero h1{font-family:Georgia,serif;color:var(--gold2);font-size:34px;margin:10px}
+.hero p{color:var(--muted)}
+.tagline{color:var(--gold);letter-spacing:3px;font-size:12px}
+.features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:18px 0}
+.feature{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 7px;text-align:center;color:var(--white)}
+.feature:hover{background:var(--panel2)}
+.feature .emoji{font-size:27px;display:block;margin-bottom:8px}
 .feature strong{font-size:13px}
-.chat-panel{background:var(--panel);border:1px solid var(--border);border-radius:18px;overflow:hidden}
-.chat-heading{
- padding:16px 18px;border-bottom:1px solid var(--border);
- display:flex;justify-content:space-between;align-items:center
-}
+.chat-panel{background:var(--panel);border:1px solid var(--border);border-radius:17px;overflow:hidden}
+.chat-heading{padding:15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between}
 .chat-heading h3{margin:0;color:var(--gold2)}
 .chat-heading button{background:none;border:0;color:var(--muted)}
-.messages{padding:18px;min-height:230px;max-height:440px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
-.message{max-width:88%;padding:13px 15px;border-radius:14px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.messages{padding:15px;min-height:230px;max-height:430px;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.message{max-width:88%;padding:12px 14px;border-radius:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
 .user{align-self:flex-end;background:#24543e}
 .bot{align-self:flex-start;background:#17372c;border:1px solid var(--border)}
-.message small{display:block;color:var(--gold);margin-bottom:5px}
-.input-area{padding:14px;border-top:1px solid var(--border);display:flex;gap:9px;align-items:center}
-.input-area input{
- flex:1;min-width:0;background:#061d18;border:1px solid var(--border);
- border-radius:12px;padding:14px;color:white;outline:none
-}
-.icon-btn{background:var(--panel2);border:1px solid var(--border);color:var(--gold2);border-radius:12px;padding:12px}
-.send-btn{background:var(--gold);color:#10251b;border:0;border-radius:12px;padding:13px 17px;font-weight:bold}
-.status{padding:0 16px 12px;color:var(--muted);font-size:12px}
-.footer{text-align:center;color:var(--muted);padding:25px;font-size:12px}
+.message small{display:block;color:var(--gold);margin-bottom:4px}
+.input-area{padding:12px;border-top:1px solid var(--border);display:flex;gap:7px}
+.input-area input{flex:1;min-width:0;background:#061d18;border:1px solid var(--border);border-radius:11px;padding:13px;color:white}
+.icon-btn{background:var(--panel2);border:1px solid var(--border);color:var(--gold2);border-radius:10px;padding:11px}
+.send-btn{background:var(--gold);color:#10251b;border:0;border-radius:10px;padding:12px 16px;font-weight:bold}
+.status{padding:0 14px 12px;color:var(--muted);font-size:12px}
+.footer{text-align:center;color:var(--muted);padding:22px;font-size:12px}
 
-/* QURAN LEARNING */
+/* Quran */
 #quranPage{display:none}
-.quran-header{
- display:flex;align-items:center;justify-content:space-between;
- gap:12px;flex-wrap:wrap;margin:10px 0 20px
-}
-.quran-header h1{color:var(--gold2);margin:0}
-.back-btn,.secondary-btn{
- background:var(--panel2);border:1px solid var(--border);
- color:var(--gold2);padding:11px 15px;border-radius:10px
-}
-.quran-intro{
- text-align:center;padding:22px;background:linear-gradient(140deg,#123e2e,#0b261d);
- border:1px solid var(--border);border-radius:16px;margin-bottom:18px
-}
-.quran-intro h2{color:var(--gold2);margin:0 0 8px}
-.quran-intro p{color:var(--muted);margin:5px}
-.quran-tools{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
-.quran-tools input{
- flex:1;min-width:150px;background:var(--panel);color:white;
- border:1px solid var(--border);border-radius:10px;padding:12px
-}
+.quran-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
+.quran-header h1{color:var(--gold2);font-size:23px}
+.back-btn,.secondary-btn{background:var(--panel2);border:1px solid var(--border);color:var(--gold2);padding:11px 14px;border-radius:10px}
+.quran-intro{text-align:center;padding:22px;background:linear-gradient(140deg,#123e2e,#0b261d);border:1px solid var(--border);border-radius:15px;margin-bottom:16px}
+.quran-intro h2{color:var(--gold2)}
+.quran-intro p{color:var(--muted);margin:6px}
+.quran-tools{display:flex;gap:10px;margin:14px 0}
+.quran-tools input{flex:1;min-width:0;background:var(--panel);color:white;border:1px solid var(--border);border-radius:10px;padding:12px}
 .surah-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.surah-card{
- display:flex;align-items:center;gap:12px;text-align:left;
- padding:14px;background:var(--panel);border:1px solid var(--border);
- color:var(--white);border-radius:13px;width:100%
-}
+.surah-card{display:flex;align-items:center;gap:12px;text-align:left;padding:13px;background:var(--panel);border:1px solid var(--border);color:var(--white);border-radius:12px;width:100%}
 .surah-card:hover{background:var(--panel2)}
-.surah-number{
- min-width:38px;height:38px;border:1px solid var(--gold);
- transform:rotate(45deg);display:grid;place-items:center;
- border-radius:8px;color:var(--gold2)
-}
-.surah-number span{transform:rotate(-45deg)}
+.surah-number{min-width:35px;height:35px;border:1px solid var(--gold);border-radius:8px;display:grid;place-items:center;color:var(--gold2)}
 .surah-info{flex:1;min-width:0}
 .surah-info strong{display:block;color:var(--gold2);font-size:14px}
 .surah-info small{color:var(--muted);font-size:11px}
-.surah-arabic{font-size:20px;direction:rtl;white-space:nowrap}
+.surah-arabic{font-size:19px;direction:rtl;white-space:nowrap}
 #surahReader{display:none}
-.reader-title{
- text-align:center;background:var(--panel);border:1px solid var(--border);
- border-radius:15px;padding:18px;margin:15px 0
-}
-.reader-title h2{color:var(--gold2);margin:5px}
-.reader-title p{color:var(--muted);margin:5px}
-.reader-settings{
- display:flex;gap:10px;flex-wrap:wrap;align-items:center;
- background:var(--panel);border:1px solid var(--border);
- border-radius:13px;padding:13px;margin:12px 0
-}
+.reader-title{text-align:center;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:17px;margin:14px 0}
+.reader-title h2{color:var(--gold2);margin:7px}
+.reader-title p{color:var(--muted)}
+.reader-settings{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0}
 .reader-settings label{color:var(--muted);font-size:13px}
 .reader-settings select{flex:1;min-width:130px}
-.audio-box{
- background:linear-gradient(135deg,#174632,#0b261d);
- border:1px solid var(--border);border-radius:15px;padding:16px;margin:14px 0
-}
-.audio-box h3{margin:0 0 10px;color:var(--gold2)}
-.audio-controls{display:flex;gap:9px;flex-wrap:wrap}
-.audio-controls button{
- border:1px solid var(--border);border-radius:9px;padding:10px 15px;
- background:#0c2921;color:var(--gold2)
-}
+.audio-box{background:linear-gradient(135deg,#174632,#0b261d);border:1px solid var(--border);border-radius:14px;padding:15px;margin:14px 0}
+.audio-box h3{color:var(--gold2);margin-top:0}
+.audio-controls{display:flex;gap:8px;flex-wrap:wrap}
+.audio-controls button{border:1px solid var(--border);border-radius:9px;padding:10px 12px;background:#0c2921;color:var(--gold2)}
 .audio-controls .play{background:var(--gold);color:#10251b;font-weight:bold}
 #audioStatus{color:var(--muted);font-size:12px;margin-top:10px}
-.ayah-card{
- background:var(--panel);border:1px solid var(--border);
- border-radius:14px;padding:20px;margin:12px 0
-}
-.ayah-number{color:var(--gold);font-size:12px;margin-bottom:12px}
-.ayah-arabic{
- font-family:"Times New Roman",serif;font-size:28px;line-height:2.1;
- text-align:right;direction:rtl;color:#fff8e8
-}
-.ayah-translation{
- border-top:1px solid var(--border);margin-top:15px;padding-top:13px;
- line-height:1.8;color:#d8e2d9;font-size:15px
-}
-.quran-note{color:var(--muted);font-size:12px;text-align:center;padding:15px}
-.loading{text-align:center;color:var(--gold2);padding:25px}
+.ayah-card{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:18px;margin:11px 0}
+.ayah-number{color:var(--gold);font-size:12px;margin-bottom:10px}
+.ayah-arabic{font-family:"Times New Roman",serif;font-size:28px;line-height:2.1;text-align:right;direction:rtl;color:#fff8e8}
+.ayah-translation{border-top:1px solid var(--border);margin-top:14px;padding-top:12px;line-height:1.8;color:#d8e2d9}
+.quran-note{color:var(--muted);font-size:12px;text-align:center;padding:14px}
+.loading{text-align:center;color:var(--gold2);padding:22px}
 .hidden{display:none!important}
-
-@media(max-width:850px){
- .sidebar{width:210px}
- .features{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:600px){
- .app{display:block}
- .sidebar{width:100%;padding:13px;gap:10px}
- .brand img{width:48px;height:48px}
- .brand h2{font-size:19px}
- .sidebar-footer{display:none}
- .history-list{max-height:100px;overflow:auto}
- .main{padding:14px}
- .hero{padding:22px 12px;margin:17px 0}
- .hero h1{font-size:29px}
- .features{gap:9px}
- .feature{padding:14px 5px}
- .messages{min-height:220px;padding:12px}
- .input-area{padding:10px;gap:6px}
- .input-area input{padding:12px;font-size:14px}
- .send-btn{padding:12px}
- .surah-list{grid-template-columns:1fr}
- .surah-card{padding:12px}
- .ayah-card{padding:15px}
- .ayah-arabic{font-size:25px}
-}
+@media(max-width:850px){.sidebar{width:210px}.features{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.app{display:block}.sidebar{width:100%;padding:12px;gap:10px}.brand img{width:45px;height:45px}.sidebar-footer{display:none}.history-list{max-height:90px}.main{padding:13px}.hero{padding:20px 10px}.hero h1{font-size:28px}.features{gap:8px}.feature{padding:13px 5px}.messages{min-height:210px;padding:11px}.input-area{padding:9px;gap:5px}.input-area input{padding:11px;font-size:14px}.send-btn{padding:11px}.surah-list{grid-template-columns:1fr}.ayah-arabic{font-size:25px}}
 </style>
 </head>
-
 <body>
 <div class="app">
 <aside class="sidebar">
@@ -235,18 +135,15 @@ select{
    <button class="feature" onclick="openQuran()"><span class="emoji">📖</span><strong>Quran Learning</strong></button>
    <button class="feature" onclick="featureAsk('Tell me authentic Hadith with references')"><span class="emoji">📚</span><strong>Hadith Library</strong></button>
    <button class="feature" onclick="featureAsk('Give me daily authentic duas with meanings')"><span class="emoji">🤲</span><strong>Dua Collection</strong></button>
-   <button class="feature" onclick="featureAsk('Suggest beautiful Muslim baby boy and girl names with meanings')"><span class="emoji">👶</span><strong>Baby Names</strong></button>
+   <button class="feature" onclick="featureAsk('Suggest Muslim baby names with meanings')"><span class="emoji">👶</span><strong>Baby Names</strong></button>
    <button class="feature" onclick="featureAsk('Help me understand daily Islamic prayer times')"><span class="emoji">🕌</span><strong>Prayer Times</strong></button>
    <button class="feature" onclick="featureAsk('Explain how to find Qibla direction')"><span class="emoji">🧭</span><strong>Qibla Direction</strong></button>
-   <button class="feature" onclick="featureAsk('Explain the Islamic Hijri calendar and important dates')"><span class="emoji">🌙</span><strong>Islamic Calendar</strong></button>
-   <button class="feature" onclick="featureAsk('Teach Islam to children in a fun and simple way')"><span class="emoji">🧒</span><strong>Kids Learning</strong></button>
+   <button class="feature" onclick="featureAsk('Explain the Islamic Hijri calendar')"><span class="emoji">🌙</span><strong>Islamic Calendar</strong></button>
+   <button class="feature" onclick="featureAsk('Teach Islam to children in a simple way')"><span class="emoji">🧒</span><strong>Kids Learning</strong></button>
   </section>
 
   <section class="chat-panel">
-   <div class="chat-heading">
-    <h3>☪ Ask DeenAI</h3>
-    <button onclick="newChat()">＋ New Chat</button>
-   </div>
+   <div class="chat-heading"><h3>☪ Ask DeenAI</h3><button onclick="newChat()">＋ New Chat</button></div>
    <div id="messages" class="messages"></div>
    <div class="input-area">
     <button class="icon-btn" onclick="startVoice()" title="Voice input">🎙️</button>
@@ -257,28 +154,22 @@ select{
   </section>
  </div>
 
- <!-- QURAN LEARNING PAGE -->
  <section id="quranPage">
   <div class="quran-header">
    <button class="back-btn" onclick="closeQuran()">← Back</button>
    <h1>📖 Quran Learning</h1>
   </div>
-
   <div class="quran-intro">
    <h2>الْقُرْآنُ الْكَرِيمُ</h2>
    <p>The Noble Quran</p>
    <p>114 Surahs • Arabic Text • Optional Translation</p>
   </div>
-
   <div id="surahBrowser">
    <div class="quran-tools">
     <input id="surahSearch" placeholder="Search Surah..." oninput="filterSurahs()">
    </div>
-   <div id="surahList" class="surah-list">
-    <div class="loading">Loading all 114 Surahs...</div>
-   </div>
+   <div id="surahList" class="surah-list"><div class="loading">Loading all 114 Surahs...</div></div>
   </div>
-
   <div id="surahReader">
    <button class="back-btn" onclick="backToSurahs()">← All Surahs</button>
    <div class="reader-title">
@@ -286,7 +177,6 @@ select{
     <h2 id="readerEnglishName"></h2>
     <p id="readerDetails"></p>
    </div>
-
    <div class="reader-settings">
     <label for="translationToggle">Show translation?</label>
     <select id="translationToggle" onchange="translationToggleChanged()">
@@ -302,7 +192,6 @@ select{
      <option value="as">Assamese</option>
     </select>
    </div>
-
    <div class="audio-box">
     <h3>🎧 DeenAI Quran Audio</h3>
     <p style="color:var(--muted);font-size:13px">Mishary Rashid Alafasy • Full Surah Recitation</p>
@@ -315,14 +204,10 @@ select{
     <div id="audioStatus">Select a Surah and press Play.</div>
     <audio id="quranAudio" preload="none"></audio>
    </div>
-
-   <div id="ayahContainer">
-    <div class="loading">Choose a Surah to begin.</div>
-   </div>
-   <div class="quran-note">Quran text and audio provided by AlQuran Cloud.</div>
+   <div id="ayahContainer"><div class="loading">Choose a Surah to begin.</div></div>
+   <div class="quran-note">Quran text and audio provided by AlQuran Cloud audio/text services.</div>
   </div>
  </section>
-
  <div class="footer">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>DeenAI • Learn • Ask • Grow</div>
 </main>
 </div>
@@ -333,16 +218,10 @@ const STORAGE_KEY="deenAIChats";
 const QURAN_API="https://api.alquran.cloud/v1";
 const AUDIO_BASE="https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/";
 
-let chats=[];
-let currentChatId=null;
-let busy=false;
-let allSurahs=[];
-let currentSurah=null;
-let currentArabicAyahs=[];
-let currentTranslation=null;
-let editionCache={};
+let chats=[],currentChatId=null,busy=false;
+let allSurahs=[],currentSurah=null,currentArabicAyahs=[],currentTranslation=null;
 
-const translationFallback={
+const translationEditions={
  ml:"ml.abdulhameed",
  en:"en.sahih",
  hi:"hi.hindi",
@@ -351,35 +230,22 @@ const translationFallback={
 };
 
 function loadChats(){
- try{
-  chats=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
-  if(!Array.isArray(chats))chats=[];
- }catch(e){chats=[]}
- if(chats.length===0)newChat();
- else{
-  currentChatId=chats[0].id;
-  renderHistory();
-  renderMessages();
- }
+ try{chats=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");if(!Array.isArray(chats))chats=[]}
+ catch(e){chats=[]}
+ if(!chats.length)newChat();
+ else{currentChatId=chats[0].id;renderHistory();renderMessages()}
 }
-function saveChats(){
- localStorage.setItem(STORAGE_KEY,JSON.stringify(chats));
- renderHistory();
-}
+function saveChats(){localStorage.setItem(STORAGE_KEY,JSON.stringify(chats));renderHistory()}
 function currentChat(){return chats.find(c=>c.id===currentChatId)}
 function newChat(){
  const chat={id:Date.now().toString(),title:"New Chat",messages:[]};
- chats.unshift(chat);currentChatId=chat.id;
- saveChats();renderMessages();
- document.getElementById("userInput").focus();
+ chats.unshift(chat);currentChatId=chat.id;saveChats();renderMessages();
+ const input=document.getElementById("userInput");if(input)input.focus();
 }
 function openChat(id){currentChatId=id;renderHistory();renderMessages()}
 function deleteChat(id){
  chats=chats.filter(c=>c.id!==id);
- if(currentChatId===id){
-  if(chats.length===0)newChat();
-  else currentChatId=chats[0].id;
- }
+ if(currentChatId===id){if(!chats.length){newChat();return}currentChatId=chats[0].id}
  saveChats();renderMessages();
 }
 function clearHistory(){
@@ -389,39 +255,29 @@ function clearHistory(){
 function renderHistory(){
  const box=document.getElementById("history");box.innerHTML="";
  chats.forEach(chat=>{
-  const row=document.createElement("div");
-  row.className="history-item"+(chat.id===currentChatId?" active":"");
-  const title=document.createElement("span");
-  title.textContent=chat.title||"New Chat";
-  title.onclick=()=>openChat(chat.id);
-  const del=document.createElement("button");
-  del.textContent="×";del.title="Delete chat";
-  del.onclick=()=>deleteChat(chat.id);
+  const row=document.createElement("div");row.className="history-item"+(chat.id===currentChatId?" active":"");
+  const title=document.createElement("span");title.textContent=chat.title||"New Chat";title.onclick=()=>openChat(chat.id);
+  const del=document.createElement("button");del.textContent="×";del.title="Delete chat";del.onclick=()=>deleteChat(chat.id);
   row.append(title,del);box.appendChild(row);
  });
 }
 function addMessage(role,text){
  const chat=currentChat();if(!chat)return;
  chat.messages.push({role,text});
- if(role==="user"&&chat.title==="New Chat"){
-  chat.title=text.slice(0,32)+(text.length>32?"…":"");
- }
+ if(role==="user"&&chat.title==="New Chat")chat.title=text.slice(0,32)+(text.length>32?"…":"");
  saveChats();renderMessages();
 }
 function renderMessages(){
  const box=document.getElementById("messages");box.innerHTML="";
  const chat=currentChat();if(!chat)return;
- if(chat.messages.length===0){
-  const welcome=document.createElement("div");
-  welcome.className="message bot";
+ if(!chat.messages.length){
+  const welcome=document.createElement("div");welcome.className="message bot";
   welcome.textContent="السلام عليكم! അസ്സലാമു അലൈക്കും! ഞാൻ DeenAI. ഇസ്‌ലാമിക അറിവുകളെക്കുറിച്ച് എന്തും ചോദിക്കാം.";
   box.appendChild(welcome);
  }
  chat.messages.forEach(m=>{
-  const item=document.createElement("div");
-  item.className="message "+(m.role==="user"?"user":"bot");
-  const label=document.createElement("small");
-  label.textContent=m.role==="user"?"You":"DeenAI";
+  const item=document.createElement("div");item.className="message "+(m.role==="user"?"user":"bot");
+  const label=document.createElement("small");label.textContent=m.role==="user"?"You":"DeenAI";
   const content=document.createElement("div");content.textContent=m.text;
   item.append(label,content);box.appendChild(item);
  });
@@ -429,62 +285,44 @@ function renderMessages(){
 }
 async function sendMessage(){
  if(busy)return;
- const input=document.getElementById("userInput");
- const message=input.value.trim();if(!message)return;
- input.value="";
- const language=document.getElementById("language").value;
+ const input=document.getElementById("userInput"),message=input.value.trim();if(!message)return;
+ input.value="";const language=document.getElementById("language").value;
  addMessage("user",message);busy=true;
  document.getElementById("sendButton").disabled=true;
  document.getElementById("status").textContent="DeenAI is thinking...";
  try{
-  const response=await fetch(API_URL,{
-   method:"POST",headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({message:message,language:language})
-  });
-  const data=await response.json();
-  if(!response.ok)throw new Error(data.detail||"Server error");
+  const response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,language})});
+  const data=await response.json();if(!response.ok)throw new Error(data.detail||"Server error");
   const answer=data.response||data.answer||data.reply||data.message;
   if(typeof answer!=="string")throw new Error("Unexpected server response");
-  addMessage("assistant",answer);
-  document.getElementById("status").textContent="DeenAI is ready";
+  addMessage("assistant",answer);document.getElementById("status").textContent="DeenAI is ready";
  }catch(error){
-  addMessage("assistant","ക്ഷമിക്കണം. ഇപ്പോൾ മറുപടി ലഭിക്കുന്നില്ല. ദയവായി വീണ്ടും ശ്രമിക്കുക. ("+error.message+")");
+  addMessage("assistant","ക്ഷമിക്കണം. ഇപ്പോൾ മറുപടി ലഭിക്കുന്നില്ല. വീണ്ടും ശ്രമിക്കുക. ("+error.message+")");
   document.getElementById("status").textContent="Connection issue";
  }
  busy=false;document.getElementById("sendButton").disabled=false;
 }
-function featureAsk(prompt){
- document.getElementById("userInput").value=prompt;sendMessage();
-}
+function featureAsk(prompt){document.getElementById("userInput").value=prompt;sendMessage()}
 function startVoice(){
  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
  if(!SpeechRecognition){alert("Voice input ഈ browser-ൽ support ചെയ്യുന്നില്ല.");return}
- const recognition=new SpeechRecognition();
- const lang=document.getElementById("language").value;
+ const recognition=new SpeechRecognition(),lang=document.getElementById("language").value;
  recognition.lang=lang==="Malayalam"?"ml-IN":lang==="Arabic"?"ar-SA":"en-IN";
  recognition.interimResults=false;
- recognition.onresult=function(event){
-  document.getElementById("userInput").value=event.results[0][0].transcript;
- };
- recognition.onerror=function(){
-  document.getElementById("status").textContent="Voice input failed. Try again.";
- };
+ recognition.onresult=e=>document.getElementById("userInput").value=e.results[0][0].transcript;
+ recognition.onerror=()=>document.getElementById("status").textContent="Voice input failed. Try again.";
  recognition.start();
 }
 document.getElementById("language").addEventListener("change",function(){
- const lang=this.value;
- document.getElementById("userInput").placeholder=
- lang==="Malayalam"?"ഇവിടെ ചോദ്യം എഴുതുക...":
- lang==="Arabic"?"اكتب سؤالك هنا...":"Type your question here...";
+ document.getElementById("userInput").placeholder=this.value==="Malayalam"?"ഇവിടെ ചോദ്യം എഴുതുക...":this.value==="Arabic"?"اكتب سؤالك هنا...":"Type your question here...";
 });
 
-/* QURAN LEARNING FUNCTIONS */
-
+/* QURAN LEARNING */
 function openQuran(){
  document.getElementById("homePage").style.display="none";
  document.getElementById("quranPage").style.display="block";
  window.scrollTo(0,0);
- if(allSurahs.length===0)loadSurahs();
+ if(!allSurahs.length)loadSurahs();
 }
 function closeQuran(){
  stopSurah();
@@ -498,12 +336,26 @@ async function loadSurahs(){
  try{
   const res=await fetch(QURAN_API+"/surah");
   if(!res.ok)throw new Error("Could not load Surahs");
-  const json=await res.json();
-  allSurahs=json.data||[];
+  const json=await res.json();allSurahs=json.data||[];
   renderSurahs(allSurahs);
  }catch(e){
-  list.innerHTML='<div class="loading">Unable to load Quran list. Please check your internet and try again.</div>';
+  list.innerHTML='<div class="loading">Unable to load Quran list. Check your internet and try again.</div>';
  }
 }
 function renderSurahs(items){
- const list=document.getElementById("s
+ const list=document.getElementById("surahList");
+ if(!items.length){list.innerHTML='<div class="loading">No Surahs found.</div>';return}
+ list.innerHTML=items.map(s=>
+  '<button class="surah-card" onclick="openSurah('+s.number+')">'+
+  '<span class="surah-number">'+s.number+'</span>'+
+  '<span class="surah-info"><strong>'+escapeHtml(s.englishName||s.name)+'</strong>'+
+  '<small>'+s.numberOfAyahs+' Ayahs • '+escapeHtml(s.revelationType||"")+'</small></span>'+
+  '<span class="surah-arabic" dir="rtl">'+escapeHtml(s.name)+'</span></button>'
+ ).join("");
+}
+function escapeHtml(value){
+ return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+function filterSurahs(){
+ const q=document.getElementById("surahSearch").value.trim().toLowerCase();
+ renderSurahs(allSurahs.filter(s=>String(s.number).includes(q)||String(s.name).toLowe
