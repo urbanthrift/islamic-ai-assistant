@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,699 +5,217 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#061d18">
 <title>DeenAI - Learn • Ask • Grow</title>
-
 <style>
-:root{
- --bg:#061d18;--panel:#0c2921;--panel2:#10372b;
- --gold:#d9b45c;--gold2:#f5dfa0;--white:#f7f3e8;
- --muted:#a8b9ad;--border:rgba(217,180,92,.2)
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,sans-serif}
-button,input,select{font:inherit}
-button{cursor:pointer}
-.app{display:flex;min-height:100vh}
-.sidebar{width:250px;background:#041610;padding:18px;display:flex;flex-direction:column;gap:15px;border-right:1px solid var(--border)}
-.brand{display:flex;align-items:center;gap:10px}
-.brand img{width:55px;height:55px;object-fit:contain}
-.brand h2{margin:0;color:var(--gold2)}
-.brand small{color:var(--muted)}
+:root{--bg:#061d18;--panel:#0c2921;--panel2:#10372b;--gold:#d9b45c;--gold2:#f5dfa0;--white:#f7f3e8;--muted:#a8b9ad;--border:rgba(217,180,92,.2)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}
+.app{display:flex;min-height:100vh}.sidebar{width:250px;background:#041610;padding:18px;display:flex;flex-direction:column;gap:15px;border-right:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:10px}.brand img{width:55px;height:55px;object-fit:contain}.brand h2{margin:0;color:var(--gold2)}.brand small{color:var(--muted)}
 .new-btn,.gold-btn{background:linear-gradient(135deg,#e8ca7c,#b68a35);color:#10251b;border:0;border-radius:11px;padding:13px;font-weight:bold}
-.section-label{color:var(--gold);font-size:12px;letter-spacing:2px}
-.history-list{display:flex;flex-direction:column;gap:6px;overflow:auto;max-height:45vh}
-.history-item{display:flex;align-items:center;gap:5px;background:transparent;border:1px solid transparent;border-radius:9px;padding:9px;color:var(--white)}
-.history-item.active,.history-item:hover{background:var(--panel);border-color:var(--border)}
-.history-item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
-.history-item button{background:none;color:#d9a8a0;border:0}
-.sidebar-footer{margin-top:auto;color:var(--muted);font-size:12px}
-.main{flex:1;min-width:0;padding:22px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.topbar h2{margin:0;color:var(--gold2);font-size:19px}
+.section-label{color:var(--gold);font-size:12px;letter-spacing:2px}.history-list{display:flex;flex-direction:column;gap:6px;overflow:auto;max-height:45vh}
+.history-item{display:flex;align-items:center;gap:5px;background:transparent;border:1px solid transparent;border-radius:9px;padding:9px;color:var(--white)}.history-item.active,.history-item:hover{background:var(--panel);border-color:var(--border)}
+.history-item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}.history-item button{background:none;color:#d9a8a0;border:0}.sidebar-footer{margin-top:auto;color:var(--muted);font-size:12px}
+.main{flex:1;min-width:0;padding:22px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.topbar h2{margin:0;color:var(--gold2);font-size:19px}
 select{background:var(--panel);color:var(--white);border:1px solid var(--border);border-radius:10px;padding:10px;max-width:100%}
 .hero{margin:22px 0;padding:28px 15px;text-align:center;border:1px solid var(--border);border-radius:20px;background:radial-gradient(circle at top,#174c38,#0b261d 65%)}
-.hero .crescent{font-size:35px;color:var(--gold)}
-.hero h1{font-family:Georgia,serif;color:var(--gold2);font-size:34px;margin:10px}
-.hero p{color:var(--muted)}
-.tagline{color:var(--gold);letter-spacing:3px;font-size:12px}
-.features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:18px 0}
-.feature{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 7px;text-align:center;color:var(--white)}
-.feature:hover{background:var(--panel2)}
-.feature .emoji{font-size:27px;display:block;margin-bottom:8px}
-.feature strong{font-size:13px}
-.chat-panel{background:var(--panel);border:1px solid var(--border);border-radius:17px;overflow:hidden}
-.chat-heading{padding:15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between}
-.chat-heading h3{margin:0;color:var(--gold2)}
-.chat-heading button{background:none;border:0;color:var(--muted)}
-.messages{padding:15px;min-height:230px;max-height:430px;overflow:auto;display:flex;flex-direction:column;gap:12px}
-.message{max-width:88%;padding:12px 14px;border-radius:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
-.user{align-self:flex-end;background:#24543e}
-.bot{align-self:flex-start;background:#17372c;border:1px solid var(--border)}
-.message small{display:block;color:var(--gold);margin-bottom:4px}
-.input-area{padding:12px;border-top:1px solid var(--border);display:flex;gap:7px}
-.input-area input{flex:1;min-width:0;background:#061d18;border:1px solid var(--border);border-radius:11px;padding:13px;color:white}
-.icon-btn{background:var(--panel2);border:1px solid var(--border);color:var(--gold2);border-radius:10px;padding:11px}
-.send-btn{background:var(--gold);color:#10251b;border:0;border-radius:10px;padding:12px 16px;font-weight:bold}
-.status{padding:0 14px 12px;color:var(--muted);font-size:12px}
+.hero .crescent{font-size:35px;color:var(--gold)}.hero h1{font-family:Georgia,serif;color:var(--gold2);font-size:34px;margin:10px}.hero p{color:var(--muted)}.tagline{color:var(--gold);letter-spacing:3px;font-size:12px}
+.features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:18px 0}.feature{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 7px;text-align:center;color:var(--white)}.feature:hover{background:var(--panel2)}
+.feature .emoji{font-size:27px;display:block;margin-bottom:8px}.feature strong{font-size:13px}
+.chat-panel{background:var(--panel);border:1px solid var(--border);border-radius:17px;overflow:hidden}.chat-heading{padding:15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between}.chat-heading h3{margin:0;color:var(--gold2)}.chat-heading button{background:none;border:0;color:var(--muted)}
+.messages{padding:15px;min-height:230px;max-height:430px;overflow:auto;display:flex;flex-direction:column;gap:12px}.message{max-width:88%;padding:12px 14px;border-radius:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}.user{align-self:flex-end;background:#24543e}.bot{align-self:flex-start;background:#17372c;border:1px solid var(--border)}
+.message small{display:block;color:var(--gold);margin-bottom:4px}.input-area{padding:12px;border-top:1px solid var(--border);display:flex;gap:7px}.input-area input{flex:1;min-width:0;background:#061d18;border:1px solid var(--border);border-radius:11px;padding:13px;color:white}
+.icon-btn{background:var(--panel2);border:1px solid var(--border);color:var(--gold2);border-radius:10px;padding:11px}.send-btn{background:var(--gold);color:#10251b;border:0;border-radius:10px;padding:12px 16px;font-weight:bold}.status{padding:0 14px 12px;color:var(--muted);font-size:12px}
 .footer{text-align:center;color:var(--muted);padding:22px;font-size:12px}
-
-/* Quran */
-#quranPage{display:none}
-.quran-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
-.quran-header h1{color:var(--gold2);font-size:23px}
+#quranPage,#duaPage,#hadithPage{display:none}.module-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0 18px}.module-header h1{color:var(--gold2);font-size:23px;margin:8px 0}
 .back-btn,.secondary-btn{background:var(--panel2);border:1px solid var(--border);color:var(--gold2);padding:11px 14px;border-radius:10px}
-.quran-intro{text-align:center;padding:22px;background:linear-gradient(140deg,#123e2e,#0b261d);border:1px solid var(--border);border-radius:15px;margin-bottom:16px}
-.quran-intro h2{color:var(--gold2)}
-.quran-intro p{color:var(--muted);margin:6px}
-.quran-tools{display:flex;gap:10px;margin:14px 0}
-.quran-tools input{flex:1;min-width:0;background:var(--panel);color:white;border:1px solid var(--border);border-radius:10px;padding:12px}
-.surah-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.surah-card{display:flex;align-items:center;gap:12px;text-align:left;padding:13px;background:var(--panel);border:1px solid var(--border);color:var(--white);border-radius:12px;width:100%}
-.surah-card:hover{background:var(--panel2)}
-.surah-number{min-width:35px;height:35px;border:1px solid var(--gold);border-radius:8px;display:grid;place-items:center;color:var(--gold2)}
-.surah-info{flex:1;min-width:0}
-.surah-info strong{display:block;color:var(--gold2);font-size:14px}
-.surah-info small{color:var(--muted);font-size:11px}
-.surah-arabic{font-size:19px;direction:rtl;white-space:nowrap}
-#surahReader{display:none}
-.reader-title{text-align:center;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:17px;margin:14px 0}
-.reader-title h2{color:var(--gold2);margin:7px}
-.reader-title p{color:var(--muted)}
-.reader-settings{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0}
-.reader-settings label{color:var(--muted);font-size:13px}
-.reader-settings select{flex:1;min-width:130px}
-.audio-box{background:linear-gradient(135deg,#174632,#0b261d);border:1px solid var(--border);border-radius:14px;padding:15px;margin:14px 0}
-.audio-box h3{color:var(--gold2);margin-top:0}
-.audio-controls{display:flex;gap:8px;flex-wrap:wrap}
-.audio-controls button{border:1px solid var(--border);border-radius:9px;padding:10px 12px;background:#0c2921;color:var(--gold2)}
-.audio-controls .play{background:var(--gold);color:#10251b;font-weight:bold}
-#audioStatus{color:var(--muted);font-size:12px;margin-top:10px}
-.ayah-card{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:18px;margin:11px 0}
-.ayah-number{color:var(--gold);font-size:12px;margin-bottom:10px}
-.ayah-arabic{font-family:"Times New Roman",serif;font-size:28px;line-height:2.1;text-align:right;direction:rtl;color:#fff8e8}
-.ayah-translation{border-top:1px solid var(--border);margin-top:14px;padding-top:12px;line-height:1.8;color:#d8e2d9}
-.quran-note{color:var(--muted);font-size:12px;text-align:center;padding:14px}
-.loading{text-align:center;color:var(--gold2);padding:22px}
-.hidden{display:none!important}
+.quran-intro,.module-intro{text-align:center;padding:22px;background:linear-gradient(140deg,#123e2e,#0b261d);border:1px solid var(--border);border-radius:15px;margin-bottom:16px}.quran-intro h2,.module-intro h2{color:var(--gold2)}.quran-intro p,.module-intro p{color:var(--muted);margin:6px}
+.quran-tools,.module-tools{display:flex;gap:10px;margin:14px 0;flex-wrap:wrap}.quran-tools input,.module-tools input{flex:1;min-width:150px;background:var(--panel);color:white;border:1px solid var(--border);border-radius:10px;padding:12px}
+.surah-list,.category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.surah-card,.category-card{display:flex;align-items:center;gap:12px;text-align:left;padding:13px;background:var(--panel);border:1px solid var(--border);color:var(--white);border-radius:12px;width:100%}
+.surah-card:hover,.category-card:hover{background:var(--panel2)}.surah-number{min-width:35px;height:35px;border:1px solid var(--gold);border-radius:8px;display:grid;place-items:center;color:var(--gold2)}
+.surah-info{flex:1;min-width:0}.surah-info strong{display:block;color:var(--gold2);font-size:14px}.surah-info small{color:var(--muted);font-size:11px}.surah-arabic{font-size:19px;direction:rtl;white-space:nowrap}
+#surahReader{display:none}.reader-title{text-align:center;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:17px;margin:14px 0}.reader-title h2{color:var(--gold2);margin:7px}.reader-title p{color:var(--muted)}
+.reader-settings,.translation-settings{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0}
+.reader-settings label,.translation-settings label{color:var(--muted);font-size:13px}.reader-settings select,.translation-settings select{flex:1;min-width:130px}
+.audio-box{background:linear-gradient(135deg,#174632,#0b261d);border:1px solid var(--border);border-radius:14px;padding:15px;margin:14px 0}.audio-box h3{color:var(--gold2);margin-top:0}
+.audio-controls{display:flex;gap:8px;flex-wrap:wrap}.audio-controls button{border:1px solid var(--border);border-radius:9px;padding:10px 12px;background:#0c2921;color:var(--gold2)}.audio-controls .play{background:var(--gold);color:#10251b;font-weight:bold}
+#audioStatus{color:var(--muted);font-size:12px;margin-top:10px}.ayah-card,.content-card{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:18px;margin:11px 0}
+.ayah-number,.item-source{color:var(--gold);font-size:12px;margin-bottom:10px}.ayah-arabic,.item-arabic{font-family:"Times New Roman",serif;font-size:28px;line-height:2.1;text-align:right;direction:rtl;color:#fff8e8}
+.ayah-translation,.item-translation{border-top:1px solid var(--border);margin-top:14px;padding-top:12px;line-height:1.8;color:#d8e2d9;white-space:pre-wrap}
+.content-card h3{color:var(--gold2);margin:0 0 10px}.content-card .item-arabic{font-size:26px}.item-pronunciation{color:#e8d8a8;line-height:1.8;margin-top:12px}.item-note{color:var(--muted);font-size:13px;line-height:1.7;margin-top:10px}
+.quran-note,.notice{color:var(--muted);font-size:12px;text-align:center;padding:14px}.loading{text-align:center;color:var(--gold2);padding:22px}.hidden{display:none!important}
+.category-card{display:block;padding:17px}.category-card .emoji{font-size:24px;display:block;margin-bottom:8px}.category-card strong{color:var(--gold2)}.category-card small{display:block;color:var(--muted);margin-top:5px}
+.item-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.item-actions button{background:var(--panel2);border:1px solid var(--border);border-radius:8px;color:var(--gold2);padding:8px 10px}
 @media(max-width:850px){.sidebar{width:210px}.features{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.app{display:block}.sidebar{width:100%;padding:12px;gap:10px}.brand img{width:45px;height:45px}.sidebar-footer{display:none}.history-list{max-height:90px}.main{padding:13px}.hero{padding:20px 10px}.hero h1{font-size:28px}.features{gap:8px}.feature{padding:13px 5px}.messages{min-height:210px;padding:11px}.input-area{padding:9px;gap:5px}.input-area input{padding:11px;font-size:14px}.send-btn{padding:11px}.surah-list{grid-template-columns:1fr}.ayah-arabic{font-size:25px}}
+@media(max-width:600px){.app{display:block}.sidebar{width:100%;padding:12px;gap:10px}.brand img{width:45px;height:45px}.sidebar-footer{display:none}.history-list{max-height:90px}.main{padding:13px}.hero{padding:20px 10px}.hero h1{font-size:28px}.features{gap:8px}.feature{padding:13px 5px}.messages{min-height:210px;padding:11px}.input-area{padding:9px;gap:5px}.input-area input{padding:11px;font-size:14px}.send-btn{padding:11px}.surah-list,.category-grid{grid-template-columns:1fr}.ayah-arabic{font-size:25px}.item-arabic{font-size:24px}}
 </style>
 </head>
-
 <body>
 <div class="app">
 <aside class="sidebar">
- <div class="brand">
-  <img src="deenai-logo.png" alt="DeenAI Logo">
-  <div><h2>DeenAI</h2><small>Learn • Ask • Grow</small></div>
- </div>
+ <div class="brand"><img src="deenai-logo.png" alt="DeenAI Logo"><div><h2>DeenAI</h2><small>Learn • Ask • Grow</small></div></div>
  <button class="new-btn" onclick="newChat()">＋ New Chat</button>
- <div class="section-label">CHAT HISTORY</div>
- <div id="history" class="history-list"></div>
+ <div class="section-label">CHAT HISTORY</div><div id="history" class="history-list"></div>
  <button class="icon-btn" onclick="clearHistory()">Clear All History</button>
  <div class="sidebar-footer">☪ Your Islamic Knowledge Companion</div>
 </aside>
-
 <main class="main">
- <div class="topbar">
-  <h2>السلام عليكم ورحمة الله وبركاته</h2>
-  <select id="language">
-   <option value="Malayalam">മലയാളം</option>
-   <option value="English">English</option>
-   <option value="Arabic">العربية</option>
-  </select>
- </div>
-
+ <div class="topbar"><h2>السلام عليكم ورحمة الله وبركاته</h2><select id="language"><option value="Malayalam">മലയാളം</option><option value="English">English</option><option value="Arabic">العربية</option></select></div>
  <div id="homePage">
-  <section class="hero">
-   <div class="crescent">☪</div>
-   <h1>Welcome to DeenAI</h1>
-   <p>നിങ്ങളുടെ ഇസ്‌ലാമിക അറിവുകളുടെ വിശ്വസ്ത സഹായി</p>
-   <div class="tagline">LEARN • ASK • GROW</div>
-  </section>
-
+  <section class="hero"><div class="crescent">☪</div><h1>Welcome to DeenAI</h1><p>നിങ്ങളുടെ ഇസ്‌ലാമിക അറിവുകളുടെ വിശ്വസ്ത സഹായി</p><div class="tagline">LEARN • ASK • GROW</div></section>
   <h3 style="color:var(--gold2)">Explore Islamic Knowledge</h3>
   <section class="features">
    <button class="feature" onclick="openQuran()"><span class="emoji">📖</span><strong>Quran Learning</strong></button>
-   <button class="feature" onclick="featureAsk('Tell me authentic Hadith with references')"><span class="emoji">📚</span><strong>Hadith Library</strong></button>
-   <button class="feature" onclick="featureAsk('Give me daily authentic duas with meanings')"><span class="emoji">🤲</span><strong>Dua Collection</strong></button>
+   <button class="feature" onclick="openHadith()"><span class="emoji">📚</span><strong>Hadith Library</strong></button>
+   <button class="feature" onclick="openDua()"><span class="emoji">🤲</span><strong>Dua Collection</strong></button>
    <button class="feature" onclick="featureAsk('Suggest Muslim baby names with meanings')"><span class="emoji">👶</span><strong>Baby Names</strong></button>
    <button class="feature" onclick="featureAsk('Help me understand daily Islamic prayer times')"><span class="emoji">🕌</span><strong>Prayer Times</strong></button>
    <button class="feature" onclick="featureAsk('Explain how to find Qibla direction')"><span class="emoji">🧭</span><strong>Qibla Direction</strong></button>
    <button class="feature" onclick="featureAsk('Explain the Islamic Hijri calendar')"><span class="emoji">🌙</span><strong>Islamic Calendar</strong></button>
    <button class="feature" onclick="featureAsk('Teach Islam to children in a simple way')"><span class="emoji">🧒</span><strong>Kids Learning</strong></button>
   </section>
-
-  <section class="chat-panel">
-   <div class="chat-heading"><h3>☪ Ask DeenAI</h3><button onclick="newChat()">＋ New Chat</button></div>
+  <section class="chat-panel"><div class="chat-heading"><h3>☪ Ask DeenAI</h3><button onclick="newChat()">＋ New Chat</button></div>
    <div id="messages" class="messages"></div>
-   <div class="input-area">
-    <button class="icon-btn" onclick="startVoice()" title="Voice input">🎙️</button>
-    <input id="userInput" placeholder="ഇവിടെ ചോദ്യം എഴുതുക..." onkeydown="if(event.key==='Enter')sendMessage()">
-    <button class="send-btn" id="sendButton" onclick="sendMessage()">Send</button>
-   </div>
+   <div class="input-area"><button class="icon-btn" onclick="startVoice()" title="Voice input">🎙️</button><input id="userInput" placeholder="ഇവിടെ ചോദ്യം എഴുതുക..." onkeydown="if(event.key==='Enter')sendMessage()"><button class="send-btn" id="sendButton" onclick="sendMessage()">Send</button></div>
    <div class="status" id="status">DeenAI AI Assistant</div>
   </section>
  </div>
 
  <section id="quranPage">
-  <div class="quran-header">
-   <button class="back-btn" onclick="closeQuran()">← Back</button>
-   <h1>📖 Quran Learning</h1>
-  </div>
-  <div class="quran-intro">
-   <h2>الْقُرْآنُ الْكَرِيمُ</h2>
-   <p>The Noble Quran</p>
-   <p>114 Surahs • Arabic Text • Optional Translation</p>
-  </div>
-
-  <div id="surahBrowser">
-   <div class="quran-tools">
-    <input id="surahSearch" placeholder="Search Surah..." oninput="filterSurahs()">
-   </div>
-   <div id="surahList" class="surah-list"><div class="loading">Loading all 114 Surahs...</div></div>
-  </div>
-
+  <div class="module-header"><button class="back-btn" onclick="closeModules()">← Home</button><h1>📖 Quran Learning</h1></div>
+  <div class="quran-intro"><h2>الْقُرْآنُ الْكَرِيمُ</h2><p>The Noble Quran</p><p>114 Surahs • Arabic Text • Optional Translation</p></div>
+  <div id="surahBrowser"><div class="quran-tools"><input id="surahSearch" placeholder="Search Surah..." oninput="filterSurahs()"></div><div id="surahList" class="surah-list"><div class="loading">Loading all 114 Surahs...</div></div></div>
   <div id="surahReader">
    <button class="back-btn" onclick="backToSurahs()">← All Surahs</button>
-   <div class="reader-title">
-    <h2 id="readerArabicName" dir="rtl"></h2>
-    <h2 id="readerEnglishName"></h2>
-    <p id="readerDetails"></p>
-   </div>
-
-   <div class="reader-settings">
-    <label for="translationToggle">Show translation?</label>
-    <select id="translationToggle" onchange="translationToggleChanged()">
-     <option value="no">No — Arabic only</option>
-     <option value="yes">Yes — Show translation</option>
-    </select>
-    <select id="translationLanguage" class="hidden" onchange="loadTranslation()">
-     <option value="ml">Malayalam</option>
-     <option value="en">English</option>
-     <option value="hi">Hindi</option>
-     <option value="ur">Urdu</option>
-     <option value="bn">Bengali</option>
-     <option value="as">Assamese</option>
-    </select>
-   </div>
-
-   <div class="audio-box">
-    <h3>🎧 DeenAI Quran Audio</h3>
-    <p style="color:var(--muted);font-size:13px">Mishary Rashid Alafasy • Full Surah Recitation</p>
-    <div class="audio-controls">
-     <button class="play" onclick="playSurah()">▶ Play from beginning</button>
-     <button onclick="pauseSurah()">Ⅱ Pause</button>
-     <button onclick="resumeSurah()">▶ Resume</button>
-     <button onclick="stopSurah()">■ Stop</button>
-    </div>
-    <div id="audioStatus">Select a Surah and press Play.</div>
-    <audio id="quranAudio" preload="none"></audio>
-   </div>
-
-   <div id="ayahContainer"><div class="loading">Choose a Surah to begin.</div></div>
-   <div class="quran-note">Quran text and audio provided by AlQuran Cloud services.</div>
+   <div class="reader-title"><h2 id="readerArabicName" dir="rtl"></h2><h2 id="readerEnglishName"></h2><p id="readerDetails"></p></div>
+   <div class="reader-settings"><label for="translationToggle">Show translation?</label><select id="translationToggle" onchange="translationToggleChanged()"><option value="no">No — Arabic only</option><option value="yes">Yes — Show translation</option></select>
+    <select id="translationLanguage" class="hidden" onchange="loadTranslation()"><option value="ml">Malayalam</option><option value="en">English</option><option value="hi">Hindi</option><option value="ur">Urdu</option><option value="bn">Bengali</option><option value="as">Assamese</option></select></div>
+   <div class="audio-box"><h3>🎧 DeenAI Quran Audio</h3><p style="color:var(--muted);font-size:13px">Mishary Rashid Alafasy • Full Surah Recitation</p><div class="audio-controls"><button class="play" onclick="playSurah()">▶ Play from beginning</button><button onclick="pauseSurah()">Ⅱ Pause</button><button onclick="resumeSurah()">▶ Resume</button><button onclick="stopSurah()">■ Stop</button></div><div id="audioStatus">Select a Surah and press Play.</div><audio id="quranAudio" preload="none"></audio></div>
+   <div id="ayahContainer"><div class="loading">Choose a Surah to begin.</div></div><div class="quran-note">Quran text and audio provided by AlQuran Cloud services.</div>
   </div>
  </section>
 
+ <section id="duaPage">
+  <div class="module-header"><button class="back-btn" onclick="closeModules()">← Home</button><h1>🤲 Dua Collection</h1></div>
+  <div class="module-intro"><h2>الدُّعَاء</h2><p>Authentic supplications from the Quran and Sunnah</p><p>Choose a category • Arabic first • Translation optional</p></div>
+  <div id="duaCategories" class="category-grid"></div>
+  <div id="duaList" class="hidden">
+   <div class="module-tools"><button class="back-btn" onclick="showDuaCategories()">← Categories</button><input id="duaSearch" placeholder="Search duas..." oninput="renderDuas()"></div>
+   <div class="translation-settings"><label for="duaTranslationToggle">Show meaning?</label><select id="duaTranslationToggle" onchange="renderDuas()"><option value="no">No — Arabic only</option><option value="yes">Yes — Show meaning</option></select><select id="duaTranslationLanguage" onchange="renderDuas()"><option value="ml">Malayalam</option><option value="en">English</option><option value="hi">Hindi</option><option value="ur">Urdu</option></select></div>
+   <div id="duaItems"></div>
+  </div>
+ </section>
+
+ <section id="hadithPage">
+  <div class="module-header"><button class="back-btn" onclick="closeModules()">← Home</button><h1>📚 Hadith Library</h1></div>
+  <div class="module-intro"><h2>السُّنَّة النَّبَوِيَّة</h2><p>Selected hadith with source references</p><p>Arabic first • Translation optional</p></div>
+  <div id="hadithCategories" class="category-grid"></div>
+  <div id="hadithList" class="hidden">
+   <div class="module-tools"><button class="back-btn" onclick="showHadithCategories()">← Categories</button><input id="hadithSearch" placeholder="Search hadith..." oninput="renderHadith()"></div>
+   <div class="translation-settings"><label for="hadithTranslationToggle">Show meaning?</label><select id="hadithTranslationToggle" onchange="renderHadith()"><option value="no">No — Arabic only</option><option value="yes">Yes — Show meaning</option></select><select id="hadithTranslationLanguage" onchange="renderHadith()"><option value="ml">Malayalam</option><option value="en">English</option><option value="hi">Hindi</option><option value="ur">Urdu</option></select></div>
+   <div id="hadithItems"></div>
+  </div>
+ </section>
  <div class="footer">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>DeenAI • Learn • Ask • Grow</div>
 </main>
 </div>
-
 <script>
 const API_URL="https://islamic-ai-assistant-9tn7.onrender.com/chat";
 const STORAGE_KEY="deenAIChats";
 const QURAN_API="https://api.alquran.cloud/v1";
 const AUDIO_BASE="https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/";
-
 const audioElement=document.getElementById("quranAudio");
-
-let chats=[];
-let currentChatId=null;
-let busy=false;
-let allSurahs=[];
-let currentSurah=null;
-let currentArabicAyahs=[];
-let currentTranslation=null;
-
-const translationEditions={
- ml:"ml.abdulhameed",
- en:"en.sahih",
- hi:"hi.hindi",
- ur:"ur.jalandhry",
- bn:"bn.bengali"
-};
-
-/* CHAT HISTORY */
-function loadChats(){
- try{
-  chats=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
-  if(!Array.isArray(chats))chats=[];
- }catch(e){chats=[]}
-
- if(!chats.length)newChat();
- else{
-  currentChatId=chats[0].id;
-  renderHistory();
-  renderMessages();
- }
-}
-
-function saveChats(){
- try{localStorage.setItem(STORAGE_KEY,JSON.stringify(chats))}
- catch(e){console.error("Unable to save chat history",e)}
- renderHistory();
-}
-
-function currentChat(){
- return chats.find(c=>c.id===currentChatId);
-}
-
-function newChat(){
- const chat={
-  id:Date.now().toString(),
-  title:"New Chat",
-  messages:[]
- };
- chats.unshift(chat);
- currentChatId=chat.id;
- saveChats();
- renderMessages();
- const input=document.getElementById("userInput");
- if(input)input.focus();
-}
-
-function openChat(id){
- currentChatId=id;
- renderHistory();
- renderMessages();
-}
-
-function deleteChat(id){
- chats=chats.filter(c=>c.id!==id);
- if(currentChatId===id){
-  if(!chats.length){newChat();return}
-  currentChatId=chats[0].id;
- }
- saveChats();
- renderMessages();
-}
-
-function clearHistory(){
- if(!confirm("Delete all saved chats?"))return;
- chats=[];
- try{localStorage.removeItem(STORAGE_KEY)}catch(e){}
- newChat();
-}
-
-function renderHistory(){
- const box=document.getElementById("history");
- box.innerHTML="";
- chats.forEach(chat=>{
-  const row=document.createElement("div");
-  row.className="history-item"+(chat.id===currentChatId?" active":"");
-
-  const title=document.createElement("span");
-  title.textContent=chat.title||"New Chat";
-  title.onclick=()=>openChat(chat.id);
-
-  const del=document.createElement("button");
-  del.textContent="×";
-  del.title="Delete chat";
-  del.onclick=()=>deleteChat(chat.id);
-
-  row.append(title,del);
-  box.appendChild(row);
- });
-}
-
-function addMessage(role,text){
- const chat=currentChat();
- if(!chat)return;
-
- chat.messages.push({role,text});
-
- if(role==="user"&&chat.title==="New Chat"){
-  chat.title=text.slice(0,32)+(text.length>32?"…":"");
- }
- saveChats();
- renderMessages();
-}
-
-function renderMessages(){
- const box=document.getElementById("messages");
- box.innerHTML="";
- const chat=currentChat();
- if(!chat)return;
-
- if(!chat.messages.length){
-  const welcome=document.createElement("div");
-  welcome.className="message bot";
-  welcome.textContent="السلام عليكم! അസ്സലാമു അലൈക്കും! ഞാൻ DeenAI. ഇസ്‌ലാമിക അറിവുകളെക്കുറിച്ച് എന്തും ചോദിക്കാം.";
-  box.appendChild(welcome);
- }
-
- chat.messages.forEach(m=>{
-  const item=document.createElement("div");
-  item.className="message "+(m.role==="user"?"user":"bot");
-
-  const label=document.createElement("small");
-  label.textContent=m.role==="user"?"You":"DeenAI";
-
-  const content=document.createElement("div");
-  content.textContent=m.text;
-
-  item.append(label,content);
-  box.appendChild(item);
- });
-
- box.scrollTop=box.scrollHeight;
-}
-
-async function sendMessage(){
- if(busy)return;
-
- const input=document.getElementById("userInput");
- const message=input.value.trim();
- if(!message)return;
-
- input.value="";
- const language=document.getElementById("language").value;
-
- addMessage("user",message);
- busy=true;
- document.getElementById("sendButton").disabled=true;
- document.getElementById("status").textContent="DeenAI is thinking...";
-
- try{
-  const response=await fetch(API_URL,{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({message,language})
-  });
-
-  const data=await response.json();
-  if(!response.ok)throw new Error(data.detail||"Server error");
-
-  const answer=data.response||data.answer||data.reply||data.message;
-  if(typeof answer!=="string")throw new Error("Unexpected server response");
-
-  addMessage("assistant",answer);
-  document.getElementById("status").textContent="DeenAI is ready";
- }catch(error){
-  addMessage("assistant","ക്ഷമിക്കണം. ഇപ്പോൾ മറുപടി ലഭിക്കുന്നില്ല. വീണ്ടും ശ്രമിക്കുക. ("+error.message+")");
-  document.getElementById("status").textContent="Connection issue";
- }
-
- busy=false;
- document.getElementById("sendButton").disabled=false;
-}
-
-function featureAsk(prompt){
- document.getElementById("userInput").value=prompt;
- sendMessage();
-}
-
-function startVoice(){
- const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
- if(!SpeechRecognition){
-  alert("Voice input ഈ browser-ൽ support ചെയ്യുന്നില്ല.");
-  return;
- }
-
- const recognition=new SpeechRecognition();
- const lang=document.getElementById("language").value;
-
- recognition.lang=lang==="Malayalam"?"ml-IN":lang==="Arabic"?"ar-SA":"en-IN";
- recognition.interimResults=false;
-
- recognition.onresult=e=>{
-  document.getElementById("userInput").value=e.results[0][0].transcript;
- };
-
- recognition.onerror=()=>{
-  document.getElementById("status").textContent="Voice input failed. Try again.";
- };
-
- recognition.start();
-}
-
-document.getElementById("language").addEventListener("change",function(){
- document.getElementById("userInput").placeholder=
- this.value==="Malayalam"?"ഇവിടെ ചോദ്യം എഴുതുക...":
- this.value==="Arabic"?"اكتب سؤالك هنا...":"Type your question here...";
-});
-
-/* QURAN LEARNING */
-function openQuran(){
- document.getElementById("homePage").style.display="none";
- document.getElementById("quranPage").style.display="block";
- window.scrollTo(0,0);
- if(!allSurahs.length)loadSurahs();
-}
-
-function closeQuran(){
- stopSurah();
- document.getElementById("quranPage").style.display="none";
- document.getElementById("homePage").style.display="block";
- window.scrollTo(0,0);
-}
-
-async function loadSurahs(){
- const list=document.getElementById("surahList");
- list.innerHTML='<div class="loading">Loading Surahs...</div>';
-
- try{
-  const res=await fetch(QURAN_API+"/surah");
-  if(!res.ok)throw new Error("Could not load Surahs");
-
-  const json=await res.json();
-  allSurahs=json.data||[];
-
-  if(!allSurahs.length)throw new Error("No Surahs returned");
-
-  renderSurahs(allSurahs);
- }catch(e){
-  list.innerHTML='<div class="loading">Unable to load Quran list. Check your internet and refresh.</div>';
- }
-}
-
-function renderSurahs(items){
- const list=document.getElementById("surahList");
-
- if(!items.length){
-  list.innerHTML='<div class="loading">No Surahs found.</div>';
-  return;
- }
-
- list.innerHTML=items.map(s=>
-  '<button class="surah-card" onclick="openSurah('+Number(s.number)+')">'+
-  '<span class="surah-number">'+Number(s.number)+'</span>'+
-  '<span class="surah-info"><strong>'+escapeHtml(s.englishName||s.name)+'</strong>'+
-  '<small>'+Number(s.numberOfAyahs)+' Ayahs • '+escapeHtml(s.revelationType||"")+'</small></span>'+
-  '<span class="surah-arabic" dir="rtl">'+escapeHtml(s.name)+'</span></button>'
- ).join("");
-}
-
-function escapeHtml(value){
- return String(value??"").replace(/[&<>"']/g,ch=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
- }[ch]));
-}
-
-function filterSurahs(){
- const q=document.getElementById("surahSearch").value.trim().toLowerCase();
-
- renderSurahs(allSurahs.filter(s=>
-  String(s.number).includes(q)||
-  String(s.name).toLowerCase().includes(q)||
-  String(s.englishName).toLowerCase().includes(q)
- ));
-}
-
-function backToSurahs(){
- stopSurah();
- document.getElementById("surahReader").style.display="none";
- document.getElementById("surahBrowser").style.display="block";
-}
-
-async function openSurah(number){
- const surah=allSurahs.find(s=>Number(s.number)===Number(number));
- if(!surah)return;
-
- stopSurah();
- currentSurah=surah;
- currentArabicAyahs=[];
- currentTranslation=null;
-
- document.getElementById("surahBrowser").style.display="none";
- document.getElementById("surahReader").style.display="block";
-
- document.getElementById("readerArabicName").textContent=surah.name;
- document.getElementById("readerEnglishName").textContent=surah.englishName;
- document.getElementById("readerDetails").textContent=
-  surah.numberOfAyahs+" Ayahs • "+surah.revelationType;
-
- document.getElementById("translationToggle").value="no";
- document.getElementById("translationLanguage").classList.add("hidden");
- document.getElementById("ayahContainer").innerHTML=
-  '<div class="loading">Loading Arabic Quran text...</div>';
-
- document.getElementById("audioStatus").textContent="Select Play to listen to the full Surah.";
-
- try{
-  const res=await fetch(QURAN_API+"/surah/"+number+"/quran-uthmani");
-  if(!res.ok)throw new Error("Unable to load Quran text");
-
-  const json=await res.json();
-  currentArabicAyahs=json.data.ayahs||[];
-
-  if(!currentArabicAyahs.length)throw new Error("No verses received");
-
-  renderAyahs();
- }catch(e){
-  document.getElementById("ayahContainer").innerHTML=
-   '<div class="loading">Unable to load Quran text. Please check your internet and try again.</div>';
- }
-}
-
-function renderAyahs(){
- const box=document.getElementById("ayahContainer");
-
- if(!currentArabicAyahs.length){
-  box.innerHTML='<div class="loading">Quran text is unavailable.</div>';
-  return;
- }
-
- box.innerHTML=currentArabicAyahs.map((ayah,index)=>{
-  const translation=currentTranslation&&currentTranslation[index]
-   ?'<div class="ayah-translation">'+escapeHtml(currentTranslation[index].text)+'</div>'
-   :'';
-
-  return '<div class="ayah-card">'+
-   '<div class="ayah-number">Ayah '+ayah.numberInSurah+'</div>'+
-   '<div class="ayah-arabic" dir="rtl">'+escapeHtml(ayah.text)+'</div>'+
-   translation+
-   '</div>';
- }).join("");
-}
-
-function translationToggleChanged(){
- const enabled=document.getElementById("translationToggle").value==="yes";
- const language=document.getElementById("translationLanguage");
-
- if(enabled){
-  language.classList.remove("hidden");
-  loadTranslation();
- }else{
-  language.classList.add("hidden");
-  currentTranslation=null;
-  renderAyahs();
- }
-}
-
-async function loadTranslation(){
- if(!currentSurah)return;
-
- const language=document.getElementById("translationLanguage").value;
- const box=document.getElementById("ayahContainer");
-
- if(language==="as"){
-  currentTranslation=null;
-  renderAyahs();
-  box.insertAdjacentHTML("afterbegin",
-   '<div class="quran-note">Assamese translation is not currently available in this edition.</div>');
-  return;
- }
-
- const edition=translationEditions[language];
- if(!edition)return;
-
- box.innerHTML='<div class="loading">Loading translation...</div>';
-
- try{
-  const res=await fetch(QURAN_API+"/surah/"+currentSurah.number+"/"+edition);
-  if(!res.ok)throw new Error("Translation not available");
-
-  const json=await res.json();
-  currentTranslation=json.data.ayahs||[];
-
-  if(!currentTranslation.length)throw new Error("No translation returned");
-
-  renderAyahs();
- }catch(e){
-  currentTranslation=null;
-  renderAyahs();
-  box.insertAdjacentHTML("afterbegin",
-   '<div class="quran-note">ഈ ഭാഷയിലെ വിവർത്തനം ഇപ്പോൾ ലഭ്യമല്ല. Arabic text മാത്രം കാണിക്കുന്നു.</div>');
- }
-}
-
-/* FULL SURAH AUDIO */
-function playSurah(){
- if(!currentSurah){
-  alert("Please select a Surah first.");
-  return;
- }
-
- audioElement.pause();
- audioElement.src=AUDIO_BASE+currentSurah.number+".mp3";
- audioElement.load();
-
- document.getElementById("audioStatus").textContent="Loading full Surah recitation...";
-
- audioElement.play().then(()=>{
-  document.getElementById("audioStatus").textContent="Playing full Surah...";
- }).catch(()=>{
-  document.getElementById("audioStatus").textContent="Unable to play audio. Please check your internet connection.";
- });
-}
-
-function pauseSurah(){
- if(!audioElement.src)return;
- audioElement.pause();
- document.getElementById("audioStatus").textContent="Paused";
-}
-
-function resumeSurah(){
- if(!audioElement.src){
-  playSurah();
-  return;
- }
-
- audioElement.play().then(()=>{
-  document.getElementById("audioStatus").textContent="Playing full Surah...";
- }).catch(()=>{
-  document.getElementById("audioStatus").textContent="Unable to resume audio.";
- });
-}
-
-function stopSurah(){
- if(!audioElement)return;
-
- audioElement.pause();
- audioElement.currentTime=0;
- audioElement.removeAttribute("src");
- audioElement.load();
-
- const status=document.getElementById("audioStatus");
- if(status)status.textContent="Stopped";
-}
-
-audioElement.addEventListener("ended",()=>{
- document.getElementById("audioStatus").textContent="Surah recitation completed.";
-});
-
-audioElement.addEventListener("error",()=>{
- if(audioElement.src){
-  document.getElementById("audioStatus").textContent="Audio could not be loaded. Please try again later.";
- }
-});
-
-/* START APP */
+let chats=[],currentChatId=null,busy=false,allSurahs=[],currentSurah=null,currentArabicAyahs=[],currentTranslation=null;
+const translationEditions={ml:"ml.abdulhameed",en:"en.sahih",hi:"hi.hindi",ur:"ur.jalandhry",bn:"bn.bengali"};
+
+/* Small starter library. Translations are supplied only where included below.
+   Hindi/Urdu selectors show a notice until reviewed translations are added. */
+const duaCategories=[
+ {id:"salah",name:"Prayer Duas",emoji:"🕌",desc:"Supplications during salah"},
+ {id:"fasting",name:"Fasting & Iftar",emoji:"🌙",desc:"Fasting-related supplications"},
+ {id:"daily",name:"Daily Life",emoji:"🏡",desc:"Eating, sleeping and waking"},
+ {id:"masjid",name:"Mosque",emoji:"🕋",desc:"Entering and leaving the mosque"},
+ {id:"travel",name:"Travel",emoji:"✈️",desc:"Dua when travelling"},
+ {id:"forgiveness",name:"Forgiveness",emoji:"🤲",desc:"Seeking Allah's forgiveness"}
+];
+const duas=[
+ {id:"d1",cat:"daily",title:"Before eating",ar:"بِسْمِ اللَّهِ",pron:"Bismillah",ml:"അല്ലാഹുവിന്റെ നാമത്തിൽ.",en:"In the name of Allah.",source:"Sahih al-Bukhari 5376; Sahih Muslim 2022",note:"If a person forgets at the beginning, the Prophet ﷺ taught saying: Bismillahi awwalahu wa akhirahu."},
+ {id:"d2",cat:"daily",title:"On waking up",ar:"الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",pron:"Alhamdu lillahil-ladhi ahyana ba'da ma amatana wa ilayhin-nushur.",ml:"ഞങ്ങളെ മരണത്തിന് സമാനമായ ഉറക്കത്തിന് ശേഷം ജീവിപ്പിച്ച അല്ലാഹുവിനാണ് സ്തുതി. അവങ്കലേക്കാണ് ഉയിർത്തെഴുന്നേൽപ്പ്.",en:"All praise is for Allah who gave us life after causing us to die, and to Him is the resurrection.",source:"Sahih al-Bukhari 6312"},
+ {id:"d3",cat:"daily",title:"Before sleeping",ar:"بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",pron:"Bismika Allahumma amutu wa ahya.",ml:"അല്ലാഹുവേ, നിന്റെ നാമത്തിൽ ഞാൻ മരിക്കുകയും ജീവിക്കുകയും ചെയ്യുന്നു.",en:"In Your name, O Allah, I die and I live.",source:"Sahih al-Bukhari 6324"},
+ {id:"d4",cat:"daily",title:"Entering the toilet",ar:"اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ",pron:"Allahumma inni a'udhu bika minal-khubuthi wal-khaba'ith.",ml:"അല്ലാഹുവേ, ആൺ-പെൺ പിശാചുക്കളിൽ നിന്ന് ഞാൻ നിന്നോട് രക്ഷ തേടുന്നു.",en:"O Allah, I seek refuge in You from male and female devils.",source:"Sahih al-Bukhari 142; Sahih Muslim 375"},
+ {id:"d5",cat:"daily",title:"Leaving the toilet",ar:"غُفْرَانَكَ",pron:"Ghufranak.",ml:"അല്ലാഹുവേ, നിന്റെ പാപമോചനം ഞാൻ തേടുന്നു.",en:"I seek Your forgiveness.",source:"Sunan Abi Dawud 30; Jami at-Tirmidhi 7"},
+ {id:"d6",cat:"masjid",title:"Entering the mosque",ar:"اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",pron:"Allahumma-ftah li abwaba rahmatik.",ml:"അല്ലാഹുവേ, നിന്റെ കാരുണ്യത്തിന്റെ വാതിലുകൾ എനിക്കായി തുറന്നുതരണമേ.",en:"O Allah, open for me the gates of Your mercy.",source:"Sahih Muslim 713"},
+ {id:"d7",cat:"masjid",title:"Leaving the mosque",ar:"اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ",pron:"Allahumma inni as'aluka min fadlik.",ml:"അല്ലാഹുവേ, നിന്റെ അനുഗ്രഹത്തിൽ നിന്ന് ഞാൻ നിന്നോട് ചോദിക്കുന്നു.",en:"O Allah, I ask You for Your bounty.",source:"Sahih Muslim 713"},
+ {id:"d8",cat:"fasting",title:"Breaking the fast",ar:"ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ",pron:"Dhahaba adh-dhama'u wabtallatil-'uruqu wa thabatal-ajru in sha Allah.",ml:"ദാഹം മാറി, ഞരമ്പുകൾ നനഞ്ഞു, അല്ലാഹു ഉദ്ദേശിച്ചാൽ പ്രതിഫലം ഉറപ്പായി.",en:"The thirst has gone, the veins are moistened, and the reward is confirmed, if Allah wills.",source:"Sunan Abi Dawud 2357",note:"This is reported as a supplication after breaking the fast. There is no single obligatory wording that must be recited."},
+ {id:"d9",cat:"fasting",title:"Intention for fasting",ar:"",pron:"",ml:"നോമ്പിന്റെ നിയ്യത്ത് ഹൃദയത്തിലെ ഉദ്ദേശ്യമാണ്. എല്ലാ ദിവസവും നിർബന്ധമായി ചൊല്ലേണ്ട പ്രത്യേക അറബി വാചകം സഹീഹ് ഹദീസിൽ സ്ഥിരപ്പെട്ടിട്ടില്ല.",en:"The intention for fasting is made in the heart. No specific Arabic formula is established as obligatory in authentic hadith.",source:"General fiqh clarification",note:"Do not treat popular fixed wording as a required prophetic dua."},
+ {id:"d10",cat:"salah",title:"Ruku (bowing)",ar:"سُبْحَانَ رَبِّيَ الْعَظِيمِ",pron:"Subhana Rabbiyal-'Azim.",ml:"മഹാനായ എന്റെ രക്ഷിതാവ് പരിശുദ്ധനാകുന്നു.",en:"Glory be to my Lord, the Magnificent.",source:"Sahih Muslim 772"},
+ {id:"d11",cat:"salah",title:"Sujud (prostration)",ar:"سُبْحَانَ رَبِّيَ الْأَعْلَى",pron:"Subhana Rabbiyal-A'la.",ml:"ഏറ്റവും ഉന്നതനായ എന്റെ രക്ഷിതാവ് പരിശുദ്ധനാകുന്നു.",en:"Glory be to my Lord, the Most High.",source:"Sahih Muslim 772"},
+ {id:"d12",cat:"forgiveness",title:"A Quranic supplication for forgiveness",ar:"رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",pron:"Rabbana zalamna anfusana wa il-lam taghfir lana wa tarhamna lanakunanna minal-khasirin.",ml:"ഞങ്ങളുടെ രക്ഷിതാവേ, ഞങ്ങൾ ഞങ്ങളോടുതന്നെ അനീതി ചെയ്തിരിക്കുന്നു. നീ ഞങ്ങൾക്ക് പൊറുത്തുതരികയും കരുണ കാണിക്കുകയും ചെയ്തില്ലെങ്കിൽ ഞങ്ങൾ നഷ്ടക്കാരിൽപ്പെടും.",en:"Our Lord, we have wronged ourselves. If You do not forgive us and have mercy upon us, we will surely be among the losers.",source:"Quran 7:23"},
+ {id:"d13",cat:"travel",title:"Travel supplication (opening)",ar:"سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ",pron:"Subhanalladhi sakh-khara lana hadha wa ma kunna lahu muqrinin.",ml:"ഇതിനെ ഞങ്ങൾക്ക് കീഴ്പ്പെടുത്തിത്തന്നവൻ പരിശുദ്ധൻ. ഞങ്ങൾക്ക് ഇതിനെ നിയന്ത്രിക്കാനാവുമായിരുന്നില്ല.",en:"Glory be to the One who has subjected this to us, for we could not have done so by ourselves.",source:"Quran 43:13; travel supplication continues in Quran 43:14",note:"This is the opening portion of the Quranic travel supplication."}
+];
+const hadithCategories=[
+ {id:"faith",name:"Faith & Intention",emoji:"❤️",desc:"Iman and sincerity"},
+ {id:"prayer",name:"Prayer",emoji:"🕌",desc:"The importance of salah"},
+ {id:"fasting",name:"Fasting",emoji:"🌙",desc:"Virtues of Ramadan and fasting"},
+ {id:"character",name:"Good Character",emoji:"🌿",desc:"Manners and kindness"},
+ {id:"knowledge",name:"Knowledge",emoji:"📖",desc:"Learning and teaching"},
+ {id:"family",name:"Family & Care",emoji:"🏡",desc:"Goodness towards others"}
+];
+const hadiths=[
+ {id:"h1",cat:"faith",title:"Actions are judged by intentions",ar:"إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى",ml:"പ്രവൃത്തികൾ ഉദ്ദേശ്യങ്ങൾക്കനുസരിച്ചാണ്. ഓരോ വ്യക്തിക്കും അവൻ ഉദ്ദേശിച്ചതാണ് ലഭിക്കുക.",en:"Actions are judged by intentions, and every person will have what they intended.",source:"Sahih al-Bukhari 1; Sahih Muslim 1907"},
+ {id:"h2",cat:"character",title:"Do not become angry",ar:"لَا تَغْضَبْ",ml:"നീ കോപിക്കരുത്.",en:"Do not become angry.",source:"Sahih al-Bukhari 6116"},
+ {id:"h3",cat:"character",title:"A Muslim is one whose tongue and hand do not harm others",ar:"الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ",ml:"മറ്റു മുസ്‌ലിംകൾ അവന്റെ നാവിൽ നിന്നും കൈയിൽ നിന്നും സുരക്ഷിതരായിരിക്കുന്നവനാണ് മുസ്‌ലിം.",en:"A Muslim is the one from whose tongue and hand other Muslims are safe.",source:"Sahih al-Bukhari 10; Sahih Muslim 40"},
+ {id:"h4",cat:"knowledge",title:"The best are those who learn and teach the Quran",ar:"خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ",ml:"നിങ്ങളിൽ ഏറ്റവും ഉത്തമൻ ഖുർആൻ പഠിക്കുകയും അത് പഠിപ്പിക്കുകയും ചെയ്യുന്നവനാണ്.",en:"The best of you are those who learn the Quran and teach it.",source:"Sahih al-Bukhari 5027"},
+ {id:"h5",cat:"fasting",title:"Fasting is a shield",ar:"الصِّيَامُ جُنَّةٌ",ml:"നോമ്പ് ഒരു പരിചയാണ്.",en:"Fasting is a shield.",source:"Sahih al-Bukhari 1894; Sahih Muslim 1151"},
+ {id:"h6",cat:"faith",title:"None truly believes until he loves for his brother what he loves for himself",ar:"لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ",ml:"തനിക്കിഷ്ടപ്പെടുന്നത് തന്റെ സഹോദരനും ഇഷ്ടപ്പെടുന്നതുവരെ നിങ്ങളിൽ ഒരാളുടെയും വിശ്വാസം പൂർണ്ണമാകുകയില്ല.",en:"None of you truly believes until he loves for his brother what he loves for himself.",source:"Sahih al-Bukhari 13; Sahih Muslim 45"},
+ {id:"h7",cat:"family",title:"The best are those best to their families",ar:"خَيْرُكُمْ خَيْرُكُمْ لِأَهْلِهِ",ml:"നിങ്ങളിൽ ഏറ്റവും ഉത്തമൻ തന്റെ കുടുംബത്തോട് ഏറ്റവും നല്ല രീതിയിൽ പെരുമാറുന്നവനാണ്.",en:"The best of you are those who are best to their families.",source:"Jami at-Tirmidhi 3895"},
+ {id:"h8",cat:"prayer",title:"The prayer is a light",ar:"وَالصَّلَاةُ نُورٌ",ml:"നിസ്കാരം പ്രകാശമാണ്.",en:"Prayer is a light.",source:"Sahih Muslim 223"}
+];
+
+function loadChats(){try{chats=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");if(!Array.isArray(chats))chats=[]}catch(e){chats=[]}if(!chats.length)newChat();else{currentChatId=chats[0].id;renderHistory();renderMessages()}}
+function saveChats(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(chats))}catch(e){console.error("Unable to save chat history",e)}renderHistory()}
+function currentChat(){return chats.find(c=>c.id===currentChatId)}
+function newChat(){const chat={id:Date.now().toString(),title:"New Chat",messages:[]};chats.unshift(chat);currentChatId=chat.id;saveChats();renderMessages();const input=document.getElementById("userInput");if(input)input.focus()}
+function openChat(id){currentChatId=id;renderHistory();renderMessages()}
+function deleteChat(id){chats=chats.filter(c=>c.id!==id);if(currentChatId===id){if(!chats.length){newChat();return}currentChatId=chats[0].id}saveChats();renderMessages()}
+function clearHistory(){if(!confirm("Delete all saved chats?"))return;chats=[];try{localStorage.removeItem(STORAGE_KEY)}catch(e){}newChat()}
+function renderHistory(){const box=document.getElementById("history");box.innerHTML="";chats.forEach(chat=>{const row=document.createElement("div");row.className="history-item"+(chat.id===currentChatId?" active":"");const title=document.createElement("span");title.textContent=chat.title||"New Chat";title.onclick=()=>openChat(chat.id);const del=document.createElement("button");del.textContent="×";del.title="Delete chat";del.onclick=()=>deleteChat(chat.id);row.append(title,del);box.appendChild(row)})}
+function addMessage(role,text){const chat=currentChat();if(!chat)return;chat.messages.push({role,text});if(role==="user"&&chat.title==="New Chat")chat.title=text.slice(0,32)+(text.length>32?"…":"");saveChats();renderMessages()}
+function renderMessages(){const box=document.getElementById("messages");box.innerHTML="";const chat=currentChat();if(!chat)return;if(!chat.messages.length){const welcome=document.createElement("div");welcome.className="message bot";welcome.textContent="السلام عليكم! അസ്സലാമു അലൈക്കും! ഞാൻ DeenAI. ഇസ്‌ലാമിക അറിവുകളെക്കുറിച്ച് എന്തും ചോദിക്കാം.";box.appendChild(welcome)}chat.messages.forEach(m=>{const item=document.createElement("div");item.className="message "+(m.role==="user"?"user":"bot");const label=document.createElement("small");label.textContent=m.role==="user"?"You":"DeenAI";const content=document.createElement("div");content.textContent=m.text;item.append(label,content);box.appendChild(item)});box.scrollTop=box.scrollHeight}
+async function sendMessage(){if(busy)return;const input=document.getElementById("userInput");const message=input.value.trim();if(!message)return;input.value="";const language=document.getElementById("language").value;addMessage("user",message);busy=true;document.getElementById("sendButton").disabled=true;document.getElementById("status").textContent="DeenAI is thinking...";try{const response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,language})});const data=await response.json();if(!response.ok)throw new Error(data.detail||"Server error");const answer=data.response||data.answer||data.reply||data.message;if(typeof answer!=="string")throw new Error("Unexpected server response");addMessage("assistant",answer);document.getElementById("status").textContent="DeenAI is ready"}catch(error){addMessage("assistant","ക്ഷമിക്കണം. ഇപ്പോൾ മറുപടി ലഭിക്കുന്നില്ല. വീണ്ടും ശ്രമിക്കുക. ("+error.message+")");document.getElementById("status").textContent="Connection issue"}busy=false;document.getElementById("sendButton").disabled=false}
+function featureAsk(prompt){document.getElementById("userInput").value=prompt;sendMessage()}
+function startVoice(){const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SpeechRecognition){alert("Voice input ഈ browser-ൽ support ചെയ്യുന്നില്ല.");return}const recognition=new SpeechRecognition();const lang=document.getElementById("language").value;recognition.lang=lang==="Malayalam"?"ml-IN":lang==="Arabic"?"ar-SA":"en-IN";recognition.interimResults=false;recognition.onresult=e=>{document.getElementById("userInput").value=e.results[0][0].transcript};recognition.onerror=()=>{document.getElementById("status").textContent="Voice input failed. Try again."};recognition.start()}
+document.getElementById("language").addEventListener("change",function(){document.getElementById("userInput").placeholder=this.value==="Malayalam"?"ഇവിടെ ചോദ്യം എഴുതുക...":this.value==="Arabic"?"اكتب سؤالك هنا...":"Type your question here..."});
+
+/* Module navigation */
+function hideAllPages(){["homePage","quranPage","duaPage","hadithPage"].forEach(id=>document.getElementById(id).style.display="none")}
+function closeModules(){stopSurah();hideAllPages();document.getElementById("homePage").style.display="block";window.scrollTo(0,0)}
+function openQuran(){hideAllPages();document.getElementById("quranPage").style.display="block";window.scrollTo(0,0);if(!allSurahs.length)loadSurahs()}
+function openDua(){hideAllPages();document.getElementById("duaPage").style.display="block";document.getElementById("duaCategories").classList.remove("hidden");document.getElementById("duaList").classList.add("hidden");renderDuaCategories();window.scrollTo(0,0)}
+function openHadith(){hideAllPages();document.getElementById("hadithPage").style.display="block";document.getElementById("hadithCategories").classList.remove("hidden");document.getElementById("hadithList").classList.add("hidden");renderHadithCategories();window.scrollTo(0,0)}
+function renderDuaCategories(){document.getElementById("duaCategories").innerHTML=duaCategories.map(c=>`<button class="category-card" onclick="openDuaCategory('${c.id}')"><span class="emoji">${c.emoji}</span><strong>${escapeHtml(c.name)}</strong><small>${escapeHtml(c.desc)}</small></button>`).join("")}
+function openDuaCategory(id){document.getElementById("duaCategories").classList.add("hidden");document.getElementById("duaList").classList.remove("hidden");document.getElementById("duaSearch").value="";document.getElementById("duaList").dataset.category=id;renderDuas()}
+function showDuaCategories(){document.getElementById("duaList").classList.add("hidden");document.getElementById("duaCategories").classList.remove("hidden")}
+function renderDuas(){const root=document.getElementById("duaItems");const cat=document.getElementById("duaList").dataset.category;const q=(document.getElementById("duaSearch").value||"").toLowerCase();const show=document.getElementById("duaTranslationToggle").value==="yes";const lang=document.getElementById("duaTranslationLanguage").value;const items=duas.filter(d=>d.cat===cat&&(d.title.toLowerCase().includes(q)||d.source.toLowerCase().includes(q)||d.ml.toLowerCase().includes(q)));if(!items.length){root.innerHTML='<div class="notice">No duas found in this category.</div>';return}root.innerHTML=items.map(d=>{let meaning=show?(d[lang]||"ഈ ഭാഷയിലെ പരിശോധിച്ച പരിഭാഷ ഇപ്പോൾ ലഭ്യമല്ല."):"";return `<article class="content-card"><h3>${escapeHtml(d.title)}</h3>${d.ar?`<div class="item-arabic" dir="rtl">${escapeHtml(d.ar)}</div>`:'<div class="notice">ഈ ദുആയ്ക്ക് നിർദ്ദിഷ്ട അറബി വാചകം നൽകിയിട്ടില്ല.</div>'}${d.pron?`<div class="item-pronunciation">${escapeHtml(d.pron)}</div>`:""}${show?`<div class="item-translation">${escapeHtml(meaning)}</div>`:""}<div class="item-source">Source: ${escapeHtml(d.source)}</div>${d.note?`<div class="item-note">${escapeHtml(d.note)}</div>`:""}</article>`}).join("")}
+function renderHadithCategories(){document.getElementById("hadithCategories").innerHTML=hadithCategories.map(c=>`<button class="category-card" onclick="openHadithCategory('${c.id}')"><span class="emoji">${c.emoji}</span><strong>${escapeHtml(c.name)}</strong><small>${escapeHtml(c.desc)}</small></button>`).join("")}
+function openHadithCategory(id){document.getElementById("hadithCategories").classList.add("hidden");document.getElementById("hadithList").classList.remove("hidden");document.getElementById("hadithSearch").value="";document.getElementById("hadithList").dataset.category=id;renderHadith()}
+function showHadithCategories(){document.getElementById("hadithList").classList.add("hidden");document.getElementById("hadithCategories").classList.remove("hidden")}
+function renderHadith(){const root=document.getElementById("hadithItems");const cat=document.getElementById("hadithList").dataset.category;const q=(document.getElementById("hadithSearch").value||"").toLowerCase();const show=document.getElementById("hadithTranslationToggle").value==="yes";const lang=document.getElementById("hadithTranslationLanguage").value;const items=hadiths.filter(h=>h.cat===cat&&(h.title.toLowerCase().includes(q)||h.source.toLowerCase().includes(q)||h.ml.toLowerCase().includes(q)));if(!items.length){root.innerHTML='<div class="notice">No hadith found in this category.</div>';return}root.innerHTML=items.map(h=>`<article class="content-card"><h3>${escapeHtml(h.title)}</h3><div class="item-arabic" dir="rtl">${escapeHtml(h.ar)}</div>${show?`<div class="item-translation">${escapeHtml(h[lang]||"ഈ ഭാഷയിലെ പരിശോധിച്ച പരിഭാഷ ഇപ്പോൾ ലഭ്യമല്ല.")}</div>`:""}<div class="item-source">Reference: ${escapeHtml(h.source)}</div></article>`).join("")}
+
+/* Quran */
+async function loadSurahs(){const list=document.getElementById("surahList");list.innerHTML='<div class="loading">Loading Surahs...</div>';try{const res=await fetch(QURAN_API+"/surah");if(!res.ok)throw new Error("Could not load Surahs");const json=await res.json();allSurahs=json.data||[];if(!allSurahs.length)throw new Error("No Surahs returned");renderSurahs(allSurahs)}catch(e){list.innerHTML='<div class="loading">Unable to load Quran list. Check your internet and refresh.</div>'}}
+function renderSurahs(items){const list=document.getElementById("surahList");if(!items.length){list.innerHTML='<div class="loading">No Surahs found.</div>';return}list.innerHTML=items.map(s=>'<button class="surah-card" onclick="openSurah('+Number(s.number)+')"><span class="surah-number">'+Number(s.number)+'</span><span class="surah-info"><strong>'+escapeHtml(s.englishName||s.name)+'</strong><small>'+Number(s.numberOfAyahs)+' Ayahs • '+escapeHtml(s.revelationType||"")+'</small></span><span class="surah-arabic" dir="rtl">'+escapeHtml(s.name)+'</span></button>').join("")}
+function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
+function filterSurahs(){const q=document.getElementById("surahSearch").value.trim().toLowerCase();renderSurahs(allSurahs.filter(s=>String(s.number).includes(q)||String(s.name).toLowerCase().includes(q)||String(s.englishName).toLowerCase().includes(q)))}
+function backToSurahs(){stopSurah();document.getElementById("surahReader").style.display="none";document.getElementById("surahBrowser").style.display="block"}
+async function openSurah(number){const surah=allSurahs.find(s=>Number(s.number)===Number(number));if(!surah)return;stopSurah();currentSurah=surah;currentArabicAyahs=[];currentTranslation=null;document.getElementById("surahBrowser").style.display="none";document.getElementById("surahReader").style.display="block";document.getElementById("readerArabicName").textContent=surah.name;document.getElementById("readerEnglishName").textContent=surah.englishName;document.getElementById("readerDetails").textContent=surah.numberOfAyahs+" Ayahs • "+surah.revelationType;document.getElementById("translationToggle").value="no";document.getElementById("translationLanguage").classList.add("hidden");document.getElementById("ayahContainer").innerHTML='<div class="loading">Loading Arabic Quran text...</div>';document.getElementById("audioStatus").textContent="Select Play to listen to the full Surah.";try{const res=await fetch(QURAN_API+"/surah/"+number+"/quran-uthmani");if(!res.ok)throw new Error("Unable to load Quran text");const json=await res.json();currentArabicAyahs=json.data.ayahs||[];if(!currentArabicAyahs.length)throw new Error("No verses received");renderAyahs()}catch(e){document.getElementById("ayahContainer").innerHTML='<div class="loading">Unable to load Quran text. Please check your internet and try again.</div>'}}
+function renderAyahs(){const box=document.getElementById("ayahContainer");if(!currentArabicAyahs.length){box.innerHTML='<div class="loading">Quran text is unavailable.</div>';return}box.innerHTML=currentArabicAyahs.map((ayah,index)=>{const translation=currentTranslation&&currentTranslation[index]?'<div class="ayah-translation">'+escapeHtml(currentTranslation[index].text)+'</div>':"";return '<div class="ayah-card"><div class="ayah-number">Ayah '+ayah.numberInSurah+'</div><div class="ayah-arabic" dir="rtl">'+escapeHtml(ayah.text)+'</div>'+translation+'</div>'}).join("")}
+function translationToggleChanged(){const enabled=document.getElementById("translationToggle").value==="yes";const language=document.getElementById("translationLanguage");if(enabled){language.classList.remove("hidden");loadTranslation()}else{language.classList.add("hidden");currentTranslation=null;renderAyahs()}}
+async function loadTranslation(){if(!currentSurah)return;const language=document.getElementById("translationLanguage").value;const box=document.getElementById("ayahContainer");if(language==="as"){currentTranslation=null;renderAyahs();box.insertAdjacentHTML("afterbegin",'<div class="quran-note">Assamese translation is not currently available in this edition.</div>');return}const edition=translationEditions[language];if(!edition)return;box.innerHTML='<div class="loading">Loading translation...</div>';try{const res=await fetch(QURAN_API+"/surah/"+currentSurah.number+"/"+edition);if(!res.ok)throw new Error("Translation not available");const json=await res.json();currentTranslation=json.data.ayahs||[];if(!currentTranslation.length)throw new Error("No translation returned");renderAyahs()}catch(e){currentTranslation=null;renderAyahs();box.insertAdjacentHTML("afterbegin",'<div class="quran-note">ഈ ഭാഷയിലെ വിവർത്തനം ഇപ്പോൾ ലഭ്യമല്ല. Arabic text മാത്രം കാണിക്കുന്നു.</div>')}}
+function playSurah(){if(!currentSurah){alert("Please select a Surah first.");return}audioElement.pause();audioElement.src=AUDIO_BASE+currentSurah.number+".mp3";audioElement.load();document.getElementById("audioStatus").textContent="Loading full Surah recitation...";audioElement.play().then(()=>{document.getElementById("audioStatus").textContent="Playing full Surah..."}).catch(()=>{document.getElementById("audioStatus").textContent="Unable to play audio. Please check your internet connection."})}
+function pauseSurah(){if(!audioElement.src)return;audioElement.pause();document.getElementById("audioStatus").textContent="Paused"}
+function resumeSurah(){if(!audioElement.src){playSurah();return}audioElement.play().then(()=>{document.getElementById("audioStatus").textContent="Playing full Surah..."}).catch(()=>{document.getElementById("audioStatus").textContent="Unable to resume audio."})}
+function stopSurah(){if(!audioElement)return;audioElement.pause();audioElement.currentTime=0;audioElement.removeAttribute("src");audioElement.load();const status=document.getElementById("audioStatus");if(status)status.textContent="Stopped"}
+audioElement.addEventListener("ended",()=>{document.getElementById("audioStatus").textContent="Surah recitation completed."});
+audioElement.addEventListener("error",()=>{if(audioElement.src)document.getElementById("audioStatus").textContent="Audio could not be loaded. Please try again later."});
 loadChats();
 </script>
 </body>
