@@ -25,7 +25,7 @@ select{background:var(--panel);color:var(--white);border:1px solid var(--border)
 .message small{display:block;color:var(--gold);margin-bottom:4px}.input-area{padding:12px;border-top:1px solid var(--border);display:flex;gap:7px}.input-area input{flex:1;min-width:0;background:#061d18;border:1px solid var(--border);border-radius:11px;padding:13px;color:white}
 .icon-btn{background:var(--panel2);border:1px solid var(--border);color:var(--gold2);border-radius:10px;padding:11px}.send-btn{background:var(--gold);color:#10251b;border:0;border-radius:10px;padding:12px 16px;font-weight:bold}.status{padding:0 14px 12px;color:var(--muted);font-size:12px}
 .footer{text-align:center;color:var(--muted);padding:22px;font-size:12px}
-#quranPage,#duaPage,#hadithPage{display:none}.module-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0 18px}.module-header h1{color:var(--gold2);font-size:23px;margin:8px 0}
+#quranPage,#duaPage,#hadithPage,#prayerPage{display:none}.module-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0 18px}.module-header h1{color:var(--gold2);font-size:23px;margin:8px 0}
 .back-btn,.secondary-btn{background:var(--panel2);border:1px solid var(--border);color:var(--gold2);padding:11px 14px;border-radius:10px}
 .quran-intro,.module-intro{text-align:center;padding:22px;background:linear-gradient(140deg,#123e2e,#0b261d);border:1px solid var(--border);border-radius:15px;margin-bottom:16px}.quran-intro h2,.module-intro h2{color:var(--gold2)}.quran-intro p,.module-intro p{color:var(--muted);margin:6px}
 .quran-tools,.module-tools{display:flex;gap:10px;margin:14px 0;flex-wrap:wrap}.quran-tools input,.module-tools input{flex:1;min-width:150px;background:var(--panel);color:white;border:1px solid var(--border);border-radius:10px;padding:12px}
@@ -44,6 +44,7 @@ select{background:var(--panel);color:var(--white);border:1px solid var(--border)
 .quran-note,.notice{color:var(--muted);font-size:12px;text-align:center;padding:14px}.loading{text-align:center;color:var(--gold2);padding:22px}.hidden{display:none!important}
 .category-card{display:block;padding:17px}.category-card .emoji{font-size:24px;display:block;margin-bottom:8px}.category-card strong{color:var(--gold2)}.category-card small{display:block;color:var(--muted);margin-top:5px}
 .item-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.item-actions button{background:var(--panel2);border:1px solid var(--border);border-radius:8px;color:var(--gold2);padding:8px 10px}
+.prayer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.prayer-tile{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:15px;text-align:center}.prayer-tile strong{display:block;color:var(--gold2);font-size:17px}.prayer-tile span{display:block;color:var(--muted);margin-top:6px}.qibla-box{background:linear-gradient(140deg,#123e2e,#0b261d);border:1px solid var(--border);border-radius:15px;padding:18px;text-align:center;margin:15px 0}.compass{width:190px;height:190px;border:3px solid var(--gold);border-radius:50%;margin:16px auto;position:relative;display:grid;place-items:center;background:radial-gradient(circle,#174c38,#061d18)}.compass-needle{font-size:70px;color:var(--gold2);transform-origin:50% 50%;display:inline-block}.prayer-actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.prayer-actions button{background:var(--panel2);border:1px solid var(--border);color:var(--gold2);padding:11px 14px;border-radius:10px}.prayer-meta{color:var(--muted);font-size:13px;line-height:1.7}
 @media(max-width:850px){.sidebar{width:210px}.features{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.app{display:block}.sidebar{width:100%;padding:12px;gap:10px}.brand img{width:45px;height:45px}.sidebar-footer{display:none}.history-list{max-height:90px}.main{padding:13px}.hero{padding:20px 10px}.hero h1{font-size:28px}.features{gap:8px}.feature{padding:13px 5px}.messages{min-height:210px;padding:11px}.input-area{padding:9px;gap:5px}.input-area input{padding:11px;font-size:14px}.send-btn{padding:11px}.surah-list,.category-grid{grid-template-columns:1fr}.ayah-arabic{font-size:25px}.item-arabic{font-size:24px}}
 </style>
@@ -67,8 +68,8 @@ select{background:var(--panel);color:var(--white);border:1px solid var(--border)
    <button class="feature" onclick="openHadith()"><span class="emoji">📚</span><strong>Hadith Library</strong></button>
    <button class="feature" onclick="openDua()"><span class="emoji">🤲</span><strong>Dua Collection</strong></button>
    <button class="feature" onclick="featureAsk('Suggest Muslim baby names with meanings')"><span class="emoji">👶</span><strong>Baby Names</strong></button>
-   <button class="feature" onclick="featureAsk('Help me understand daily Islamic prayer times')"><span class="emoji">🕌</span><strong>Prayer Times</strong></button>
-   <button class="feature" onclick="featureAsk('Explain how to find Qibla direction')"><span class="emoji">🧭</span><strong>Qibla Direction</strong></button>
+   <button class="feature" onclick="openPrayer()"><span class="emoji">🕌</span><strong>Prayer Times</strong></button>
+   <button class="feature" onclick="openPrayer()"><span class="emoji">🧭</span><strong>Qibla Direction</strong></button>
    <button class="feature" onclick="featureAsk('Explain the Islamic Hijri calendar')"><span class="emoji">🌙</span><strong>Islamic Calendar</strong></button>
    <button class="feature" onclick="featureAsk('Teach Islam to children in a simple way')"><span class="emoji">🧒</span><strong>Kids Learning</strong></button>
   </section>
@@ -114,6 +115,16 @@ select{background:var(--panel);color:var(--white);border:1px solid var(--border)
    <div id="hadithItems"></div>
   </div>
  </section>
+ <section id="prayerPage">
+  <div class="module-header"><button class="back-btn" onclick="closeModules()">← Home</button><h1>🕌 Prayer Times & Qibla</h1></div>
+  <div class="module-intro"><h2>مَوَاقِيتُ الصَّلَاةِ</h2><p>നമസ്കാര സമയങ്ങളും ഖിബ്‌ല ദിശയും</p><p>നിങ്ങളുടെ ലൊക്കേഷൻ അനുമതി ഉപയോഗിച്ച് കണക്കാക്കുന്നു</p></div>
+  <div class="prayer-actions"><button onclick="loadPrayerData()">📍 Use my location</button><button onclick="togglePrayerMethod()">Calculation method: <span id="methodLabel">Karachi</span></button></div>
+  <div id="prayerStatus" class="notice">നമസ്കാര സമയങ്ങൾ കാണാൻ Use my location അമർത്തി Location permission അനുവദിക്കുക.</div>
+  <div id="prayerLocation" class="prayer-meta"></div>
+  <div id="prayerTimes" class="prayer-grid"></div>
+  <div class="qibla-box"><h2 style="color:var(--gold2)">🧭 Qibla Compass</h2><div class="compass"><span id="qiblaNeedle" class="compass-needle">▲</span></div><h2 id="qiblaDegree" style="color:var(--gold2)">--°</h2><p id="qiblaDirection" class="prayer-meta">ലൊക്കേഷൻ ലഭിച്ചാൽ ഖിബ്‌ല ദിശ കാണിക്കും.</p><p class="prayer-meta">ദിശ വടക്കിൽ നിന്ന് clockwise ആയി കണക്കാക്കുന്നു. Compass sensor ലഭ്യമല്ലെങ്കിൽ ഫോൺ compass ഉപയോഗിച്ച് തിരിക്കുക.</p></div>
+  <p class="quran-note">Prayer times: AlAdhan calculation service. സമയങ്ങൾ കണക്കാക്കുന്ന രീതിയും പ്രാദേശിക ചന്ദ്രദർശന/മസ്ജിദ് സമയക്രമവും അനുസരിച്ച് വ്യത്യാസപ്പെടാം.</p>
+ </section>
  <div class="footer">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>DeenAI • Learn • Ask • Grow</div>
 </main>
 </div>
@@ -149,11 +160,18 @@ function startVoice(){const SpeechRecognition=window.SpeechRecognition||window.w
 document.getElementById("language").addEventListener("change",function(){document.getElementById("userInput").placeholder=this.value==="Malayalam"?"ഇവിടെ ചോദ്യം എഴുതുക...":this.value==="Arabic"?"اكتب سؤالك هنا...":"Type your question here..."});
 
 /* Module navigation */
-function hideAllPages(){["homePage","quranPage","duaPage","hadithPage"].forEach(id=>document.getElementById(id).style.display="none")}
+function hideAllPages(){["homePage","quranPage","duaPage","hadithPage","prayerPage"].forEach(id=>document.getElementById(id).style.display="none")}
 function closeModules(){stopSurah();hideAllPages();document.getElementById("homePage").style.display="block";window.scrollTo(0,0)}
 function openQuran(){hideAllPages();document.getElementById("quranPage").style.display="block";window.scrollTo(0,0);if(!allSurahs.length)loadSurahs()}
 function openDua(){hideAllPages();document.getElementById("duaPage").style.display="block";document.getElementById("duaCategories").classList.remove("hidden");document.getElementById("duaList").classList.add("hidden");renderDuaCategories();window.scrollTo(0,0)}
 function openHadith(){hideAllPages();document.getElementById("hadithPage").style.display="block";document.getElementById("hadithCategories").classList.remove("hidden");document.getElementById("hadithList").classList.add("hidden");renderHadithCategories();window.scrollTo(0,0)}
+let prayerMethod=1,prayerCoordinates=null;
+function openPrayer(){hideAllPages();document.getElementById("prayerPage").style.display="block";window.scrollTo(0,0);if(!prayerCoordinates)loadPrayerData()}
+function togglePrayerMethod(){prayerMethod=prayerMethod===1?3:1;document.getElementById("methodLabel").textContent=prayerMethod===1?"Karachi":"MWL";if(prayerCoordinates)fetchPrayerTimes(prayerCoordinates.lat,prayerCoordinates.lon)}
+function loadPrayerData(){const status=document.getElementById("prayerStatus");if(!navigator.geolocation){status.textContent="ഈ browser-ൽ location support ലഭ്യമല്ല.";return}status.textContent="നിങ്ങളുടെ location കണ്ടെത്തുന്നു...";navigator.geolocation.getCurrentPosition(pos=>{prayerCoordinates={lat:pos.coords.latitude,lon:pos.coords.longitude};fetchPrayerTimes(prayerCoordinates.lat,prayerCoordinates.lon)},err=>{status.textContent=err.code===1?"Location permission അനുവദിച്ചില്ല. Browser settings-ൽ location അനുവദിച്ച് വീണ്ടും ശ്രമിക്കുക.":"Location ലഭിച്ചില്ല. Internet/GPS പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക."},{enableHighAccuracy:true,timeout:15000,maximumAge:300000})}
+async function fetchPrayerTimes(lat,lon){const status=document.getElementById("prayerStatus");status.textContent="നമസ്കാര സമയങ്ങൾ ലഭ്യമാക്കുന്നു...";try{const url=`https://api.aladhan.com/v1/timings/${Math.floor(Date.now()/1000)}?latitude=${lat}&longitude=${lon}&method=${prayerMethod}`;const res=await fetch(url);if(!res.ok)throw new Error("Prayer time service unavailable");const json=await res.json();if(json.code!==200)throw new Error("Prayer time data unavailable");const t=json.data.timings;const names=[["Fajr","ഫജർ"],["Sunrise","സൂര്യോദയം"],["Dhuhr","ളുഹർ"],["Asr","അസർ"],["Maghrib","മഗ്‌രിബ്"],["Isha","ഇശാ"]];document.getElementById("prayerTimes").innerHTML=names.map(([k,label])=>`<div class="prayer-tile"><strong>${label}</strong><span>${escapeHtml(t[k]||"--")}</span></div>`).join("");document.getElementById("prayerLocation").textContent=`${json.data.date.readable||""} • ${json.data.meta.timezone||"Local time"} • Method: ${prayerMethod===1?"Karachi":"Muslim World League"}`;status.textContent="നമസ്കാര സമയങ്ങൾ ലഭിച്ചു. നിങ്ങളുടെ പ്രാദേശിക മസ്ജിദ് സമയവുമായി ഒത്തുനോക്കുക.";const bearing=qiblaBearing(lat,lon);document.getElementById("qiblaDegree").textContent=bearing.toFixed(1)+"°";document.getElementById("qiblaNeedle").style.transform=`rotate(${bearing}deg)`;document.getElementById("qiblaDirection").textContent=`വടക്കിൽ നിന്ന് ${bearing.toFixed(1)}° clockwise • കഅ്ബയിലേക്കുള്ള ദിശ`; }catch(e){status.textContent="Prayer times ലഭിച്ചില്ല. Internet connection പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക."}}
+function qiblaBearing(lat,lon){const kaabaLat=21.4225*Math.PI/180,kaabaLon=39.8262*Math.PI/180,phi=lat*Math.PI/180,dlon=kaabaLon-lon*Math.PI/180;const y=Math.sin(dlon),x=Math.cos(phi)*Math.tan(kaabaLat)-Math.sin(phi)*Math.cos(dlon);return (Math.atan2(y,x)*180/Math.PI+360)%360}
+
 function renderDuaCategories(){document.getElementById("duaCategories").innerHTML=duaCategories.map(c=>`<button class="category-card" onclick="openDuaCategory('${c.id}')"><span class="emoji">${c.emoji}</span><strong>${escapeHtml(c.name)}</strong><small>${escapeHtml(c.desc)}</small></button>`).join("")}
 function openDuaCategory(id){document.getElementById("duaCategories").classList.add("hidden");document.getElementById("duaList").classList.remove("hidden");document.getElementById("duaSearch").value="";document.getElementById("duaList").dataset.category=id;renderDuas()}
 function showDuaCategories(){document.getElementById("duaList").classList.add("hidden");document.getElementById("duaCategories").classList.remove("hidden")}
