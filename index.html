@@ -1,4 +1,115 @@
-h2>DeenAI</h2><small>Learn • Ask • Grow</small></div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#061d18">
+<title>DeenAI - Learn • Ask • Grow</title>
+
+<style>
+:root{
+ --bg:#061d18;--panel:#0c2921;--panel2:#10372b;
+ --gold:#d9b45c;--gold2:#f5dfa0;--white:#f7f3e8;
+ --muted:#a8b9ad;--border:rgba(217,180,92,.2)
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:250px;background:#041610;padding:18px;display:flex;flex-direction:column;gap:15px;border-right:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:55px;height:55px;object-fit:contain}
+.brand h2{margin:0;color:var(--gold2)}
+.brand small{color:var(--muted)}
+.new-btn,.gold-btn{background:linear-gradient(135deg,#e8ca7c,#b68a35);color:#10251b;border:0;border-radius:11px;padding:13px;font-weight:bold}
+.section-label{color:var(--gold);font-size:12px;letter-spacing:2px}
+.history-list{display:flex;flex-direction:column;gap:6px;overflow:auto;max-height:45vh}
+.history-item{display:flex;align-items:center;gap:5px;background:transparent;border:1px solid transparent;border-radius:9px;padding:9px;color:var(--white)}
+.history-item.active,.history-item:hover{background:var(--panel);border-color:var(--border)}
+.history-item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
+.history-item button{background:none;color:#d9a8a0;border:0}
+.sidebar-footer{margin-top:auto;color:var(--muted);font-size:12px}
+.main{flex:1;min-width:0;padding:22px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.topbar h2{margin:0;color:var(--gold2);font-size:19px}
+select{background:var(--panel);color:var(--white);border:1px solid var(--border);border-radius:10px;padding:10px;max-width:100%}
+.hero{margin:22px 0;padding:28px 15px;text-align:center;border:1px solid var(--border);border-radius:20px;background:radial-gradient(circle at top,#174c38,#0b261d 65%)}
+.hero .crescent{font-size:35px;color:var(--gold)}
+.hero h1{font-family:Georgia,serif;color:var(--gold2);font-size:34px;margin:10px}
+.hero p{color:var(--muted)}
+.tagline{color:var(--gold);letter-spacing:3px;font-size:12px}
+.features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:18px 0}
+.feature{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 7px;text-align:center;color:var(--white)}
+.feature:hover{background:var(--panel2)}
+.feature .emoji{font-size:27px;display:block;margin-bottom:8px}
+.feature strong{font-size:13px}
+.chat-panel{background:var(--panel);border:1px solid var(--border);border-radius:17px;overflow:hidden}
+.chat-heading{padding:15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between}
+.chat-heading h3{margin:0;color:var(--gold2)}
+.chat-heading button{background:none;border:0;color:var(--muted)}
+.messages{padding:15px;min-height:230px;max-height:430px;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.message{max-width:88%;padding:12px 14px;border-radius:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.user{align-self:flex-end;background:#24543e}
+.bot{align-self:flex-start;background:#17372c;border:1px solid var(--border)}
+.message small{display:block;color:var(--gold);margin-bottom:4px}
+.input-area{padding:12px;border-top:1px solid var(--border);display:flex;gap:7px}
+.input-area input{flex:1;min-width:0;background:#061d18;border:1px solid var(--border);border-radius:11px;padding:13px;color:white}
+.icon-btn{background:var(--panel2);border:1px solid var(--border);color:var(--gold2);border-radius:10px;padding:11px}
+.send-btn{background:var(--gold);color:#10251b;border:0;border-radius:10px;padding:12px 16px;font-weight:bold}
+.status{padding:0 14px 12px;color:var(--muted);font-size:12px}
+.footer{text-align:center;color:var(--muted);padding:22px;font-size:12px}
+
+/* Quran */
+#quranPage{display:none}
+.quran-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
+.quran-header h1{color:var(--gold2);font-size:23px}
+.back-btn,.secondary-btn{background:var(--panel2);border:1px solid var(--border);color:var(--gold2);padding:11px 14px;border-radius:10px}
+.quran-intro{text-align:center;padding:22px;background:linear-gradient(140deg,#123e2e,#0b261d);border:1px solid var(--border);border-radius:15px;margin-bottom:16px}
+.quran-intro h2{color:var(--gold2)}
+.quran-intro p{color:var(--muted);margin:6px}
+.quran-tools{display:flex;gap:10px;margin:14px 0}
+.quran-tools input{flex:1;min-width:0;background:var(--panel);color:white;border:1px solid var(--border);border-radius:10px;padding:12px}
+.surah-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.surah-card{display:flex;align-items:center;gap:12px;text-align:left;padding:13px;background:var(--panel);border:1px solid var(--border);color:var(--white);border-radius:12px;width:100%}
+.surah-card:hover{background:var(--panel2)}
+.surah-number{min-width:35px;height:35px;border:1px solid var(--gold);border-radius:8px;display:grid;place-items:center;color:var(--gold2)}
+.surah-info{flex:1;min-width:0}
+.surah-info strong{display:block;color:var(--gold2);font-size:14px}
+.surah-info small{color:var(--muted);font-size:11px}
+.surah-arabic{font-size:19px;direction:rtl;white-space:nowrap}
+#surahReader{display:none}
+.reader-title{text-align:center;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:17px;margin:14px 0}
+.reader-title h2{color:var(--gold2);margin:7px}
+.reader-title p{color:var(--muted)}
+.reader-settings{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0}
+.reader-settings label{color:var(--muted);font-size:13px}
+.reader-settings select{flex:1;min-width:130px}
+.audio-box{background:linear-gradient(135deg,#174632,#0b261d);border:1px solid var(--border);border-radius:14px;padding:15px;margin:14px 0}
+.audio-box h3{color:var(--gold2);margin-top:0}
+.audio-controls{display:flex;gap:8px;flex-wrap:wrap}
+.audio-controls button{border:1px solid var(--border);border-radius:9px;padding:10px 12px;background:#0c2921;color:var(--gold2)}
+.audio-controls .play{background:var(--gold);color:#10251b;font-weight:bold}
+#audioStatus{color:var(--muted);font-size:12px;margin-top:10px}
+.ayah-card{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:18px;margin:11px 0}
+.ayah-number{color:var(--gold);font-size:12px;margin-bottom:10px}
+.ayah-arabic{font-family:"Times New Roman",serif;font-size:28px;line-height:2.1;text-align:right;direction:rtl;color:#fff8e8}
+.ayah-translation{border-top:1px solid var(--border);margin-top:14px;padding-top:12px;line-height:1.8;color:#d8e2d9}
+.quran-note{color:var(--muted);font-size:12px;text-align:center;padding:14px}
+.loading{text-align:center;color:var(--gold2);padding:22px}
+.hidden{display:none!important}
+@media(max-width:850px){.sidebar{width:210px}.features{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.app{display:block}.sidebar{width:100%;padding:12px;gap:10px}.brand img{width:45px;height:45px}.sidebar-footer{display:none}.history-list{max-height:90px}.main{padding:13px}.hero{padding:20px 10px}.hero h1{font-size:28px}.features{gap:8px}.feature{padding:13px 5px}.messages{min-height:210px;padding:11px}.input-area{padding:9px;gap:5px}.input-area input{padding:11px;font-size:14px}.send-btn{padding:11px}.surah-list{grid-template-columns:1fr}.ayah-arabic{font-size:25px}}
+</style>
+</head>
+
+<body>
+<div class="app">
+<aside class="sidebar">
+ <div class="brand">
+  <img src="deenai-logo.png" alt="DeenAI Logo">
+  <div><h2>DeenAI</h2><small>Learn • Ask • Grow</small></div>
  </div>
  <button class="new-btn" onclick="newChat()">＋ New Chat</button>
  <div class="section-label">CHAT HISTORY</div>
