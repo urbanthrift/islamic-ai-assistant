@@ -1,6 +1,7 @@
 
 import os
 import logging
+import time
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -22,23 +23,25 @@ app.add_middleware(
 SYSTEM_PROMPT = """
 You are Islamic AI Assistant.
 
-Your supported languages are Malayalam, English and Arabic.
+Support Malayalam, English and Arabic.
 
 Your purpose:
-- Answer questions about the Quran and authentic Hadith.
-- Explain Islamic beliefs and worship.
-- Help with Dua, Dhikr and daily Islamic practices.
-- Explain traditional Islamic dream interpretation.
+- Quran and authentic Hadith explanations
+- Islamic beliefs and worship
+- Dua and Dhikr
+- Islamic daily guidance
+- Traditional Islamic dream interpretation
 
 Important rules:
-1. Never claim to know the unseen or predict the future.
-2. Never invent Quran verses, Hadith or religious references.
-3. Clearly distinguish authentic sources from traditional interpretations.
-4. Mention differences of scholarly opinion when relevant.
-5. Refer complex religious rulings to qualified Islamic scholars.
-6. Be respectful, accurate and easy to understand.
-7. Always reply in the language requested by the user.
-8. If you are uncertain, say so honestly.
+1. Never claim knowledge of the unseen.
+2. Never predict the future.
+3. Never invent Quran verses or Hadith.
+4. Distinguish authentic sources from traditional interpretations.
+5. Mention scholarly differences when relevant.
+6. Refer complex religious rulings to qualified scholars.
+7. Reply in the user's requested language.
+8. Be respectful and accurate.
+9. If uncertain, say so honestly.
 """
 
 class ChatRequest(BaseModel):
@@ -60,7 +63,6 @@ def chat(request: ChatRequest):
     api_key = os.environ.get("GEMINI_API_KEY")
 
     if not api_key:
-        logger.error("GEMINI_API_KEY is missing")
         return {"reply": "Gemini API Key is not configured."}
 
     if not request.message.strip():
@@ -77,21 +79,42 @@ def chat(request: ChatRequest):
             + request.message
         )
 
-        interaction = client.interactions.create(
-            model="gemini-3.8-flash",
-            input=prompt
-        )
+        last_error = None
 
-        answer = interaction.output_text
+        for attempt in range(3):
+            try:
+                result = client.interactions.create(
+                    model="gemini-3.5-flash-lite",
+                    input=prompt
+                )
 
-        if not answer:
-            logger.error("Gemini returned an empty response")
-            return {"reply": "No answer received. Please try again."}
+                answer = result.output_text
 
-        return {"reply": answer}
+                if answer:
+                    return {"reply": answer}
+
+                return {"reply": "No answer received. Please try again."}
+
+            except Exception as e:
+                last_error = e
+                logger.warning(
+                    "Gemini attempt %s failed: %s",
+                    attempt + 1,
+                    str(e)
+                )
+
+                if attempt < 2:
+                    time.sleep(2 ** attempt)
+
+        logger.error("All Gemini attempts failed: %s", str(last_error))
+
+        return {
+            "reply": "AI is temporarily busy. Please try again shortly."
+        }
 
     except Exception:
-        logger.exception("Gemini API request failed")
+        logger.exception("Gemini setup failed")
         return {
-            "reply": "AI service error. Please check Render logs."
+            "reply": "AI service error. Please check server logs."
         }
+        
