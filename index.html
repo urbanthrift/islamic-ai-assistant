@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -358,4 +359,88 @@ function escapeHtml(value){
 }
 function filterSurahs(){
  const q=document.getElementById("surahSearch").value.trim().toLowerCase();
- renderSurahs(allSurahs.filter(s=>String(s.number).includes(q)||String(s.name).toLowe
+ renderSurahs(allSurahs.filter(s=>String(s.number).includes(q)||String(s.name).toLowerCase().includes(q)||String(s.englishName).toLowerCase().includes(q)));
+}
+async function openSurah(number){
+ const surah=allSurahs.find(s=>s.number===number);if(!surah)return;
+ currentSurah=surah;currentTranslation=null;
+ document.getElementById("surahBrowser").style.display="none";
+ document.getElementById("surahReader").style.display="block";
+ document.getElementById("readerArabicName").textContent=surah.name;
+ document.getElementById("readerEnglishName").textContent=surah.englishName+" ("+surah.englishNameTranslation+")";
+ document.getElementById("readerDetails").textContent=surah.numberOfAyahs+" Ayahs • "+surah.revelationType;
+ document.getElementById("translationToggle").value="no";
+ document.getElementById("translationLanguage").classList.add("hidden");
+ document.getElementById("ayahContainer").innerHTML='<div class="loading">Loading Surah...</div>';
+ stopSurah();
+ try{
+  const res=await fetch(QURAN_API+"/surah/"+number+"/quran-uthmani");
+  if(!res.ok)throw new Error("Surah could not be loaded");
+  const json=await res.json();currentArabicAyahs=json.data.ayahs||[];
+  renderAyahs();document.getElementById("audioStatus").textContent="Ready • Full Surah recitation";
+ }catch(e){
+  document.getElementById("ayahContainer").innerHTML='<div class="loading">Unable to load this Surah. Please try again.</div>';
+ }
+}
+function renderAyahs(){
+ const box=document.getElementById("ayahContainer");
+ if(!currentArabicAyahs.length){box.innerHTML='<div class="loading">No ayahs available.</div>';return}
+ box.innerHTML=currentArabicAyahs.map((a,i)=>{
+  const tr=currentTranslation&&currentTranslation[i]?'<div class="ayah-translation" dir="auto">'+escapeHtml(currentTranslation[i].text)+'</div>':"";
+  return '<article class="ayah-card"><div class="ayah-number">'+(i+1)+'</div><div class="ayah-arabic" dir="rtl" lang="ar">'+escapeHtml(a.text)+'</div>'+tr+'</article>';
+ }).join("");
+}
+function backToSurahs(){
+ stopSurah();document.getElementById("surahReader").style.display="none";document.getElementById("surahBrowser").style.display="block";
+}
+function translationToggleChanged(){
+ const enabled=document.getElementById("translationToggle").value==="yes";
+ document.getElementById("translationLanguage").classList.toggle("hidden",!enabled);
+ if(enabled)loadTranslation();else{currentTranslation=null;renderAyahs()}
+}
+async function loadTranslation(){
+ if(!currentSurah||document.getElementById("translationToggle").value!=="yes")return;
+ const lang=document.getElementById("translationLanguage").value;
+ const box=document.getElementById("ayahContainer");
+ if(lang==="as"){
+  currentTranslation=null;renderAyahs();
+  box.insertAdjacentHTML("afterbegin",'<p class="loading">Assamese translation is not currently available here.</p>');
+  return;
+ }
+ const edition=translationEditions[lang];if(!edition)return;
+ box.innerHTML='<div class="loading">Loading translation...</div>';
+ try{
+  const res=await fetch(QURAN_API+"/surah/"+currentSurah.number+"/"+edition);
+  if(!res.ok)throw new Error("Translation unavailable");
+  const json=await res.json();currentTranslation=json.data.ayahs||[];
+  renderAyahs();
+ }catch(e){
+  currentTranslation=null;renderAyahs();
+  box.insertAdjacentHTML("afterbegin",'<div class="loading">This translation is unavailable. Please choose another language.</div>');
+ }
+}
+const audioElement=document.getElementById("quranAudio");
+function playSurah(){
+ if(!currentSurah){document.getElementById("audioStatus").textContent="Please select a Surah first.";return}
+ audioElement.pause();audioElement.currentTime=0;
+ audioElement.src=AUDIO_BASE+currentSurah.number+".mp3";audioElement.load();
+ audioElement.play().then(()=>document.getElementById("audioStatus").textContent="Playing full Surah...").catch(()=>document.getElementById("audioStatus").textContent="Audio could not start. Check your internet connection.");
+}
+function pauseSurah(){
+ if(!audioElement.src)return;
+ audioElement.pause();document.getElementById("audioStatus").textContent="Paused";
+}
+function resumeSurah(){
+ if(!audioElement.src){playSurah();return}
+ audioElement.play().then(()=>document.getElementById("audioStatus").textContent="Playing full Surah...").catch(()=>document.getElementById("audioStatus").textContent="Unable to resume audio.");
+}
+function stopSurah(){
+ if(!audioElement)return;
+ audioElement.pause();audioElement.currentTime=0;audioElement.removeAttribute("src");audioElement.load();
+ const status=document.getElementById("audioStatus");if(status)status.textContent="Stopped";
+}
+audioElement.addEventListener("ended",()=>document.getElementById("audioStatus").textContent="Surah recitation completed.");
+loadChats();
+</script>
+</body>
+</html>
