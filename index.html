@@ -4,417 +4,348 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#071b17">
-<title>Islamic AI Assistant</title>
-
+<title>DeenAI - Islamic Knowledge Assistant</title>
+<meta name="theme-color" content="#062b21">
 <style>
+:root{
+ --bg:#041c17;--panel:#092b22;--panel2:#10382c;
+ --gold:#e7bd69;--gold2:#f7d994;--text:#f7f2e8;
+ --muted:#b9c9bd;--line:#315345;
+}
 *{box-sizing:border-box}
 body{
- margin:0;padding:12px;
- min-height:100vh;
- font-family:Arial,sans-serif;
- background:radial-gradient(circle at top,#174638,#061812 65%);
- color:white;
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,sans-serif;min-height:100vh;
 }
-.app{
- max-width:850px;margin:auto;
- min-height:95vh;
- background:#102a23;
- border:1px solid #b99a53;
- border-radius:20px;
- padding:16px;
- display:flex;
- flex-direction:column;
-}
-header{text-align:center;padding:12px}
-.logo{font-size:42px;color:#e5c778}
-h1{color:#e5c778;letter-spacing:3px;margin:8px}
-.sub{font-size:13px;color:#b9c9c0}
-.status{font-size:11px;color:#b9d7bd;margin-top:10px}
-.layout{display:flex;gap:12px;flex:1;min-height:400px}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
 .sidebar{
- width:210px;flex-shrink:0;
- background:#0b211b;
- border-radius:12px;padding:10px;
+ width:250px;background:#031a14;border-right:1px solid var(--line);
+ padding:22px 15px;display:flex;flex-direction:column;
 }
-.sidebar button{
- width:100%;padding:11px;margin-bottom:9px;
- border:1px solid #806b3e;border-radius:9px;
- background:#214238;color:#e5c778;
- cursor:pointer;
+.brand{text-align:center;padding:12px 5px 28px}
+.logo{
+ width:76px;height:76px;border:2px solid var(--gold);
+ border-radius:50%;display:grid;place-items:center;
+ margin:auto;color:var(--gold);font-size:40px;
+ box-shadow:0 0 25px #d6a64b30;
 }
-#historyList{
- display:flex;flex-direction:column;gap:7px;
- max-height:430px;overflow:auto;
+.brand h1{font-family:Georgia,serif;color:var(--gold);
+ font-size:30px;margin:10px 0 4px}
+.brand p{color:var(--muted);font-size:12px;letter-spacing:2px}
+.nav button,.newchat{
+ width:100%;border:0;background:transparent;color:var(--text);
+ padding:13px 12px;border-radius:12px;text-align:left;
+ margin:3px 0;font-size:14px;
 }
-.historyItem{
- display:flex;align-items:center;gap:5px;
+.nav button:hover,.nav button.active{background:#173e30;color:var(--gold2)}
+.nav button span{display:inline-block;width:30px;font-size:18px}
+.newchat{
+ background:linear-gradient(110deg,#d9ad5e,#f5d48e);
+ color:#14251b;font-weight:bold;margin-bottom:16px;text-align:center;
 }
-.historyItem button{
- margin:0;text-align:left;
- overflow:hidden;text-overflow:ellipsis;
- white-space:nowrap;min-width:0;
+.history-title{color:var(--muted);font-size:11px;
+ letter-spacing:1.5px;margin:22px 8px 8px}
+#history{overflow:auto;max-height:35vh}
+.history-item{display:flex;align-items:center;gap:5px;margin:3px 0}
+.history-item button:first-child{
+ flex:1;min-width:0;text-align:left;overflow:hidden;
+ text-overflow:ellipsis;white-space:nowrap;
+ background:transparent;border:0;color:var(--muted);
+ padding:9px;border-radius:8px;font-size:12px;
 }
-.historyItem .delete{
- width:34px;flex-shrink:0;text-align:center;
- padding:9px 3px;
+.history-item button:last-child{
+ background:transparent;border:0;color:#d58d75;padding:8px
 }
-.main{
- flex:1;min-width:0;
- display:flex;flex-direction:column;
+.sidebar-foot{margin-top:auto;text-align:center;color:var(--muted);
+ font-size:11px;padding:20px 5px 5px;line-height:1.7}
+.main{flex:1;min-width:0;padding:25px 4%;max-width:1500px;margin:auto;width:100%}
+.topbar{display:flex;justify-content:flex-end;align-items:center;gap:10px}
+select,.small-btn{
+ background:var(--panel);color:var(--text);
+ border:1px solid var(--line);padding:10px 13px;border-radius:20px;
 }
-.toolbar{
- display:flex;justify-content:space-between;
- gap:8px;margin-bottom:10px;
+.hero{
+ margin:20px 0 25px;padding:32px 28px;border:1px solid #92743e;
+ border-radius:22px;position:relative;overflow:hidden;
+ background:radial-gradient(ellipse at 85% 20%,#a57a342c,transparent 45%),
+ linear-gradient(120deg,#0d3829,#062219);
 }
-select,.clear{
- background:#214238;color:white;
- border:1px solid #597b64;
- border-radius:9px;padding:10px;
+.hero:after{content:"☾";position:absolute;right:35px;top:5px;
+ color:#e8c47730;font-size:150px}
+.hero small{color:var(--gold);letter-spacing:2px}
+.hero h2{font:36px Georgia,serif;margin:12px 0}
+.hero h2 em{color:var(--gold);font-style:normal}
+.hero p{color:var(--muted);line-height:1.6;max-width:650px}
+.chatbox{
+ background:#09271f;border:1px solid #a88a4d;
+ border-radius:20px;padding:17px;margin-bottom:30px;
+ box-shadow:0 8px 35px #0005;
 }
-.clear{cursor:pointer;color:#e5c778}
-#chat{
- flex:1;min-height:300px;max-height:55vh;
- overflow-y:auto;display:flex;
- flex-direction:column;gap:12px;
- padding:12px 3px;
+.chathead{color:var(--gold);font-size:13px;margin:0 0 12px}
+#messages{max-height:390px;overflow-y:auto;padding:4px}
+.msg{padding:13px 15px;border-radius:14px;margin:10px 0;
+ max-width:90%;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.user{background:#1b4937;margin-left:auto}
+.msg.ai{background:#12372b;border:1px solid #315345}
+.msg .who{font-size:10px;color:var(--gold);display:block;margin-bottom:5px}
+.entry{display:flex;gap:8px;margin-top:12px}
+.entry input{
+ flex:1;min-width:0;background:#031c16;border:1px solid var(--line);
+ color:white;border-radius:13px;padding:15px;outline:none;
 }
-.msg{
- padding:13px 15px;border-radius:15px;
- max-width:92%;font-size:14px;
- line-height:1.7;white-space:pre-wrap;
- overflow-wrap:anywhere;
+.action{
+ background:linear-gradient(120deg,#d5a74f,#f4d38b);
+ color:#17261c;border:0;border-radius:13px;padding:0 17px;font-weight:bold;
 }
-.bot{background:#1d4436;border:1px solid #456c55;align-self:flex-start}
-.user{background:linear-gradient(135deg,#e5c778,#b18b3f);color:#15251d;align-self:flex-end}
-.controls{display:flex;gap:7px;margin-top:10px}
-input{
- flex:1;min-width:0;padding:14px;
- border:0;border-radius:10px;
- font-size:15px;color:#111;
+.mic{background:#173c2e;color:var(--gold);border:1px solid var(--line);
+ border-radius:13px;padding:0 14px}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.quick button{
+ background:#12372b;color:var(--gold2);border:1px solid var(--line);
+ padding:8px 12px;border-radius:20px;font-size:12px;
 }
-.send,#micBtn{
- border:0;border-radius:10px;
- padding:12px 15px;cursor:pointer;
- font-weight:bold;
+.section-title{font:25px Georgia,serif;margin:30px 0 16px}
+.section-title span{color:var(--gold)}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card{
+ background:linear-gradient(145deg,#10382b,#08251d);
+ border:1px solid #365847;border-radius:17px;padding:19px;
+ min-height:145px;cursor:pointer;transition:.2s;
 }
-.send{background:#e5c778;color:#102019}
-#micBtn{background:#214238;color:#e5c778;border:1px solid #597b64;font-size:19px}
-#micBtn.listening{background:#b83232;color:white}
-button:disabled{opacity:.5}
-.note{text-align:center;color:#a9bcb0;font-size:11px;margin-top:15px}
+.card:hover{transform:translateY(-3px);border-color:var(--gold)}
+.card .emoji{font-size:28px}
+.card h3{font:18px Georgia,serif;color:var(--gold2);margin:12px 0 7px}
+.card p{font-size:12px;color:var(--muted);line-height:1.5;margin:0}
+.footer{text-align:center;color:var(--muted);font-size:12px;
+ padding:35px 10px 20px;line-height:1.8}
+.footer strong{color:var(--gold)}
+.mobilebar{display:none}
+@media(max-width:850px){
+ .sidebar{width:205px}
+ .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .main{padding:18px}
+}
 @media(max-width:600px){
- body{padding:5px}
- .app{padding:10px}
- .layout{flex-direction:column}
- .sidebar{width:100%}
- #historyList{flex-direction:row;max-height:100px;overflow-x:auto}
- .historyItem{min-width:150px}
- #chat{max-height:55vh}
+ .app{display:block}
+ .sidebar{width:100%;padding:10px 12px;border-right:0;
+  border-bottom:1px solid var(--line)}
+ .brand{display:flex;align-items:center;gap:12px;
+  text-align:left;padding:5px 5px 12px}
+ .logo{width:43px;height:43px;font-size:24px;margin:0}
+ .brand h1{font-size:23px;margin:0}
+ .brand p{margin:3px 0}
+ .nav{display:flex;overflow-x:auto;gap:5px}
+ .nav button{white-space:nowrap;width:auto;padding:10px}
+ .nav button span{width:auto;margin-right:5px}
+ .newchat{width:auto;margin:4px 0 10px}
+ .history-title,.sidebar-foot{display:none}
+ #history{display:none}
+ .main{padding:13px}
+ .hero{padding:24px 18px}
+ .hero h2{font-size:29px}
+ .hero:after{right:5px;font-size:100px}
+ .cards{gap:9px}
+ .card{padding:14px;min-height:135px}
+ .card h3{font-size:16px}
+ .entry{gap:5px}
+ .entry input{padding:12px}
+ .action{padding:0 13px}
+ .mic{padding:0 11px}
 }
 </style>
 </head>
-
 <body>
 <div class="app">
-
-<header>
- <div class="logo">☪</div>
- <h1>ISLAMIC AI</h1>
- <div class="sub">Your Premium Islamic Knowledge Assistant</div>
- <div class="status">✦ AI ASSISTANT ONLINE</div>
-</header>
-
-<div class="layout">
-
 <aside class="sidebar">
- <button id="newChatBtn">＋ New Chat</button>
- <div style="color:#e5c778;font-size:13px;margin:8px 0">
-  🕘 Chat History
+ <div class="brand">
+  <div class="logo">☪</div>
+  <div><h1>DeenAI</h1><p>LEARN • ASK • GROW</p></div>
  </div>
- <div id="historyList"></div>
+ <button class="newchat" onclick="newChat()">＋ New Chat</button>
+ <nav class="nav">
+  <button class="active" onclick="goHome(this)"><span>⌂</span>Home</button>
+  <button onclick="focusChat()"><span>▤</span>AI Chat</button>
+  <button onclick="askTopic('ഖുർആൻ പഠനം')"><span>📖</span>Quran Learning</button>
+  <button onclick="askTopic('ഹദീസ്')"><span>📚</span>Hadith Library</button>
+  <button onclick="askTopic('ദുആകൾ')"><span>🤲</span>Dua Collection</button>
+  <button onclick="askTopic('മുസ്ലിം കുഞ്ഞുങ്ങൾക്കുള്ള പേരുകളും അർത്ഥവും')"><span>👶</span>Baby Names</button>
+  <button onclick="askTopic('നമസ്കാര സമയം')"><span>🕌</span>Prayer Times</button>
+  <button onclick="askTopic('ഖിബ്‌ല ദിശ കണ്ടെത്താൻ സഹായിക്കൂ')"><span>🧭</span>Qibla Direction</button>
+  <button onclick="askTopic('ഇസ്‌ലാമിക ഹിജ്റി കലണ്ടർ')"><span>🌙</span>Islamic Calendar</button>
+  <button onclick="askTopic('കുട്ടികൾക്കുള്ള ഇസ്‌ലാമിക പഠനം')"><span>🧒</span>Kids Learning</button>
+ </nav>
+ <div class="history-title">RECENT CHATS</div>
+ <div id="history"></div>
+ <div class="sidebar-foot">May Allah accept our deeds<br>and guide us always. Ameen 🤲</div>
 </aside>
 
 <main class="main">
+ <div class="topbar">
+  <select id="language" aria-label="Language">
+   <option value="Malayalam">മലയാളം</option>
+   <option value="English">English</option>
+   <option value="Arabic">العربية</option>
+  </select>
+  <button class="small-btn" onclick="clearCurrent()">Clear Chat</button>
+ </div>
 
-<div class="toolbar">
- <select id="lang">
-  <option value="Malayalam">മലയാളം</option>
-  <option value="English">English</option>
-  <option value="Arabic">العربية</option>
- </select>
- <button class="clear" id="clearBtn">Clear Chat</button>
-</div>
+ <section class="hero">
+  <small>السلام عليكم ورحمة الله وبركاته</small>
+  <h2>Welcome to <em>DeenAI</em> 🌙</h2>
+  <p>Your Complete Islamic Knowledge Assistant. Learn, ask and grow with Quran, Hadith, Duas and authentic Islamic knowledge.</p>
+ </section>
 
-<div id="chat"></div>
+ <section class="chatbox" id="chatArea">
+  <div class="chathead">✦ ASK YOUR ISLAMIC AI ASSISTANT</div>
+  <div id="messages"></div>
+  <div class="entry">
+   <input id="question" placeholder="ഇസ്‌ലാമിനെക്കുറിച്ച് എന്തും ചോദിക്കാം..." onkeydown="if(event.key==='Enter')sendMessage()">
+   <button class="mic" onclick="voiceInput()" title="Voice input">🎙</button>
+   <button class="action" onclick="sendMessage()">➤</button>
+  </div>
+  <div class="quick">
+   <button onclick="askTopic('ഇസ്‌ലാമിന്റെ അഞ്ച് തൂണുകൾ വിശദീകരിക്കൂ')">📖 Quran</button>
+   <button onclick="askTopic('ഒരു നല്ല ഹദീസ് പറയൂ')">📚 Hadith</button>
+   <button onclick="askTopic('ദൈനംദിന ദുആകൾ')">🤲 Dua</button>
+   <button onclick="askTopic('മുസ്ലിം ആൺകുട്ടികൾക്കും പെൺകുട്ടികൾക്കും നല്ല പേരുകൾ അർത്ഥസഹിതം')">👶 Baby Names</button>
+  </div>
+ </section>
 
-<form id="form" class="controls">
- <button type="button" id="micBtn">🎤</button>
- <input id="question" placeholder="നിങ്ങളുടെ ചോദ്യം എഴുതുക..." required>
- <button class="send" id="sendBtn">Send</button>
-</form>
-
+ <h2 class="section-title">Explore <span>Islamic Knowledge</span></h2>
+ <div class="cards">
+  <div class="card" onclick="askTopic('ഖുർആൻ പഠിക്കാൻ സഹായിക്കൂ')"><div class="emoji">📖</div><h3>Quran Learning</h3><p>Read, understand and explore the Holy Quran.</p></div>
+  <div class="card" onclick="askTopic('സഹീഹ് ഹദീസുകൾ വിശദീകരിക്കൂ')"><div class="emoji">📚</div><h3>Hadith Library</h3><p>Hadith, meanings and explanations.</p></div>
+  <div class="card" onclick="askTopic('ദൈനംദിന ദുആകൾ അർത്ഥസഹിതം തരൂ')"><div class="emoji">🤲</div><h3>Dua Collection</h3><p>Daily duas with meaning and pronunciation.</p></div>
+  <div class="card" onclick="askTopic('മുസ്ലിം ബേബി ബോയ് ആൻഡ് ഗേൾ പേരുകൾ അർത്ഥസഹിതം')"><div class="emoji">👶</div><h3>Baby Names</h3><p>Meaningful Muslim names for your little one.</p></div>
+  <div class="card" onclick="askTopic('നമസ്കാര സമയത്തെക്കുറിച്ച് സഹായിക്കൂ')"><div class="emoji">🕌</div><h3>Prayer Times</h3><p>Learn about the five daily prayers.</p></div>
+  <div class="card" onclick="askTopic('ഖിബ്‌ല എങ്ങനെ കണ്ടെത്താം?')"><div class="emoji">🧭</div><h3>Qibla Direction</h3><p>Learn how to find the Qibla direction.</p></div>
+  <div class="card" onclick="askTopic('ഇസ്‌ലാമിക ഹിജ്റി കലണ്ടർ വിശദീകരിക്കൂ')"><div class="emoji">🌙</div><h3>Islamic Calendar</h3><p>Hijri dates and important Islamic events.</p></div>
+  <div class="card" onclick="askTopic('കുട്ടികൾക്കുള്ള ഇസ്‌ലാമിക ക്വിസ് തയ്യാറാക്കൂ')"><div class="emoji">🧒</div><h3>Kids Learning</h3><p>Fun Islamic learning and quizzes for kids.</p></div>
+ </div>
+ <div class="footer">
+  <strong>DeenAI — Learn • Ask • Grow</strong><br>
+  May Allah guide us to beneficial knowledge. Ameen.
+ </div>
 </main>
-</div>
-
-<div class="note">
-Islamic Knowledge Assistant · Verify important religious rulings with qualified scholars.
-</div>
 </div>
 
 <script>
 const API_URL="https://islamic-ai-assistant-9tn7.onrender.com/chat";
-
-const chat=document.getElementById("chat");
-const input=document.getElementById("question");
-const form=document.getElementById("form");
-const lang=document.getElementById("lang");
-const sendBtn=document.getElementById("sendBtn");
-const micBtn=document.getElementById("micBtn");
-const historyList=document.getElementById("historyList");
-
-const welcome=`السلام عليكم ورحمة الله وبركاته
-
-അസ്സലാമു അലൈക്കും!
-
-ഞാൻ നിങ്ങളുടെ Islamic AI Assistant ആണ്.
-
-ഖുർആൻ, ഹദീസ്, ദുആ, നിസ്കാരം, ഇസ്‌ലാമിക അറിവുകൾ എന്നിവയെക്കുറിച്ച് ചോദിക്കാം.
-
-നിങ്ങളെ സഹായിക്കാൻ ഞാൻ തയ്യാറാണ്. 🌙`;
-
-let chats=[];
+const STORAGE_KEY="deenAIChats";
+let chats=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
 let currentId=null;
-let busy=false;
 
-try{
- chats=JSON.parse(localStorage.getItem("islamicChats")||"[]");
- if(!Array.isArray(chats))chats=[];
-}catch(e){chats=[]}
-
-function saveChats(){
- try{
-  localStorage.setItem("islamicChats",JSON.stringify(chats));
- }catch(e){
-  alert("Storage is full. Please delete some old chats.");
- }
+function saveAll(){localStorage.setItem(STORAGE_KEY,JSON.stringify(chats))}
+function currentChat(){return chats.find(c=>c.id===currentId)}
+function newChat(){
+ const c={id:Date.now().toString(),title:"New Chat",messages:[]};
+ chats.unshift(c);currentId=c.id;saveAll();renderAll();
+ document.getElementById("question").focus();
 }
-
-function createChat(){
- const id=Date.now().toString();
- const item={
-  id:id,
-  title:"New Chat",
-  messages:[{type:"bot",text:welcome}]
- };
- chats.unshift(item);
- currentId=id;
- saveChats();
- renderHistory();
- renderChat();
-}
-
-function getCurrent(){
- return chats.find(c=>c.id===currentId);
-}
-
-function renderChat(){
- chat.innerHTML="";
- const current=getCurrent();
- if(!current)return;
- current.messages.forEach(m=>addMessage(m.text,m.type,false));
-}
-
-function addMessage(text,type,save=true){
- const div=document.createElement("div");
- div.className="msg "+type;
- div.textContent=text;
- chat.appendChild(div);
- chat.scrollTop=chat.scrollHeight;
-
- if(save){
-  const current=getCurrent();
-  if(current){
-   current.messages.push({type,text});
-   saveChats();
-   renderHistory();
-  }
- }
- return div;
-}
-
 function renderHistory(){
- historyList.innerHTML="";
- chats.forEach(item=>{
-  const row=document.createElement("div");
-  row.className="historyItem";
-
+ const el=document.getElementById("history");el.innerHTML="";
+ chats.forEach(c=>{
+  const row=document.createElement("div");row.className="history-item";
   const open=document.createElement("button");
-  open.textContent=item.title;
-  open.title=item.title;
-  open.onclick=()=>{
-   currentId=item.id;
-   renderChat();
-   renderHistory();
-  };
-
-  const del=document.createElement("button");
-  del.className="delete";
-  del.textContent="×";
-  del.title="Delete chat";
-  del.onclick=()=>{
-   if(!confirm("Delete this conversation?"))return;
-   chats=chats.filter(c=>c.id!==item.id);
-   if(currentId===item.id){
-    currentId=null;
-   }
-   saveChats();
-   if(!currentId){
-    if(chats.length){
-     currentId=chats[0].id;
-    }else{
-     createChat();
-     return;
-    }
-   }
-   renderChat();
-   renderHistory();
-  };
-
-  row.append(open,del);
-  historyList.appendChild(row);
+  open.textContent="💬 "+c.title;open.onclick=()=>{currentId=c.id;renderAll()};
+  const del=document.createElement("button");del.textContent="×";
+  del.title="Delete chat";del.onclick=()=>deleteChat(c.id);
+  row.append(open,del);el.append(row);
  });
 }
-
-function updateTitle(message){
- const current=getCurrent();
- if(current && current.title==="New Chat"){
-  current.title=message.slice(0,28)+(message.length>28?"...":"");
-  saveChats();
-  renderHistory();
+function renderMessages(){
+ const el=document.getElementById("messages");el.innerHTML="";
+ const c=currentChat();if(!c)return;
+ c.messages.forEach(m=>{
+  const d=document.createElement("div");d.className="msg "+m.role;
+  const who=document.createElement("span");who.className="who";
+  who.textContent=m.role==="user"?"YOU":"DEENAI";
+  const body=document.createElement("div");body.textContent=m.text;
+  d.append(who,body);el.append(d);
+ });
+ el.scrollTop=el.scrollHeight;
+}
+function renderAll(){renderHistory();renderMessages()}
+function addMessage(role,text){
+ const c=currentChat();if(!c)return;
+ c.messages.push({role,text});saveAll();renderMessages();
+ if(role==="user"&&c.title==="New Chat"){
+  c.title=text.slice(0,28)+(text.length>28?"…":"");saveAll();renderHistory();
  }
 }
-
-document.getElementById("newChatBtn").onclick=createChat;
-
-document.getElementById("clearBtn").onclick=()=>{
- const current=getCurrent();
- if(!current)return;
- current.messages=[{type:"bot",text:welcome}];
- saveChats();
- renderChat();
- renderHistory();
-};
-
-if(chats.length){
- currentId=chats[0].id;
- renderHistory();
- renderChat();
-}else{
- createChat();
+function deleteChat(id){
+ chats=chats.filter(c=>c.id!==id);
+ if(currentId===id)currentId=chats[0]?.id||null;
+ if(!currentId)newChat();else{saveAll();renderAll()}
 }
-
-// Gemini AI message
-form.addEventListener("submit",async e=>{
- e.preventDefault();
- const message=input.value.trim();
- if(!message || busy)return;
-
- busy=true;
- updateTitle(message);
- addMessage(message,"user");
- input.value="";
- sendBtn.disabled=true;
- micBtn.disabled=true;
-
- const loading=addMessage("AI മറുപടി തയ്യാറാക്കുന്നു... 🌙","bot");
-
+function clearCurrent(){
+ const c=currentChat();if(!c)return;
+ c.messages=[];c.title="New Chat";saveAll();renderAll();
+}
+async function sendMessage(){
+ const input=document.getElementById("question");
+ const message=input.value.trim();if(!message)return;
+ if(!currentId)newChat();
+ input.value="";addMessage("user",message);
+ const c=currentChat();const loadingId="loading";
+ const loading={role:"ai",text:"ഉത്തരം തയ്യാറാക്കുന്നു…"};
+ c.messages.push(loading);saveAll();renderMessages();
  try{
+  const language=document.getElementById("language").value;
   const response=await fetch(API_URL,{
    method:"POST",
    headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({
-    message:message,
-    language:lang.value
-   })
+   body:JSON.stringify({message,language})
   });
-
+  if(!response.ok)throw new Error("Server error: "+response.status);
   const data=await response.json();
-
-  if(!response.ok){
-   throw new Error(data.detail||"AI service error");
-  }
-
-  const current=getCurrent();
-  if(current){
-   const index=current.messages.length-1;
-   current.messages[index].text=data.reply;
-   saveChats();
-  }
-  loading.textContent=data.reply||"മറുപടി ലഭിച്ചില്ല.";
-
+  const answer=data.response||data.answer||data.reply||data.message;
+  if(!answer)throw new Error("No answer received from AI");
+  const index=c.messages.indexOf(loading);
+  if(index!==-1)c.messages[index].text=answer;
+  saveAll();renderMessages();
  }catch(error){
-  const errorText="ക്ഷമിക്കണം! ഇപ്പോൾ AI-യുമായി ബന്ധപ്പെടാൻ കഴിയുന്നില്ല. കുറച്ച് കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക.";
-  loading.textContent=errorText;
-  const current=getCurrent();
-  if(current){
-   const index=current.messages.length-1;
-   current.messages[index].text=errorText;
-   saveChats();
-  }
- }finally{
-  busy=false;
-  sendBtn.disabled=false;
-  micBtn.disabled=false;
-  sendBtn.textContent="Send";
-  chat.scrollTop=chat.scrollHeight;
+  const index=c.messages.indexOf(loading);
+  const errorText="ക്ഷമിക്കണം, ഇപ്പോൾ മറുപടി ലഭിച്ചില്ല. കുറച്ച് കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കൂ.";
+  if(index!==-1)c.messages[index].text=errorText;
+  saveAll();renderMessages();
+  console.error(error);
  }
-});
-
-// Voice input
-const SpeechRecognition=
- window.SpeechRecognition||window.webkitSpeechRecognition;
-
-if(SpeechRecognition){
- const recognition=new SpeechRecognition();
- recognition.continuous=false;
- recognition.interimResults=false;
-
- micBtn.onclick=()=>{
-  if(busy)return;
-  recognition.lang=
-   lang.value==="Malayalam"?"ml-IN":
-   lang.value==="Arabic"?"ar-SA":"en-IN";
-  try{recognition.start()}catch(e){}
- };
-
- recognition.onstart=()=>{
-  micBtn.classList.add("listening");
-  micBtn.textContent="🔴";
- };
-
- recognition.onresult=e=>{
-  input.value=e.results[0][0].transcript;
-  input.focus();
- };
-
- recognition.onerror=e=>{
-  if(e.error==="not-allowed"){
-   alert("Please allow microphone permission.");
-  }else{
-   alert("Voice recognition error. Please try again.");
-  }
- };
-
- recognition.onend=()=>{
-  micBtn.classList.remove("listening");
-  micBtn.textContent="🎤";
- };
-}else{
- micBtn.onclick=()=>{
-  alert("Voice input is not supported. Please try Chrome.");
- };
 }
+function askTopic(topic){
+ document.getElementById("question").value=topic;
+ focusChat();sendMessage();
+}
+function focusChat(){
+ document.getElementById("chatArea").scrollIntoView({behavior:"smooth"});
+ document.getElementById("question").focus();
+}
+function goHome(btn){
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+ btn.classList.add("active");window.scrollTo({top:0,behavior:"smooth"});
+}
+function voiceInput(){
+ const Speech=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!Speech){alert("Voice input ഈ browser പിന്തുണയ്ക്കുന്നില്ല.");return}
+ const rec=new Speech();
+ const lang=document.getElementById("language").value;
+ rec.lang=lang==="Malayalam"?"ml-IN":lang==="Arabic"?"ar-SA":"en-IN";
+ rec.onresult=e=>{
+  document.getElementById("question").value=e.results[0][0].transcript;
+ };
+ rec.onerror=()=>alert("Voice input ലഭിച്ചില്ല. വീണ്ടും ശ്രമിക്കൂ.");
+ rec.start();
+}
+if(chats.length){
+ currentId=chats[0].id;
+}else{
+ chats=[{id:Date.now().toString(),title:"New Chat",messages:[]}];
+ currentId=chats[0].id;saveAll();
+}
+renderAll();
 </script>
 </body>
-</html>
+ </html>
+ 
