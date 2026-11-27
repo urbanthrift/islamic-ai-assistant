@@ -4,52 +4,142 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Islamic AI Assistant</title>
-
+<title>Islamic AI | Premium Assistant</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;font-family:Arial,sans-serif;
- background:#071b17;color:#fff;
- display:flex;justify-content:center;
- min-height:100vh;padding:20px
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:radial-gradient(circle at top,#174638,#061812 65%);
+ color:#fff;
+ min-height:100vh;
+ padding:18px;
+ display:flex;
+ justify-content:center;
 }
 .app{
- width:100%;max-width:600px;
- background:#102a23;border-radius:20px;
- padding:22px;display:flex;flex-direction:column;
- min-height:85vh;border:1px solid #b99a53
+ width:100%;
+ max-width:650px;
+ min-height:92vh;
+ display:flex;
+ flex-direction:column;
+ background:rgba(13,39,31,.96);
+ border:1px solid #b99a53;
+ border-radius:24px;
+ padding:20px;
+ box-shadow:0 15px 50px #0008;
 }
-header{text-align:center;padding:15px}
-.logo{font-size:38px;color:#d8b96c}
-h1{color:#e5c778;margin:8px}
+header{text-align:center;padding:18px 5px}
+.logo{
+ font-size:48px;
+ color:#e5c778;
+ text-shadow:0 0 20px #d8b96c66;
+}
+h1{
+ color:#e5c778;
+ letter-spacing:3px;
+ margin:10px 0;
+ font-size:27px;
+}
 .sub{color:#b9c9c0;font-size:13px}
+.status{
+ display:inline-block;
+ margin-top:12px;
+ color:#b9d7bd;
+ font-size:11px;
+ border:1px solid #537b61;
+ padding:6px 12px;
+ border-radius:20px;
+}
+.toolbar{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin-bottom:12px;
+}
+select,.clear{
+ background:#214238;
+ color:#fff;
+ border:1px solid #597b64;
+ border-radius:10px;
+ padding:11px;
+ font-size:13px;
+}
+.clear{cursor:pointer;color:#e5c778}
 #chat{
- flex:1;overflow:auto;padding:15px 0;
- display:flex;flex-direction:column;gap:12px
+ flex:1;
+ min-height:300px;
+ max-height:58vh;
+ overflow-y:auto;
+ display:flex;
+ flex-direction:column;
+ gap:13px;
+ padding:15px 3px;
 }
 .msg{
- padding:13px 15px;border-radius:14px;
- max-width:88%;line-height:1.6;
- white-space:pre-wrap;overflow-wrap:anywhere
+ padding:14px 16px;
+ border-radius:17px;
+ max-width:90%;
+ line-height:1.7;
+ font-size:14px;
+ white-space:pre-wrap;
+ overflow-wrap:anywhere;
 }
-.bot{background:#214238;align-self:flex-start}
-.user{background:#b99a53;color:#102019;align-self:flex-end}
-.controls{display:flex;gap:8px;margin-bottom:10px}
-select,input,button{
- padding:13px;border-radius:10px;
- border:0;font-size:15px
+.bot{
+ background:#1d4436;
+ border:1px solid #456c55;
+ align-self:flex-start;
+ border-bottom-left-radius:4px;
 }
-select{background:#214238;color:white}
-input{flex:1;min-width:0;background:#fff;color:#111}
-button{
- background:#d8b96c;color:#102019;
- font-weight:bold;cursor:pointer
+.user{
+ background:linear-gradient(135deg,#d8b96c,#b18b3f);
+ color:#15251d;
+ align-self:flex-end;
+ border-bottom-right-radius:4px;
 }
-button:disabled{opacity:.6;cursor:not-allowed}
+.controls{
+ display:flex;
+ gap:9px;
+ margin-top:12px;
+}
+input{
+ flex:1;
+ min-width:0;
+ padding:15px;
+ border-radius:12px;
+ border:1px solid #8e9d87;
+ background:#fff;
+ color:#111;
+ font-size:15px;
+ outline:none;
+}
+button.send{
+ background:linear-gradient(135deg,#e5c778,#b99a53);
+ border:0;
+ padding:0 21px;
+ border-radius:12px;
+ font-weight:bold;
+ color:#15251d;
+ cursor:pointer;
+}
+button:disabled{opacity:.5;cursor:not-allowed}
 .note{
- font-size:11px;color:#b9c9c0;
- text-align:center;margin-top:15px
+ text-align:center;
+ font-size:11px;
+ color:#a9bcb0;
+ margin-top:17px;
+ line-height:1.6;
+}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{
+ background:#b99a53;border-radius:10px
+}
+@media(max-width:480px){
+ body{padding:8px}
+ .app{padding:14px;border-radius:18px}
+ h1{font-size:23px}
+ .msg{max-width:95%;font-size:14px}
 }
 </style>
 </head>
@@ -58,102 +148,127 @@ button:disabled{opacity:.6;cursor:not-allowed}
 <div class="app">
 
 <header>
-<div class="logo">☪</div>
-<h1>ISLAMIC AI</h1>
-<div class="sub">Your Islamic Knowledge Assistant</div>
+ <div class="logo">☪</div>
+ <h1>ISLAMIC AI</h1>
+ <div class="sub">Your Premium Islamic Knowledge Assistant</div>
+ <div class="status">✦ AI ASSISTANT ONLINE</div>
 </header>
 
-<div class="controls">
-<select id="lang">
-<option value="Malayalam">മലയാളം</option>
-<option value="English">English</option>
-<option value="Arabic">العربية</option>
-</select>
+<div class="toolbar">
+ <select id="lang">
+  <option value="Malayalam">മലയാളം</option>
+  <option value="English">English</option>
+  <option value="Arabic">العربية</option>
+ </select>
+ <button class="clear" id="clearBtn" type="button">
+  Clear Chat
+ </button>
 </div>
 
 <div id="chat">
-<div class="msg bot">السلام عليكم ورحمة الله وبركاته
+ <div class="msg bot">السلام عليكم ورحمة الله وبركاته
 
 അസ്സലാമു അലൈക്കും!
 
-ഇസ്‌ലാമിക അറിവുകൾ, ഖുർആൻ, ഹദീസ്, ദുആ, സ്വപ്ന വ്യാഖ്യാന പാരമ്പര്യങ്ങൾ എന്നിവയെക്കുറിച്ച് ചോദിക്കാം.
+ഞാൻ നിങ്ങളുടെ Islamic AI Assistant ആണ്.
 
-നിങ്ങൾക്ക് എങ്ങനെ സഹായിക്കാം?</div>
+ഖുർആൻ, ഹദീസ്, ദുആ, നിസ്കാരം, ഇസ്‌ലാമിക അറിവുകൾ എന്നിവയെക്കുറിച്ച് ചോദിക്കാം.
+
+നിങ്ങളെ സഹായിക്കാൻ ഞാൻ തയ്യാറാണ്. 🌙</div>
 </div>
 
 <form id="form" class="controls">
-<input id="question" placeholder="നിങ്ങളുടെ ചോദ്യം എഴുതുക..." required>
-<button id="sendBtn" type="submit">Send</button>
+ <input id="question"
+  placeholder="നിങ്ങളുടെ ചോദ്യം എഴുതുക..."
+  autocomplete="off" required>
+ <button class="send" id="sendBtn" type="submit">
+  Send
+ </button>
 </form>
 
 <div class="note">
-Islamic knowledge assistant · Verify religious rulings with qualified scholars.
+Islamic Knowledge Assistant<br>
+Please verify important religious rulings with qualified scholars.
 </div>
 
 </div>
 
 <script>
-const API_URL = "https://islamic-ai-assistant-9tn7.onrender.com/chat";
+const API_URL =
+"https://islamic-ai-assistant-9tn7.onrender.com/chat";
 
-const form = document.getElementById("form");
-const input = document.getElementById("question");
-const chat = document.getElementById("chat");
-const lang = document.getElementById("lang");
-const sendBtn = document.getElementById("sendBtn");
+const form=document.getElementById("form");
+const input=document.getElementById("question");
+const chat=document.getElementById("chat");
+const lang=document.getElementById("lang");
+const sendBtn=document.getElementById("sendBtn");
+const clearBtn=document.getElementById("clearBtn");
 
-function addMessage(message, type) {
- const div = document.createElement("div");
- div.className = "msg " + type;
- div.textContent = message;
+const welcome = `السلام عليكم ورحمة الله وبركاته
+
+അസ്സലാമു അലൈക്കും!
+
+ഞാൻ നിങ്ങളുടെ Islamic AI Assistant ആണ്.
+
+ഖുർആൻ, ഹദീസ്, ദുആ, നിസ്കാരം, ഇസ്‌ലാമിക അറിവുകൾ എന്നിവയെക്കുറിച്ച് ചോദിക്കാം.
+
+നിങ്ങളെ സഹായിക്കാൻ ഞാൻ തയ്യാറാണ്. 🌙`;
+
+function addMessage(message,type){
+ const div=document.createElement("div");
+ div.className="msg "+type;
+ div.textContent=message;
  chat.appendChild(div);
- chat.scrollTop = chat.scrollHeight;
+ chat.scrollTop=chat.scrollHeight;
  return div;
 }
 
-form.addEventListener("submit", async function(e) {
+form.addEventListener("submit",async function(e){
  e.preventDefault();
 
- const message = input.value.trim();
- if (!message || sendBtn.disabled) return;
+ const message=input.value.trim();
+ if(!message || sendBtn.disabled)return;
 
- addMessage(message, "user");
- input.value = "";
- sendBtn.disabled = true;
- sendBtn.textContent = "Please wait...";
+ addMessage(message,"user");
+ input.value="";
+ sendBtn.disabled=true;
+ sendBtn.textContent="...";
 
- const loading = addMessage("AI മറുപടി തയ്യാറാക്കുന്നു...", "bot");
+ const loading=addMessage("AI മറുപടി തയ്യാറാക്കുന്നു... 🌙","bot");
 
- try {
-   const response = await fetch(API_URL, {
-     method: "POST",
-     headers: {
-       "Content-Type": "application/json"
-     },
-     body: JSON.stringify({
-       message: message,
-       language: lang.value
-     })
-   });
+ try{
+  const response=await fetch(API_URL,{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({
+    message:message,
+    language:lang.value
+   })
+  });
 
-   const data = await response.json();
+  const data=await response.json();
 
-   if (!response.ok) {
-     throw new Error(data.detail || "AI service error");
-   }
+  if(!response.ok){
+   throw new Error(data.detail || "AI service error");
+  }
 
-   loading.textContent = data.reply || "മറുപടി ലഭിച്ചില്ല.";
+  loading.textContent=data.reply || "മറുപടി ലഭിച്ചില്ല.";
 
- } catch (error) {
-   loading.textContent =
-     "ക്ഷമിക്കണം! ഇപ്പോൾ AI-യുമായി ബന്ധപ്പെടാൻ കഴിയുന്നില്ല.\n\n" +
-     "ദയവായി കുറച്ച് കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക.\n" +
-     "Error: " + error.message;
- } finally {
-   sendBtn.disabled = false;
-   sendBtn.textContent = "Send";
-   input.focus();
-   chat.scrollTop = chat.scrollHeight;
+ }catch(error){
+  loading.textContent=
+   "ക്ഷമിക്കണം! ഇപ്പോൾ AI-യുമായി ബന്ധപ്പെടാൻ കഴിയുന്നില്ല.\n"+
+   "കുറച്ച് കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക.";
+ }finally{
+  sendBtn.disabled=false;
+  sendBtn.textContent="Send";
+  input.focus();
+  chat.scrollTop=chat.scrollHeight;
  }
+});
+
+clearBtn.addEventListener("click",function(){
+ chat.innerHTML="";
+ addMessage(welcome,"bot");
 });
 </script>
 </body>
