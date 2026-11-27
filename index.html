@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#061d18">
 <title>DeenAI - Learn • Ask • Grow</title>
+
 <style>
-:root{--bg:#061d18;--panel:#0c2921;--panel2:#10372b;--gold:#d9b45c;--gold2:#f5dfa0;--white:#f7f3e8;--muted:#a8b9ad;--border:rgba(217,180,92,.2)}
+:root{
+ --bg:#061d18;--panel:#0c2921;--panel2:#10372b;
+ --gold:#d9b45c;--gold2:#f5dfa0;--white:#f7f3e8;
+ --muted:#a8b9ad;--border:rgba(217,180,92,.2)
+}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,sans-serif}
 button,input,select{font:inherit}
@@ -99,6 +103,7 @@ select{background:var(--panel);color:var(--white);border:1px solid var(--border)
 @media(max-width:600px){.app{display:block}.sidebar{width:100%;padding:12px;gap:10px}.brand img{width:45px;height:45px}.sidebar-footer{display:none}.history-list{max-height:90px}.main{padding:13px}.hero{padding:20px 10px}.hero h1{font-size:28px}.features{gap:8px}.feature{padding:13px 5px}.messages{min-height:210px;padding:11px}.input-area{padding:9px;gap:5px}.input-area input{padding:11px;font-size:14px}.send-btn{padding:11px}.surah-list{grid-template-columns:1fr}.ayah-arabic{font-size:25px}}
 </style>
 </head>
+
 <body>
 <div class="app">
 <aside class="sidebar">
@@ -165,12 +170,14 @@ select{background:var(--panel);color:var(--white);border:1px solid var(--border)
    <p>The Noble Quran</p>
    <p>114 Surahs • Arabic Text • Optional Translation</p>
   </div>
+
   <div id="surahBrowser">
    <div class="quran-tools">
     <input id="surahSearch" placeholder="Search Surah..." oninput="filterSurahs()">
    </div>
    <div id="surahList" class="surah-list"><div class="loading">Loading all 114 Surahs...</div></div>
   </div>
+
   <div id="surahReader">
    <button class="back-btn" onclick="backToSurahs()">← All Surahs</button>
    <div class="reader-title">
@@ -178,6 +185,7 @@ select{background:var(--panel);color:var(--white);border:1px solid var(--border)
     <h2 id="readerEnglishName"></h2>
     <p id="readerDetails"></p>
    </div>
+
    <div class="reader-settings">
     <label for="translationToggle">Show translation?</label>
     <select id="translationToggle" onchange="translationToggleChanged()">
@@ -193,6 +201,7 @@ select{background:var(--panel);color:var(--white);border:1px solid var(--border)
      <option value="as">Assamese</option>
     </select>
    </div>
+
    <div class="audio-box">
     <h3>🎧 DeenAI Quran Audio</h3>
     <p style="color:var(--muted);font-size:13px">Mishary Rashid Alafasy • Full Surah Recitation</p>
@@ -205,10 +214,12 @@ select{background:var(--panel);color:var(--white);border:1px solid var(--border)
     <div id="audioStatus">Select a Surah and press Play.</div>
     <audio id="quranAudio" preload="none"></audio>
    </div>
+
    <div id="ayahContainer"><div class="loading">Choose a Surah to begin.</div></div>
-   <div class="quran-note">Quran text and audio provided by AlQuran Cloud audio/text services.</div>
+   <div class="quran-note">Quran text and audio provided by AlQuran Cloud services.</div>
   </div>
  </section>
+
  <div class="footer">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>DeenAI • Learn • Ask • Grow</div>
 </main>
 </div>
@@ -219,8 +230,15 @@ const STORAGE_KEY="deenAIChats";
 const QURAN_API="https://api.alquran.cloud/v1";
 const AUDIO_BASE="https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/";
 
-let chats=[],currentChatId=null,busy=false;
-let allSurahs=[],currentSurah=null,currentArabicAyahs=[],currentTranslation=null;
+const audioElement=document.getElementById("quranAudio");
+
+let chats=[];
+let currentChatId=null;
+let busy=false;
+let allSurahs=[];
+let currentSurah=null;
+let currentArabicAyahs=[];
+let currentTranslation=null;
 
 const translationEditions={
  ml:"ml.abdulhameed",
@@ -230,92 +248,204 @@ const translationEditions={
  bn:"bn.bengali"
 };
 
+/* CHAT HISTORY */
 function loadChats(){
- try{chats=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");if(!Array.isArray(chats))chats=[]}
- catch(e){chats=[]}
+ try{
+  chats=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
+  if(!Array.isArray(chats))chats=[];
+ }catch(e){chats=[]}
+
  if(!chats.length)newChat();
- else{currentChatId=chats[0].id;renderHistory();renderMessages()}
+ else{
+  currentChatId=chats[0].id;
+  renderHistory();
+  renderMessages();
+ }
 }
-function saveChats(){localStorage.setItem(STORAGE_KEY,JSON.stringify(chats));renderHistory()}
-function currentChat(){return chats.find(c=>c.id===currentChatId)}
+
+function saveChats(){
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify(chats))}
+ catch(e){console.error("Unable to save chat history",e)}
+ renderHistory();
+}
+
+function currentChat(){
+ return chats.find(c=>c.id===currentChatId);
+}
+
 function newChat(){
- const chat={id:Date.now().toString(),title:"New Chat",messages:[]};
- chats.unshift(chat);currentChatId=chat.id;saveChats();renderMessages();
- const input=document.getElementById("userInput");if(input)input.focus();
+ const chat={
+  id:Date.now().toString(),
+  title:"New Chat",
+  messages:[]
+ };
+ chats.unshift(chat);
+ currentChatId=chat.id;
+ saveChats();
+ renderMessages();
+ const input=document.getElementById("userInput");
+ if(input)input.focus();
 }
-function openChat(id){currentChatId=id;renderHistory();renderMessages()}
+
+function openChat(id){
+ currentChatId=id;
+ renderHistory();
+ renderMessages();
+}
+
 function deleteChat(id){
  chats=chats.filter(c=>c.id!==id);
- if(currentChatId===id){if(!chats.length){newChat();return}currentChatId=chats[0].id}
- saveChats();renderMessages();
+ if(currentChatId===id){
+  if(!chats.length){newChat();return}
+  currentChatId=chats[0].id;
+ }
+ saveChats();
+ renderMessages();
 }
+
 function clearHistory(){
  if(!confirm("Delete all saved chats?"))return;
- chats=[];localStorage.removeItem(STORAGE_KEY);newChat();
+ chats=[];
+ try{localStorage.removeItem(STORAGE_KEY)}catch(e){}
+ newChat();
 }
+
 function renderHistory(){
- const box=document.getElementById("history");box.innerHTML="";
+ const box=document.getElementById("history");
+ box.innerHTML="";
  chats.forEach(chat=>{
-  const row=document.createElement("div");row.className="history-item"+(chat.id===currentChatId?" active":"");
-  const title=document.createElement("span");title.textContent=chat.title||"New Chat";title.onclick=()=>openChat(chat.id);
-  const del=document.createElement("button");del.textContent="×";del.title="Delete chat";del.onclick=()=>deleteChat(chat.id);
-  row.append(title,del);box.appendChild(row);
+  const row=document.createElement("div");
+  row.className="history-item"+(chat.id===currentChatId?" active":"");
+
+  const title=document.createElement("span");
+  title.textContent=chat.title||"New Chat";
+  title.onclick=()=>openChat(chat.id);
+
+  const del=document.createElement("button");
+  del.textContent="×";
+  del.title="Delete chat";
+  del.onclick=()=>deleteChat(chat.id);
+
+  row.append(title,del);
+  box.appendChild(row);
  });
 }
+
 function addMessage(role,text){
- const chat=currentChat();if(!chat)return;
+ const chat=currentChat();
+ if(!chat)return;
+
  chat.messages.push({role,text});
- if(role==="user"&&chat.title==="New Chat")chat.title=text.slice(0,32)+(text.length>32?"…":"");
- saveChats();renderMessages();
+
+ if(role==="user"&&chat.title==="New Chat"){
+  chat.title=text.slice(0,32)+(text.length>32?"…":"");
+ }
+ saveChats();
+ renderMessages();
 }
+
 function renderMessages(){
- const box=document.getElementById("messages");box.innerHTML="";
- const chat=currentChat();if(!chat)return;
+ const box=document.getElementById("messages");
+ box.innerHTML="";
+ const chat=currentChat();
+ if(!chat)return;
+
  if(!chat.messages.length){
-  const welcome=document.createElement("div");welcome.className="message bot";
+  const welcome=document.createElement("div");
+  welcome.className="message bot";
   welcome.textContent="السلام عليكم! അസ്സലാമു അലൈക്കും! ഞാൻ DeenAI. ഇസ്‌ലാമിക അറിവുകളെക്കുറിച്ച് എന്തും ചോദിക്കാം.";
   box.appendChild(welcome);
  }
+
  chat.messages.forEach(m=>{
-  const item=document.createElement("div");item.className="message "+(m.role==="user"?"user":"bot");
-  const label=document.createElement("small");label.textContent=m.role==="user"?"You":"DeenAI";
-  const content=document.createElement("div");content.textContent=m.text;
-  item.append(label,content);box.appendChild(item);
+  const item=document.createElement("div");
+  item.className="message "+(m.role==="user"?"user":"bot");
+
+  const label=document.createElement("small");
+  label.textContent=m.role==="user"?"You":"DeenAI";
+
+  const content=document.createElement("div");
+  content.textContent=m.text;
+
+  item.append(label,content);
+  box.appendChild(item);
  });
+
  box.scrollTop=box.scrollHeight;
 }
+
 async function sendMessage(){
  if(busy)return;
- const input=document.getElementById("userInput"),message=input.value.trim();if(!message)return;
- input.value="";const language=document.getElementById("language").value;
- addMessage("user",message);busy=true;
+
+ const input=document.getElementById("userInput");
+ const message=input.value.trim();
+ if(!message)return;
+
+ input.value="";
+ const language=document.getElementById("language").value;
+
+ addMessage("user",message);
+ busy=true;
  document.getElementById("sendButton").disabled=true;
  document.getElementById("status").textContent="DeenAI is thinking...";
+
  try{
-  const response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,language})});
-  const data=await response.json();if(!response.ok)throw new Error(data.detail||"Server error");
+  const response=await fetch(API_URL,{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({message,language})
+  });
+
+  const data=await response.json();
+  if(!response.ok)throw new Error(data.detail||"Server error");
+
   const answer=data.response||data.answer||data.reply||data.message;
   if(typeof answer!=="string")throw new Error("Unexpected server response");
-  addMessage("assistant",answer);document.getElementById("status").textContent="DeenAI is ready";
+
+  addMessage("assistant",answer);
+  document.getElementById("status").textContent="DeenAI is ready";
  }catch(error){
   addMessage("assistant","ക്ഷമിക്കണം. ഇപ്പോൾ മറുപടി ലഭിക്കുന്നില്ല. വീണ്ടും ശ്രമിക്കുക. ("+error.message+")");
   document.getElementById("status").textContent="Connection issue";
  }
- busy=false;document.getElementById("sendButton").disabled=false;
+
+ busy=false;
+ document.getElementById("sendButton").disabled=false;
 }
-function featureAsk(prompt){document.getElementById("userInput").value=prompt;sendMessage()}
+
+function featureAsk(prompt){
+ document.getElementById("userInput").value=prompt;
+ sendMessage();
+}
+
 function startVoice(){
  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
- if(!SpeechRecognition){alert("Voice input ഈ browser-ൽ support ചെയ്യുന്നില്ല.");return}
- const recognition=new SpeechRecognition(),lang=document.getElementById("language").value;
+ if(!SpeechRecognition){
+  alert("Voice input ഈ browser-ൽ support ചെയ്യുന്നില്ല.");
+  return;
+ }
+
+ const recognition=new SpeechRecognition();
+ const lang=document.getElementById("language").value;
+
  recognition.lang=lang==="Malayalam"?"ml-IN":lang==="Arabic"?"ar-SA":"en-IN";
  recognition.interimResults=false;
- recognition.onresult=e=>document.getElementById("userInput").value=e.results[0][0].transcript;
- recognition.onerror=()=>document.getElementById("status").textContent="Voice input failed. Try again.";
+
+ recognition.onresult=e=>{
+  document.getElementById("userInput").value=e.results[0][0].transcript;
+ };
+
+ recognition.onerror=()=>{
+  document.getElementById("status").textContent="Voice input failed. Try again.";
+ };
+
  recognition.start();
 }
+
 document.getElementById("language").addEventListener("change",function(){
- document.getElementById("userInput").placeholder=this.value==="Malayalam"?"ഇവിടെ ചോദ്യം എഴുതുക...":this.value==="Arabic"?"اكتب سؤالك هنا...":"Type your question here...";
+ document.getElementById("userInput").placeholder=
+ this.value==="Malayalam"?"ഇവിടെ ചോദ്യം എഴുതുക...":
+ this.value==="Arabic"?"اكتب سؤالك هنا...":"Type your question here...";
 });
 
 /* QURAN LEARNING */
@@ -325,121 +455,250 @@ function openQuran(){
  window.scrollTo(0,0);
  if(!allSurahs.length)loadSurahs();
 }
+
 function closeQuran(){
  stopSurah();
  document.getElementById("quranPage").style.display="none";
  document.getElementById("homePage").style.display="block";
  window.scrollTo(0,0);
 }
+
 async function loadSurahs(){
  const list=document.getElementById("surahList");
  list.innerHTML='<div class="loading">Loading Surahs...</div>';
+
  try{
   const res=await fetch(QURAN_API+"/surah");
   if(!res.ok)throw new Error("Could not load Surahs");
-  const json=await res.json();allSurahs=json.data||[];
+
+  const json=await res.json();
+  allSurahs=json.data||[];
+
+  if(!allSurahs.length)throw new Error("No Surahs returned");
+
   renderSurahs(allSurahs);
  }catch(e){
-  list.innerHTML='<div class="loading">Unable to load Quran list. Check your internet and try again.</div>';
+  list.innerHTML='<div class="loading">Unable to load Quran list. Check your internet and refresh.</div>';
  }
 }
+
 function renderSurahs(items){
  const list=document.getElementById("surahList");
- if(!items.length){list.innerHTML='<div class="loading">No Surahs found.</div>';return}
+
+ if(!items.length){
+  list.innerHTML='<div class="loading">No Surahs found.</div>';
+  return;
+ }
+
  list.innerHTML=items.map(s=>
-  '<button class="surah-card" onclick="openSurah('+s.number+')">'+
-  '<span class="surah-number">'+s.number+'</span>'+
+  '<button class="surah-card" onclick="openSurah('+Number(s.number)+')">'+
+  '<span class="surah-number">'+Number(s.number)+'</span>'+
   '<span class="surah-info"><strong>'+escapeHtml(s.englishName||s.name)+'</strong>'+
-  '<small>'+s.numberOfAyahs+' Ayahs • '+escapeHtml(s.revelationType||"")+'</small></span>'+
+  '<small>'+Number(s.numberOfAyahs)+' Ayahs • '+escapeHtml(s.revelationType||"")+'</small></span>'+
   '<span class="surah-arabic" dir="rtl">'+escapeHtml(s.name)+'</span></button>'
  ).join("");
 }
+
 function escapeHtml(value){
- return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+ return String(value??"").replace(/[&<>"']/g,ch=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[ch]));
 }
+
 function filterSurahs(){
  const q=document.getElementById("surahSearch").value.trim().toLowerCase();
- renderSurahs(allSurahs.filter(s=>String(s.number).includes(q)||String(s.name).toLowerCase().includes(q)||String(s.englishName).toLowerCase().includes(q)));
+
+ renderSurahs(allSurahs.filter(s=>
+  String(s.number).includes(q)||
+  String(s.name).toLowerCase().includes(q)||
+  String(s.englishName).toLowerCase().includes(q)
+ ));
 }
+
+function backToSurahs(){
+ stopSurah();
+ document.getElementById("surahReader").style.display="none";
+ document.getElementById("surahBrowser").style.display="block";
+}
+
 async function openSurah(number){
- const surah=allSurahs.find(s=>s.number===number);if(!surah)return;
- currentSurah=surah;currentTranslation=null;
+ const surah=allSurahs.find(s=>Number(s.number)===Number(number));
+ if(!surah)return;
+
+ stopSurah();
+ currentSurah=surah;
+ currentArabicAyahs=[];
+ currentTranslation=null;
+
  document.getElementById("surahBrowser").style.display="none";
  document.getElementById("surahReader").style.display="block";
+
  document.getElementById("readerArabicName").textContent=surah.name;
- document.getElementById("readerEnglishName").textContent=surah.englishName+" ("+surah.englishNameTranslation+")";
- document.getElementById("readerDetails").textContent=surah.numberOfAyahs+" Ayahs • "+surah.revelationType;
+ document.getElementById("readerEnglishName").textContent=surah.englishName;
+ document.getElementById("readerDetails").textContent=
+  surah.numberOfAyahs+" Ayahs • "+surah.revelationType;
+
  document.getElementById("translationToggle").value="no";
  document.getElementById("translationLanguage").classList.add("hidden");
- document.getElementById("ayahContainer").innerHTML='<div class="loading">Loading Surah...</div>';
- stopSurah();
+ document.getElementById("ayahContainer").innerHTML=
+  '<div class="loading">Loading Arabic Quran text...</div>';
+
+ document.getElementById("audioStatus").textContent="Select Play to listen to the full Surah.";
+
  try{
   const res=await fetch(QURAN_API+"/surah/"+number+"/quran-uthmani");
-  if(!res.ok)throw new Error("Surah could not be loaded");
-  const json=await res.json();currentArabicAyahs=json.data.ayahs||[];
-  renderAyahs();document.getElementById("audioStatus").textContent="Ready • Full Surah recitation";
- }catch(e){
-  document.getElementById("ayahContainer").innerHTML='<div class="loading">Unable to load this Surah. Please try again.</div>';
- }
-}
-function renderAyahs(){
- const box=document.getElementById("ayahContainer");
- if(!currentArabicAyahs.length){box.innerHTML='<div class="loading">No ayahs available.</div>';return}
- box.innerHTML=currentArabicAyahs.map((a,i)=>{
-  const tr=currentTranslation&&currentTranslation[i]?'<div class="ayah-translation" dir="auto">'+escapeHtml(currentTranslation[i].text)+'</div>':"";
-  return '<article class="ayah-card"><div class="ayah-number">'+(i+1)+'</div><div class="ayah-arabic" dir="rtl" lang="ar">'+escapeHtml(a.text)+'</div>'+tr+'</article>';
- }).join("");
-}
-function backToSurahs(){
- stopSurah();document.getElementById("surahReader").style.display="none";document.getElementById("surahBrowser").style.display="block";
-}
-function translationToggleChanged(){
- const enabled=document.getElementById("translationToggle").value==="yes";
- document.getElementById("translationLanguage").classList.toggle("hidden",!enabled);
- if(enabled)loadTranslation();else{currentTranslation=null;renderAyahs()}
-}
-async function loadTranslation(){
- if(!currentSurah||document.getElementById("translationToggle").value!=="yes")return;
- const lang=document.getElementById("translationLanguage").value;
- const box=document.getElementById("ayahContainer");
- if(lang==="as"){
-  currentTranslation=null;renderAyahs();
-  box.insertAdjacentHTML("afterbegin",'<p class="loading">Assamese translation is not currently available here.</p>');
-  return;
- }
- const edition=translationEditions[lang];if(!edition)return;
- box.innerHTML='<div class="loading">Loading translation...</div>';
- try{
-  const res=await fetch(QURAN_API+"/surah/"+currentSurah.number+"/"+edition);
-  if(!res.ok)throw new Error("Translation unavailable");
-  const json=await res.json();currentTranslation=json.data.ayahs||[];
+  if(!res.ok)throw new Error("Unable to load Quran text");
+
+  const json=await res.json();
+  currentArabicAyahs=json.data.ayahs||[];
+
+  if(!currentArabicAyahs.length)throw new Error("No verses received");
+
   renderAyahs();
  }catch(e){
-  currentTranslation=null;renderAyahs();
-  box.insertAdjacentHTML("afterbegin",'<div class="loading">This translation is unavailable. Please choose another language.</div>');
+  document.getElementById("ayahContainer").innerHTML=
+   '<div class="loading">Unable to load Quran text. Please check your internet and try again.</div>';
  }
 }
-const audioElement=document.getElementById("quranAudio");
-function playSurah(){
- if(!currentSurah){document.getElementById("audioStatus").textContent="Please select a Surah first.";return}
- audioElement.pause();audioElement.currentTime=0;
- audioElement.src=AUDIO_BASE+currentSurah.number+".mp3";audioElement.load();
- audioElement.play().then(()=>document.getElementById("audioStatus").textContent="Playing full Surah...").catch(()=>document.getElementById("audioStatus").textContent="Audio could not start. Check your internet connection.");
+
+function renderAyahs(){
+ const box=document.getElementById("ayahContainer");
+
+ if(!currentArabicAyahs.length){
+  box.innerHTML='<div class="loading">Quran text is unavailable.</div>';
+  return;
+ }
+
+ box.innerHTML=currentArabicAyahs.map((ayah,index)=>{
+  const translation=currentTranslation&&currentTranslation[index]
+   ?'<div class="ayah-translation">'+escapeHtml(currentTranslation[index].text)+'</div>'
+   :'';
+
+  return '<div class="ayah-card">'+
+   '<div class="ayah-number">Ayah '+ayah.numberInSurah+'</div>'+
+   '<div class="ayah-arabic" dir="rtl">'+escapeHtml(ayah.text)+'</div>'+
+   translation+
+   '</div>';
+ }).join("");
 }
+
+function translationToggleChanged(){
+ const enabled=document.getElementById("translationToggle").value==="yes";
+ const language=document.getElementById("translationLanguage");
+
+ if(enabled){
+  language.classList.remove("hidden");
+  loadTranslation();
+ }else{
+  language.classList.add("hidden");
+  currentTranslation=null;
+  renderAyahs();
+ }
+}
+
+async function loadTranslation(){
+ if(!currentSurah)return;
+
+ const language=document.getElementById("translationLanguage").value;
+ const box=document.getElementById("ayahContainer");
+
+ if(language==="as"){
+  currentTranslation=null;
+  renderAyahs();
+  box.insertAdjacentHTML("afterbegin",
+   '<div class="quran-note">Assamese translation is not currently available in this edition.</div>');
+  return;
+ }
+
+ const edition=translationEditions[language];
+ if(!edition)return;
+
+ box.innerHTML='<div class="loading">Loading translation...</div>';
+
+ try{
+  const res=await fetch(QURAN_API+"/surah/"+currentSurah.number+"/"+edition);
+  if(!res.ok)throw new Error("Translation not available");
+
+  const json=await res.json();
+  currentTranslation=json.data.ayahs||[];
+
+  if(!currentTranslation.length)throw new Error("No translation returned");
+
+  renderAyahs();
+ }catch(e){
+  currentTranslation=null;
+  renderAyahs();
+  box.insertAdjacentHTML("afterbegin",
+   '<div class="quran-note">ഈ ഭാഷയിലെ വിവർത്തനം ഇപ്പോൾ ലഭ്യമല്ല. Arabic text മാത്രം കാണിക്കുന്നു.</div>');
+ }
+}
+
+/* FULL SURAH AUDIO */
+function playSurah(){
+ if(!currentSurah){
+  alert("Please select a Surah first.");
+  return;
+ }
+
+ audioElement.pause();
+ audioElement.src=AUDIO_BASE+currentSurah.number+".mp3";
+ audioElement.load();
+
+ document.getElementById("audioStatus").textContent="Loading full Surah recitation...";
+
+ audioElement.play().then(()=>{
+  document.getElementById("audioStatus").textContent="Playing full Surah...";
+ }).catch(()=>{
+  document.getElementById("audioStatus").textContent="Unable to play audio. Please check your internet connection.";
+ });
+}
+
 function pauseSurah(){
  if(!audioElement.src)return;
- audioElement.pause();document.getElementById("audioStatus").textContent="Paused";
+ audioElement.pause();
+ document.getElementById("audioStatus").textContent="Paused";
 }
+
 function resumeSurah(){
- if(!audioElement.src){playSurah();return}
- audioElement.play().then(()=>document.getElementById("audioStatus").textContent="Playing full Surah...").catch(()=>document.getElementById("audioStatus").textContent="Unable to resume audio.");
+ if(!audioElement.src){
+  playSurah();
+  return;
+ }
+
+ audioElement.play().then(()=>{
+  document.getElementById("audioStatus").textContent="Playing full Surah...";
+ }).catch(()=>{
+  document.getElementById("audioStatus").textContent="Unable to resume audio.";
+ });
 }
+
 function stopSurah(){
  if(!audioElement)return;
- audioElement.pause();audioElement.currentTime=0;audioElement.removeAttribute("src");audioElement.load();
- const status=document.getElementById("audioStatus");if(status)status.textContent="Stopped";
+
+ audioElement.pause();
+ audioElement.currentTime=0;
+ audioElement.removeAttribute("src");
+ audioElement.load();
+
+ const status=document.getElementById("audioStatus");
+ if(status)status.textContent="Stopped";
 }
-audioElement.addEventListener("ended",()=>document.getElementById("audioStatus").textContent="Surah recitation completed.");
+
+audioElement.addEventListener("ended",()=>{
+ document.getElementById("audioStatus").textContent="Surah recitation completed.";
+});
+
+audioElement.addEventListener("error",()=>{
+ if(audioElement.src){
+  document.getElementById("audioStatus").textContent="Audio could not be loaded. Please try again later.";
+ }
+});
+
+/* START APP */
 loadChats();
 </script>
 </body>
