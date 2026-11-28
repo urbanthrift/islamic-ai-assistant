@@ -449,14 +449,55 @@ loadChats();
 #deenaiAiWindow .messages{min-height:180px;max-height:48vh;overflow-y:auto}
 #deenaiAiClose{float:right;background:transparent;color:#f5dfa0;border:1px solid rgba(217,180,92,.4);border-radius:9px;padding:7px 12px;font-size:18px}
 @media(max-width:600px){#deenaiAiOverlay{padding:8px}#deenaiAiWindow{max-height:86vh}#deenaiAiWindow .messages{max-height:48vh}#deenaiAiFab{right:14px;bottom:14px}}
+#deenaiAiWindow{width:min(820px,100%);max-height:88vh;overflow:auto;background:#f6f4eb!important;color:#244735!important}
+#deenaiAiPopupLayout{display:grid;grid-template-columns:minmax(190px,245px) minmax(0,1fr);gap:12px;margin-top:10px;min-height:0}
+#deenaiAiPopupTools{display:flex;flex-direction:column;gap:10px;min-width:0;padding:12px;background:#fffefa;border:1px solid rgba(35,91,62,.15);border-radius:13px}
+#deenaiAiLanguageRow{display:flex;justify-content:flex-end}
+#deenaiAiLanguageRow #language{width:100%;max-width:100%;background:#f6f4eb;color:#174b35;border:1px solid rgba(35,91,62,.2);border-radius:9px;padding:10px}
+#deenaiAiPopupNewChat .new-btn{width:100%;}
+#deenaiAiPopupHistoryTitle .section-label{color:#174b35;font-weight:800;letter-spacing:1.4px}
+#deenaiAiPopupHistory{min-height:70px;max-height:34vh;overflow:auto}
+#deenaiAiPopupHistory .history-item{color:#244b38!important}
+#deenaiAiPopupClearHistory{margin-top:auto}
+#deenaiAiPopupClearHistory .clear-history-btn{width:100%;}
+#deenaiAiPopupMain{min-width:0;min-height:0}
+#deenaiAiWindow .chat-panel{max-height:calc(88vh - 75px);min-height:420px}
+#deenaiAiWindow .messages{max-height:48vh;min-height:180px}
+@media(max-width:600px){
+ #deenaiAiOverlay{padding:7px;align-items:flex-end;justify-content:center}
+ #deenaiAiWindow{width:100%;max-height:91vh;padding:9px}
+ #deenaiAiPopupLayout{grid-template-columns:minmax(0,1fr);gap:8px;margin-top:7px}
+ #deenaiAiPopupTools{gap:7px;padding:9px}
+ #deenaiAiPopupHistory{max-height:13vh;min-height:40px}
+ #deenaiAiPopupMain{min-height:0}
+ #deenaiAiWindow .chat-panel{max-height:none;min-height:0}
+ #deenaiAiWindow .messages{max-height:30vh;min-height:120px}
+ #deenaiAiFab{right:14px;bottom:14px}
+}
 </style>
 <button id="deenaiAiFab" type="button" aria-label="Open DeenAI assistant" onclick="toggleDeenAIAssistant(true)"><span>☪</span><span>AI</span></button>
 <div id="deenaiAiOverlay" role="dialog" aria-modal="true" aria-label="DeenAI Assistant" onclick="if(event.target===this)toggleDeenAIAssistant(false)">
- <div id="deenaiAiWindow"><button id="deenaiAiClose" type="button" aria-label="Close AI assistant" onclick="toggleDeenAIAssistant(false)">×</button><div style="clear:both"></div></div>
+ <div id="deenaiAiWindow"><button id="deenaiAiClose" type="button" aria-label="Close AI assistant" onclick="toggleDeenAIAssistant(false)">×</button><div style="clear:both"></div><div id="deenaiAiPopupLayout"><aside id="deenaiAiPopupTools"><div id="deenaiAiLanguageRow"></div><div id="deenaiAiPopupNewChat"></div><div id="deenaiAiPopupHistoryTitle"></div><div id="deenaiAiPopupHistory"></div><div id="deenaiAiPopupClearHistory"></div></aside><div id="deenaiAiPopupMain"></div></div></div>
 </div>
 <script>
 function toggleDeenAIAssistant(open){const overlay=document.getElementById('deenaiAiOverlay');if(!overlay)return;overlay.classList.toggle('open',!!open);document.getElementById('deenaiAiFab').style.display=open?'none':'flex';if(open){const input=document.getElementById('userInput');if(input)setTimeout(()=>input.focus(),80)}}
-(function(){const panel=document.querySelector('#homePage .chat-panel');const target=document.getElementById('deenaiAiWindow');if(panel&&target)target.appendChild(panel);document.addEventListener('keydown',e=>{if(e.key==='Escape')toggleDeenAIAssistant(false)});})();
+(function(){
+ const byId=id=>document.getElementById(id);
+ const panel=document.querySelector('#homePage .chat-panel');
+ const target=byId('deenaiAiPopupMain');
+ const language=byId('language');
+ const newChatButton=document.querySelector('.sidebar .new-btn');
+ const historyTitle=document.querySelector('.sidebar .section-label');
+ const history=byId('history');
+ const clearButton=document.querySelector('.sidebar .clear-history-btn');
+ if(language)byId('deenaiAiLanguageRow').appendChild(language);
+ if(newChatButton)byId('deenaiAiPopupNewChat').appendChild(newChatButton);
+ if(historyTitle)byId('deenaiAiPopupHistoryTitle').appendChild(historyTitle);
+ if(history)byId('deenaiAiPopupHistory').appendChild(history);
+ if(clearButton)byId('deenaiAiPopupClearHistory').appendChild(clearButton);
+ if(panel&&target)target.appendChild(panel);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')toggleDeenAIAssistant(false)});
+})();
 </script>
 
 
