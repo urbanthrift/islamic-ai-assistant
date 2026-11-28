@@ -1,25 +1,61 @@
 import os
 import logging
+from typing import List, Literal
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from google import genai
+from google.genai import types
+from slowapi import Limiter
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("islamic-ai")
 
+
+def client_ip(request: Request) -> str:
+    # Render sits behind a proxy, so the real client IP is in X-Forwarded-For
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return get_remote_address(request)
+
+
+limiter = Limiter(key_func=client_ip)
+
 app = FastAPI(
     title="Islamic AI Assistant",
     description="Multilingual Islamic AI Assistant",
-    version="1.1.0"
+    version="1.2.0"
 )
+app.state.limiter = limiter
+
+
+@app.exception_handler(RateLimitExceeded)
+async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
+    # The frontend reads `detail`, so keep that key
+    return JSONResponse(
+        status_code=429,
+        content={"detail": "Too many requests. Please wait a minute and try again."},
+    )
+
+
+# Only your site may call this API from a browser.
+# Add more origins (e.g. a custom domain) via the ALLOWED_ORIGINS env var, comma-separated.
+ALLOWED_ORIGINS = [
+    o.strip()
+    for o in os.environ.get("ALLOWED_ORIGINS", "https://urbanthrift.github.io").split(",")
+    if o.strip()
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=ALLOWED_ORIGINS,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
 )
 
 MODEL_NAME = "gemini-3.5-flash-lite"
@@ -62,34 +98,66 @@ BEHAVIOUR:
 - Keep answers clear and organised.
 """
 
+MAX_HISTORY_MESSAGES = 10
+
+
+class HistoryItem(BaseModel):
+    role: Literal["user", "assistant"]
+    text: str = Field(max_length=6000)
+
+
 class ChatRequest(BaseModel):
     message: str = Field(min_length=1, max_length=10000)
     language: str = Field(default="Malayalam", max_length=30)
+    history: List[HistoryItem] = Field(default_factory=list, max_length=40)
+
+
+def build_contents(history: List[HistoryItem], message: str, language: str):
+    """Turn recent chat history + the new message into Gemini `contents`."""
+    turns = []
+    for item in history[-MAX_HISTORY_MESSAGES:]:
+        role = "user" if item.role == "user" else "model"
+        # merge consecutive same-role turns (e.g. after a failed reply)
+        if turns and turns[-1]["role"] == role:
+            turns[-1]["parts"][0]["text"] += "\n" + item.text
+        else:
+            turns.append({"role": role, "parts": [{"text": item.text}]})
+
+    # Gemini conversations must start with a user turn
+    while turns and turns[0]["role"] != "user":
+        turns.pop(0)
+
+    final = f"[Preferred response language: {language}]\n{message}"
+    if turns and turns[-1]["role"] == "user":
+        turns[-1]["parts"][0]["text"] += "\n" + final
+    else:
+        turns.append({"role": "user", "parts": [{"text": final}]})
+    return turns
 
 @app.get("/")
 def home():
-    return {"status": "online", "name": "Islamic AI Assistant", "version": "1.1.0", "model": MODEL_NAME}
+    return {"status": "online", "name": "Islamic AI Assistant", "version": "1.2.0", "model": MODEL_NAME}
 
 @app.get("/health")
 def health():
     return {"status": "healthy", "api_key_configured": client is not None}
 
 @app.post("/chat")
-def chat(request: ChatRequest):
+@limiter.limit("10/minute")
+@limiter.limit("100/day")
+def chat(request: Request, payload: ChatRequest):
     if client is None:
         raise HTTPException(status_code=503, detail="Gemini API key is not configured.")
 
     allowed = {"Malayalam", "English", "Hindi", "Arabic"}
-    language = request.language if request.language in allowed else "Malayalam"
-    prompt = f"""{SYSTEM_PROMPT}
-
-Preferred response language: {language}
-
-User question:
-{request.message}
-"""
+    language = payload.language if payload.language in allowed else "Malayalam"
+    contents = build_contents(payload.history, payload.message, language)
     try:
-        response = client.models.generate_content(model=MODEL_NAME, contents=prompt)
+        response = client.models.generate_content(
+            model=MODEL_NAME,
+            contents=contents,
+            config=types.GenerateContentConfig(system_instruction=SYSTEM_PROMPT),
+        )
         answer = response.text
         if not answer:
             raise HTTPException(status_code=502, detail="The AI returned an empty response.")
