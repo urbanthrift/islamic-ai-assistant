@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#061d18">
+<meta name="theme-color" content="#f6f4eb">
 <title>DeenAI - Learn • Ask • Grow</title>
 <style>
 :root{--bg:#061d18;--panel:#0c2921;--panel2:#10372b;--gold:#d9b45c;--gold2:#f5dfa0;--white:#f7f3e8;--muted:#a8b9ad;--border:rgba(217,180,92,.2)}
@@ -140,6 +140,109 @@ select,.reader-settings select,.translation-settings select,.tasbih-card select{
 @media(max-width:700px){.nf-form{grid-template-columns:1fr}.nf-check-grid{grid-template-columns:1fr}.nf-names-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.new-features-page{padding-left:2px;padding-right:2px}}
 </style>
 
+
+<style id="deenai-premium-homepage-v2">
+:root{--home-emerald:#174b35;--home-deep:#103c2b;--home-gold:#d2ad63;--home-cream:#fbfaf5}
+.main{max-width:1600px;margin:0 auto;padding:26px clamp(16px,3vw,46px) 40px}
+.topbar{padding:4px 2px 18px;border-bottom:1px solid rgba(35,91,62,.11)}
+.topbar h2{font-family:Georgia,serif!important;font-size:17px!important;letter-spacing:.03em}
+.topbar select{min-width:132px;box-shadow:0 4px 14px rgba(23,75,53,.05)}
+.deenai-home-hero{position:relative;isolation:isolate;overflow:hidden;min-height:330px;margin:24px 0 34px;padding:48px clamp(24px,5vw,68px) 52px!important;text-align:left!important;display:flex;align-items:center;justify-content:space-between;gap:24px;border:1px solid rgba(210,173,99,.42)!important;border-radius:27px!important;background:radial-gradient(ellipse at 83% 40%,rgba(69,120,81,.42),transparent 36%),radial-gradient(ellipse at 10% 0%,rgba(255,255,255,.09),transparent 42%),linear-gradient(116deg,#103b2b 0%,#174b35 53%,#0c3023 100%)!important;box-shadow:0 22px 54px rgba(23,75,53,.18),inset 0 1px rgba(255,255,255,.13)!important;color:#fffdf5!important}
+.deenai-home-hero:before{content:"";position:absolute;inset:12px;border:1px solid rgba(232,207,151,.19);border-radius:19px;pointer-events:none;z-index:-1}
+.deenai-home-hero:after{content:"";position:absolute;width:330px;height:330px;border:1px solid rgba(232,207,151,.13);border-radius:50%;right:15%;top:-190px;box-shadow:0 0 0 24px rgba(232,207,151,.035),0 0 0 48px rgba(232,207,151,.025);pointer-events:none;z-index:-1}
+.hero-copy{position:relative;z-index:2;max-width:690px}.hero-eyebrow{display:inline-flex;align-items:center;gap:9px;color:#e7d5a6;font-size:10px;font-weight:700;letter-spacing:2.2px;margin-bottom:18px}.eyebrow-dot{width:7px;height:7px;border-radius:50%;background:#d9bb78;box-shadow:0 0 0 5px rgba(217,187,120,.13)}
+.hero-arabic{font-family:"Times New Roman",serif;color:#e6d2a0;font-size:23px;letter-spacing:.04em;margin-bottom:7px}.deenai-home-hero h1{font-family:Georgia,serif!important;font-weight:500!important;color:#fffdf5!important;font-size:clamp(34px,4.2vw,54px)!important;line-height:1.12;margin:0 0 14px!important;letter-spacing:-1.1px}.deenai-home-hero h1 em{font-style:normal;color:#e7ca88}.deenai-home-hero p{max-width:570px;color:rgba(255,253,245,.8)!important;font-size:15px;line-height:1.9;margin:0 0 17px}.deenai-home-hero .tagline{color:#e8ce94!important;font-size:11px;letter-spacing:3.6px;font-weight:700}.deenai-home-hero .tagline i{font-style:normal;color:#c5a45f;padding:0 3px}
+.hero-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:26px}.hero-actions button{border-radius:999px;padding:13px 20px;font-size:13px;font-weight:700;transition:transform .2s,box-shadow .2s}.hero-actions button:hover{transform:translateY(-2px)}.hero-primary{background:linear-gradient(135deg,#ead49e,#c9a65e);border:1px solid rgba(255,255,255,.25);color:#173e2c;box-shadow:0 8px 22px rgba(0,0,0,.16)}.hero-secondary{background:rgba(255,255,255,.08);border:1px solid rgba(237,219,174,.45);color:#fff9e9}
+.hero-art{position:relative;flex:0 0 300px;width:300px;height:260px;display:grid;place-items:center;margin-right:3%;z-index:1}.hero-art-orbit{position:absolute;border:1px solid rgba(232,207,151,.27);border-radius:50%;width:238px;height:238px}.orbit-two{width:190px;height:190px;border-style:dashed;opacity:.7}.hero-art-moon{font-family:Georgia,serif;font-size:130px;line-height:1;color:#e6c982;text-shadow:0 8px 35px rgba(0,0,0,.2);transform:translate(4px,-7px);z-index:2}.hero-art-star{position:absolute;top:15px;right:58px;color:#f4dfae;font-size:27px}.hero-art-arch{position:absolute;bottom:5px;width:112px;height:128px;border:1px solid rgba(232,207,151,.52);border-bottom:0;border-radius:60px 60px 0 0;background:linear-gradient(180deg,rgba(232,207,151,.14),rgba(232,207,151,.015));display:flex;justify-content:center;align-items:center;z-index:3}.arch-inner{font-family:"Times New Roman",serif;color:#f1dfb5;font-size:23px;text-align:center;padding-top:28px}.arch-inner span{display:block;font:700 9px Arial,sans-serif;letter-spacing:3px;margin-top:7px;color:#e4ca8e}.hero-art-spark{position:absolute;color:#e8d4a4;font-size:20px}.spark-one{left:26px;top:52px}.spark-two{right:25px;bottom:42px}.hero-bottom-note{position:absolute;bottom:15px;left:0;right:0;text-align:center;color:rgba(245,230,193,.65);font-size:10px;letter-spacing:.6px}.hero-bottom-note span{color:#d7b66f;padding:0 8px}
+.home-section-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 2px 16px}.home-kicker{font-size:9px;letter-spacing:2px;font-weight:800;color:#a17c3d}.home-section-heading h2{font:600 clamp(22px,2.6vw,29px) Georgia,serif;color:#174b35;margin:6px 0}.home-section-heading p{font-size:13px;color:#718075;margin:0;line-height:1.6}.section-ornament{color:#c09a52;font-size:28px;padding:0 8px 7px}
+.features{grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:0 0 24px}.features .feature{position:relative;min-height:116px;padding:18px 12px 16px;border-radius:17px!important;text-align:left;display:flex;align-items:center;gap:13px;overflow:hidden;box-shadow:0 5px 18px rgba(35,74,49,.055)!important;transition:transform .2s,box-shadow .2s,border-color .2s}.features .feature:after{content:"";position:absolute;width:70px;height:70px;border:1px solid rgba(35,91,62,.07);border-radius:50%;right:-30px;bottom:-35px}.features .feature:hover{transform:translateY(-3px);box-shadow:0 13px 27px rgba(35,74,49,.11)!important}.features .feature .emoji{flex:0 0 43px;width:43px;height:43px;display:grid;place-items:center;margin:0;border-radius:13px;background:#e7efe4;font-size:23px}.features .feature strong{font-family:Georgia,serif;font-size:14px;line-height:1.45;max-width:150px}.home-promise-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:8px 0 28px}.home-promise-strip>div{display:grid;grid-template-columns:38px 1fr;column-gap:10px;align-items:center;padding:14px 16px;border:1px solid rgba(35,91,62,.12);border-radius:15px;background:rgba(255,254,250,.75)}.home-promise-strip>div>span{grid-row:span 2;width:36px;height:36px;display:grid;place-items:center;border-radius:11px;background:#e8f0e7;font-size:18px}.home-promise-strip strong{font:600 13px Georgia,serif;color:#214a35}.home-promise-strip small{font-size:10px;color:#7a887d;margin-top:3px}
+#homePage .chat-panel{border-radius:19px!important;box-shadow:0 12px 32px rgba(35,74,49,.07)!important}#homePage .chat-heading{padding:17px 20px}#homePage .chat-heading h3{font-family:Georgia,serif;font-size:18px}#homePage .messages{min-height:180px}
+@media(max-width:1050px){.features{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-art{flex-basis:240px;width:240px;transform:scale(.9);margin-right:0}}
+@media(max-width:700px){.main{padding:15px 13px 32px}.topbar{padding-bottom:13px}.deenai-home-hero{min-height:0;margin:17px 0 25px;padding:30px 22px 48px!important;border-radius:21px!important}.hero-art{position:absolute;right:-45px;top:10px;width:170px;height:170px;opacity:.28;transform:scale(.85);pointer-events:none}.hero-art-orbit{width:155px;height:155px}.orbit-two{width:122px;height:122px}.hero-art-moon{font-size:90px}.hero-art-arch{transform:scale(.72);bottom:-3px}.hero-art-star{right:28px}.hero-copy{max-width:100%}.hero-eyebrow{font-size:8px;letter-spacing:1.5px;margin-bottom:15px}.hero-arabic{font-size:19px}.deenai-home-hero h1{font-size:35px!important;max-width:300px}.deenai-home-hero p{font-size:13px;max-width:310px}.hero-actions{margin-top:20px}.hero-actions button{padding:12px 15px;font-size:11px}.hero-bottom-note{font-size:8px;letter-spacing:0}.home-section-heading{align-items:center}.home-section-heading p{font-size:11px}.features{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.features .feature{min-height:94px;padding:12px 9px;gap:9px;border-radius:14px!important}.features .feature .emoji{flex-basis:36px;width:36px;height:36px;font-size:19px;border-radius:11px}.features .feature strong{font-size:12px}.home-promise-strip{grid-template-columns:1fr;gap:8px}.home-promise-strip>div{padding:11px 13px}.home-promise-strip small{font-size:10px}}
+@media(max-width:380px){.deenai-home-hero h1{font-size:30px!important}.hero-actions{gap:7px}.hero-actions button{font-size:10px;padding:11px 12px}.features .feature{gap:7px}.features .feature .emoji{flex-basis:32px;width:32px;height:32px;font-size:17px}.features .feature strong{font-size:11px}}
+
+/* DeenAI Premium Dashboard Home */
+#homePage{max-width:1240px;margin:0 auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.topbar:before{content:none}.home-brand{display:flex;align-items:center;gap:9px;order:-1;color:#174b35;font:700 17px Georgia,serif}.home-brand img{width:34px;height:34px;object-fit:contain;border-radius:9px}.home-brand small{display:block;font:600 8px Arial,sans-serif;letter-spacing:1.3px;color:#9b793e;margin-top:2px}
+.topbar h2{margin:0!important;font-size:13px!important;color:#718075!important}
+#homePage .deenai-home-hero{min-height:260px;margin:18px 0 22px;padding:36px clamp(22px,4vw,54px) 40px!important}
+#homePage .hero-art{transform:scale(.88)}
+.home-dash-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin:0 0 24px}
+.home-dash-card{position:relative;overflow:hidden;border:1px solid rgba(35,91,62,.13);border-radius:19px;background:linear-gradient(145deg,#fffefa,#f3f7ef);padding:19px 20px;box-shadow:0 8px 24px rgba(35,74,49,.055);color:#244735}
+.home-dash-label{font-size:10px;font-weight:800;letter-spacing:1.6px;color:#9b793e;text-transform:uppercase}
+.home-prayer-card{background:linear-gradient(125deg,#174b35,#103c2b);color:#fffdf5;border-color:rgba(210,173,99,.42);min-height:164px}
+.home-prayer-card .home-dash-label{color:#e8ce94}.home-prayer-name{font:500 27px Georgia,serif;margin:9px 0 3px;color:#fffdf5}.home-prayer-time{font-size:14px;color:#e8d8b3}.home-prayer-count{font-size:12px;color:rgba(255,253,245,.75);margin-top:10px}.home-prayer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.home-prayer-actions button{border-radius:999px;padding:8px 12px;font-size:11px;font-weight:700;border:1px solid rgba(238,220,177,.4);background:rgba(255,255,255,.08);color:#fff8e7}.home-prayer-actions button:first-child{background:#e5cc91;color:#173e2c;border-color:#e5cc91}
+.home-quote-card{min-height:164px}.home-quote-ar{font:26px/1.8 "Times New Roman",serif;text-align:right;direction:rtl;color:#174b35;margin:7px 0}.home-quote-translation{font-size:13px;line-height:1.75;color:#536b5a}.home-quote-source{font-size:10px;color:#9b793e;margin-top:8px}
+.home-hadith-card{grid-column:1/-1;display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:start;padding:16px 19px}.home-hadith-icon{width:40px;height:40px;display:grid;place-items:center;background:#e8f0e7;border-radius:13px;font-size:20px}.home-hadith-card .home-quote-ar{font-size:21px;margin:3px 0}.home-section-heading{margin-top:24px}
+.home-ibadah-card{margin:0 0 18px}.home-ibadah-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.home-ibadah-count{font:600 22px Georgia,serif;color:#174b35}.home-ibadah-bar{height:9px;border-radius:20px;background:#e5ece2;overflow:hidden;margin:12px 0}.home-ibadah-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#b28a3e,#245f43);border-radius:20px;transition:width .2s}.home-ibadah-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.home-ibadah-list label{display:flex;align-items:center;gap:8px;padding:10px 11px;background:#f3f6ef;border:1px solid rgba(35,91,62,.1);border-radius:11px;color:#355743;font-size:12px}.home-ibadah-list input{accent-color:#245f43;width:15px;height:15px}.home-reminder-card{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 24px;background:linear-gradient(110deg,#f5f0e2,#fffefa);border-color:rgba(178,138,62,.2)}.home-reminder-card h3{font:600 19px Georgia,serif;color:#174b35;margin:5px 0}.home-reminder-card p{font-size:12px;line-height:1.7;color:#617365;margin:0}.home-reminder-card button{flex-shrink:0;border:0;border-radius:999px;padding:11px 15px;background:#174b35;color:#fff;font-weight:700;font-size:11px}
+#homePage .chat-panel{display:none!important}
+@media(max-width:700px){.topbar:before{font-size:16px}.topbar h2{font-size:10px!important}.home-dash-grid{grid-template-columns:1fr;gap:10px}.home-hadith-card{grid-column:auto}.home-ibadah-list{grid-template-columns:repeat(2,minmax(0,1fr))}.home-dash-card{padding:16px}.home-prayer-card,.home-quote-card{min-height:0}.home-reminder-card{align-items:flex-start;flex-direction:column}.home-reminder-card button{width:100%}#homePage .deenai-home-hero{min-height:0;padding:27px 20px 43px!important}}
+
+
+/* Reference-matched DeenAI dashboard refinement */
+#homePage{max-width:1180px;margin:0 auto}
+#homePage .topbar{padding:8px 2px 14px;margin-bottom:2px;border-bottom:1px solid rgba(35,91,62,.10)}
+#homePage .home-brand{font-size:19px;gap:11px}
+#homePage .home-brand img{width:42px;height:42px}
+#homePage .topbar h2{font:600 14px Georgia,serif!important;color:#42664f!important}
+#homePage .deenai-home-hero{min-height:210px;margin:17px 0 18px;padding:27px clamp(22px,4vw,46px) 35px!important;border-radius:23px!important;background:linear-gradient(115deg,#174b35 0%,#236448 58%,#315f43 100%)!important;box-shadow:0 13px 32px rgba(23,75,53,.15)!important}
+#homePage .hero-eyebrow{color:#e7d6a8}
+#homePage .hero-arabic{color:#f0dca7}
+#homePage .deenai-home-hero h1{font-size:clamp(30px,3.4vw,43px)!important}
+#homePage .deenai-home-hero p{max-width:540px}
+#homePage .home-dash-grid{grid-template-columns:1fr 1fr;gap:13px;margin-bottom:22px}
+#homePage .home-prayer-card{grid-column:1/-1;min-height:145px;padding:19px 22px}
+#homePage .home-quote-card,#homePage .home-hadith-card{grid-column:auto;min-height:174px}
+#homePage .home-hadith-card{display:block;padding:19px 20px}
+#homePage .home-hadith-icon{float:right;margin-left:10px}
+#homePage .home-section-heading{margin:22px 2px 14px}
+#homePage .features{grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+#homePage .features .feature{min-height:91px;padding:13px 11px;border-radius:15px!important}
+#homePage .features .feature .emoji{width:38px;height:38px;flex-basis:38px;font-size:20px}
+#homePage .features .feature strong{font-size:13px}
+#homePage .home-ibadah-card{margin-top:2px}
+#homePage .home-reminder-card{margin-top:14px}
+#homePage .home-promise-strip{display:none!important}
+@media(max-width:700px){
+ .sidebar{display:none!important}
+ .app{display:block!important}
+ .main{padding:12px 13px 90px!important}
+ #homePage .topbar{display:grid;grid-template-columns:1fr auto;gap:8px;padding:5px 1px 12px}
+ #homePage .home-brand{grid-column:1;grid-row:1;font-size:17px}
+ #homePage .home-brand img{width:39px;height:39px}
+ #homePage .topbar h2{grid-column:1/-1;grid-row:2;font-size:12px!important;text-align:left!important}
+ #homePage .topbar select{grid-column:2;grid-row:1;max-width:112px;padding:8px 6px;font-size:11px}
+ #homePage .deenai-home-hero{margin:13px 0 15px;padding:24px 18px 37px!important;min-height:0;border-radius:19px!important}
+ #homePage .hero-art{right:-35px;top:0;opacity:.24}
+ #homePage .hero-eyebrow{font-size:8px}
+ #homePage .deenai-home-hero h1{font-size:30px!important}
+ #homePage .deenai-home-hero p{font-size:12px;line-height:1.7}
+ #homePage .hero-actions button{font-size:10px;padding:10px 12px}
+ #homePage .home-dash-grid{grid-template-columns:1fr 1fr;gap:9px;margin-bottom:19px}
+ #homePage .home-prayer-card{grid-column:1/-1;min-height:0;padding:17px}
+ #homePage .home-quote-card,#homePage .home-hadith-card{grid-column:auto;min-height:172px;padding:13px 12px}
+ #homePage .home-hadith-card{display:block}
+ #homePage .home-hadith-icon{float:none;width:30px;height:30px;font-size:15px;margin:0 0 7px}
+ #homePage .home-dash-label{font-size:8px;letter-spacing:1px}
+ #homePage .home-quote-ar{font-size:19px;line-height:1.7}
+ #homePage .home-hadith-card .home-quote-ar{font-size:17px}
+ #homePage .home-quote-translation{font-size:11px;line-height:1.55}
+ #homePage .home-quote-source{font-size:9px}
+ #homePage .home-section-heading h2{font-size:21px}
+ #homePage .home-section-heading p{font-size:10px}
+ #homePage .features{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ #homePage .features .feature{min-height:91px;padding:10px 7px;display:flex;flex-direction:column;align-items:flex-start;gap:7px}
+ #homePage .features .feature .emoji{width:31px;height:31px;flex-basis:31px;font-size:17px;border-radius:10px}
+ #homePage .features .feature strong{font-size:10px;line-height:1.35}
+ #homePage .home-ibadah-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #homePage .home-reminder-card{padding:16px}
+ #deenaiAiFab{right:14px;bottom:14px}
+}
+@media(max-width:370px){#homePage .features{grid-template-columns:repeat(2,minmax(0,1fr))}#homePage .home-dash-grid{grid-template-columns:1fr}#homePage .home-quote-card,#homePage .home-hadith-card{min-height:0}}
+
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -153,10 +256,26 @@ select,.reader-settings select,.translation-settings select,.tasbih-card select{
  </div>
 </aside>
 <main class="main">
- <div class="topbar"><h2>السلام عليكم ورحمة الله وبركاته</h2><select id="language" aria-label="Website language"><option value="Malayalam">മലയാളം</option><option value="English">English</option><option value="Hindi">हिन्दी</option><option value="Arabic">العربية</option></select></div>
+ <div class="topbar"><div class="home-brand"><img src="deenai-logo.png" alt="DeenAI"><span>DeenAI<small>LEARN • ASK • GROW</small></span></div><h2>السلام عليكم ورحمة الله وبركاته</h2><select id="language" aria-label="Website language"><option value="Malayalam">മലയാളം</option><option value="English">English</option><option value="Hindi">हिन्दी</option><option value="Arabic">العربية</option></select></div>
  <div id="homePage">
-  <section class="hero"><div class="crescent">☪</div><h1>Welcome to DeenAI</h1><p>നിങ്ങളുടെ ഇസ്‌ലാമിക അറിവുകളുടെ വിശ്വസ്ത സഹായി</p><div class="tagline">LEARN • ASK • GROW</div></section>
-  <h3 style="color:var(--gold2)">Explore Islamic Knowledge</h3>
+  <section class="hero deenai-home-hero">
+   <div class="hero-copy">
+    <div class="hero-eyebrow"><span class="eyebrow-dot"></span> YOUR ISLAMIC KNOWLEDGE COMPANION</div>
+    <div class="hero-arabic" lang="ar" dir="rtl">السَّلَامُ عَلَيْكُمْ</div>
+    <h1>Welcome to <em>DeenAI</em></h1>
+    <p>നിങ്ങളുടെ ഇസ്‌ലാമിക അറിവുകളിലേക്കുള്ള മനോഹരമായൊരു യാത്ര ഇവിടെ തുടങ്ങുന്നു.</p>
+    <div class="tagline">LEARN <i>•</i> ASK <i>•</i> GROW</div>
+    <div class="hero-actions"><button type="button" class="hero-primary" onclick="toggleDeenAIAssistant(true)">☪ &nbsp; Ask DeenAI</button><button type="button" class="hero-secondary" onclick="openQuran()">Explore the Quran &nbsp; →</button></div>
+   </div>
+   <div class="hero-art" aria-hidden="true"><div class="hero-art-orbit orbit-one"></div><div class="hero-art-orbit orbit-two"></div><div class="hero-art-star">✦</div><div class="hero-art-moon">☾</div><div class="hero-art-arch"><div class="arch-inner">﷽<span>DEENAI</span></div></div><div class="hero-art-spark spark-one">✧</div><div class="hero-art-spark spark-two">✦</div></div>
+   <div class="hero-bottom-note"><span>✧</span> A little learning every day brings lasting light <span>✧</span></div>
+  </section>
+  <section class="home-dash-grid" aria-label="Daily Islamic dashboard">
+   <article class="home-dash-card home-prayer-card"><div class="home-dash-label">🕌 NEXT PRAYER</div><div class="home-prayer-name" id="homeNextPrayer">നമസ്കാര സമയം</div><div class="home-prayer-time" id="homeNextPrayerTime">Location അനുവദിച്ചാൽ സമയങ്ങൾ കാണാം</div><div class="home-prayer-count" id="homePrayerCountdown">നിങ്ങളുടെ പ്രാദേശിക നമസ്കാര സമയങ്ങൾ ലഭ്യമാക്കുക</div><div class="home-prayer-actions"><button type="button" onclick="loadPrayerData()">Enable Location</button><button type="button" onclick="openPrayer()">All Prayer Times →</button></div></article>
+   <article class="home-dash-card home-quote-card"><div class="home-dash-label">📖 TODAY'S AYAH</div><div class="home-quote-ar" lang="ar" dir="rtl">فَإِنَّ مَعَ الْعُسْرِ يُسْرًا</div><div class="home-quote-translation">തീർച്ചയായും പ്രയാസത്തോടൊപ്പം എളുപ്പവുമുണ്ട്.</div><div class="home-quote-source">ഖുർആൻ 94:5 • സൂറത്ത് അശ്ശർഹ്</div></article>
+   <article class="home-dash-card home-hadith-card"><div class="home-hadith-icon">📚</div><div><div class="home-dash-label">TODAY'S HADITH</div><div class="home-quote-ar" id="homeHadithArabic" lang="ar" dir="rtl"></div><div class="home-quote-translation" id="homeHadithMeaning"></div><div class="home-quote-source" id="homeHadithSource"></div></div></article>
+  </section>
+  <div class="home-section-heading"><div><span class="home-kicker">DISCOVER • LEARN • PRACTICE</span><h2>Explore Islamic Knowledge</h2><p>Everything you need to learn, reflect and grow — all in one place.</p></div><span class="section-ornament">✦</span></div>
   <section class="features">
    <button class="feature" onclick="openQuran()"><span class="emoji">📖</span><strong>Quran Learning</strong></button>
    <button class="feature" onclick="openHadith()"><span class="emoji">📚</span><strong>Hadith Library</strong></button>
@@ -182,6 +301,9 @@ select,.reader-settings select,.translation-settings select,.tasbih-card select{
    <button class="feature" onclick="openNewFeature('wallpaper')"><span class="emoji">🖼️</span><strong>Wallpaper Studio</strong></button>
    <button class="feature" onclick="openNewFeature('family')"><span class="emoji">👨‍👩‍👧‍👦</span><strong>Family Learning Mode</strong></button>
   </section>
+  <section class="home-dash-card home-ibadah-card"><div class="home-ibadah-head"><div><div class="home-dash-label">🌿 DAILY IBADAH</div><strong style="font:600 19px Georgia,serif;color:#174b35">Your daily progress</strong></div><div class="home-ibadah-count" id="homeIbadahCount">0 / 9</div></div><div class="home-ibadah-bar"><span id="homeIbadahBar"></span></div><div class="home-ibadah-list" id="homeIbadahList"></div><div style="font-size:10px;color:#819083;margin-top:10px">നിങ്ങളുടെ പുരോഗതി ഈ ഉപകരണത്തിൽ മാത്രം സേവ് ചെയ്യും.</div></section>
+  <section class="home-dash-card home-reminder-card"><div><div class="home-dash-label">✨ DAILY ISLAMIC REMINDER</div><h3 id="homeReminderTitle">ഇന്നത്തെ ഓർമ്മപ്പെടുത്തൽ</h3><p id="homeReminderText">നല്ല വാക്കുകളും നല്ല പ്രവൃത്തികളും ദിനം മനോഹരമാക്കട്ടെ.</p></div><button type="button" onclick="openDailyReminder()">Read Reminder →</button></section>
+  <section class="home-promise-strip"><div><span>📖</span><strong>Learn with purpose</strong><small>Explore Quran, Hadith & more</small></div><div><span>🌿</span><strong>Grow every day</strong><small>Build meaningful daily habits</small></div><div><span>🤲</span><strong>Ask with confidence</strong><small>Discover answers with DeenAI</small></div></section>
   <section class="chat-panel"><div class="chat-heading"><h3>☪ Ask DeenAI</h3><button onclick="newChat()">＋ New Chat</button></div>
    <div id="messages" class="messages"></div>
    <div class="input-area"><button class="icon-btn" onclick="startVoice()" title="Voice input">🎙️</button><input id="userInput" placeholder="ഇവിടെ ചോദ്യം എഴുതുക..." onkeydown="if(event.key==='Enter')sendMessage()"><button class="send-btn" id="sendButton" onclick="sendMessage()">Send</button></div>
@@ -408,7 +530,7 @@ function openKids(){hideAllPages();document.getElementById("kidsPage").style.dis
 function openCalendar(){hideAllPages();document.getElementById("calendarPage").style.display="block";window.scrollTo(0,0);loadHijriDate()}
 function togglePrayerMethod(){prayerMethod=prayerMethod===1?3:1;document.getElementById("methodLabel").textContent=prayerMethod===1?"Karachi":"MWL";if(prayerCoordinates)fetchPrayerTimes(prayerCoordinates.lat,prayerCoordinates.lon)}
 function loadPrayerData(){const status=document.getElementById("prayerStatus");if(!navigator.geolocation){status.textContent="ഈ browser-ൽ location support ലഭ്യമല്ല.";return}status.textContent="നിങ്ങളുടെ location കണ്ടെത്തുന്നു...";navigator.geolocation.getCurrentPosition(pos=>{prayerCoordinates={lat:pos.coords.latitude,lon:pos.coords.longitude};fetchPrayerTimes(prayerCoordinates.lat,prayerCoordinates.lon);updateQibla(prayerCoordinates.lat,prayerCoordinates.lon)},err=>{status.textContent=err.code===1?"Location permission അനുവദിച്ചില്ല. Browser settings-ൽ location അനുവദിച്ച് വീണ്ടും ശ്രമിക്കുക.":"Location ലഭിച്ചില്ല. Internet/GPS പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക."},{enableHighAccuracy:true,timeout:15000,maximumAge:300000})}
-async function fetchPrayerTimes(lat,lon){const status=document.getElementById("prayerStatus");status.textContent="നമസ്കാര സമയങ്ങൾ ലഭ്യമാക്കുന്നു...";try{const url=`https://api.aladhan.com/v1/timings/${Math.floor(Date.now()/1000)}?latitude=${lat}&longitude=${lon}&method=${prayerMethod}`;const res=await fetch(url);if(!res.ok)throw new Error("Prayer time service unavailable");const json=await res.json();if(json.code!==200)throw new Error("Prayer time data unavailable");const t=json.data.timings;const names=[["Fajr","ഫജർ"],["Sunrise","സൂര്യോദയം"],["Dhuhr","ളുഹർ"],["Asr","അസർ"],["Maghrib","മഗ്‌രിബ്"],["Isha","ഇശാ"]];document.getElementById("prayerTimes").innerHTML=names.map(([k,label])=>`<div class="prayer-tile"><strong>${label}</strong><span>${escapeHtml(t[k]||"--")}</span></div>`).join("");document.getElementById("prayerLocation").textContent=`${json.data.date.readable||""} • ${json.data.meta.timezone||"Local time"} • Method: ${prayerMethod===1?"Karachi":"Muslim World League"}`;status.textContent="നമസ്കാര സമയങ്ങൾ ലഭിച്ചു. നിങ്ങളുടെ പ്രാദേശിക മസ്ജിദ് സമയവുമായി ഒത്തുനോക്കുക.";updateQibla(lat,lon); }catch(e){status.textContent="Prayer times ലഭിച്ചില്ല. Internet connection പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക."}}
+async function fetchPrayerTimes(lat,lon){const status=document.getElementById("prayerStatus");status.textContent="നമസ്കാര സമയങ്ങൾ ലഭ്യമാക്കുന്നു...";try{const url=`https://api.aladhan.com/v1/timings/${Math.floor(Date.now()/1000)}?latitude=${lat}&longitude=${lon}&method=${prayerMethod}`;const res=await fetch(url);if(!res.ok)throw new Error("Prayer time service unavailable");const json=await res.json();if(json.code!==200)throw new Error("Prayer time data unavailable");const t=json.data.timings;if(window.updateDeenAIHomePrayer)window.updateDeenAIHomePrayer(t);const names=[["Fajr","ഫജർ"],["Sunrise","സൂര്യോദയം"],["Dhuhr","ളുഹർ"],["Asr","അസർ"],["Maghrib","മഗ്‌രിബ്"],["Isha","ഇശാ"]];document.getElementById("prayerTimes").innerHTML=names.map(([k,label])=>`<div class="prayer-tile"><strong>${label}</strong><span>${escapeHtml(t[k]||"--")}</span></div>`).join("");document.getElementById("prayerLocation").textContent=`${json.data.date.readable||""} • ${json.data.meta.timezone||"Local time"} • Method: ${prayerMethod===1?"Karachi":"Muslim World League"}`;status.textContent="നമസ്കാര സമയങ്ങൾ ലഭിച്ചു. നിങ്ങളുടെ പ്രാദേശിക മസ്ജിദ് സമയവുമായി ഒത്തുനോക്കുക.";updateQibla(lat,lon); }catch(e){status.textContent="Prayer times ലഭിച്ചില്ല. Internet connection പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക."}}
 function qiblaBearing(lat,lon){const kaabaLat=21.4225*Math.PI/180,kaabaLon=39.8262*Math.PI/180,phi=lat*Math.PI/180,dlon=kaabaLon-lon*Math.PI/180;const y=Math.sin(dlon),x=Math.cos(phi)*Math.tan(kaabaLat)-Math.sin(phi)*Math.cos(dlon);return (Math.atan2(y,x)*180/Math.PI+360)%360}
 
 const babyNames=[
@@ -581,6 +703,20 @@ window.nfRenderNames=function(){let q=($('nfNameSearch').value||'').toLowerCase(
 window.nfMakeWallpaper=function(){let main=$('nfWallMain').value.trim(),meaning=$('nfWallMeaning').value.trim(),ref=$('nfWallRef').value.trim();if(!main&&!meaning)return alert('Enter text for your wallpaper.');let c=$('nfWallCanvas'),x=c.getContext('2d');let g=x.createLinearGradient(0,0,1080,1920);g.addColorStop(0,'#e8efe3');g.addColorStop(1,'#fbf8ed');x.fillStyle=g;x.fillRect(0,0,1080,1920);x.strokeStyle='#b28a3e';x.lineWidth=8;x.strokeRect(45,45,990,1830);x.textAlign='center';x.fillStyle='#174b35';x.font='bold 62px Georgia';x.fillText('DEENAI',540,220);x.fillStyle='#9a7536';x.font='30px Arial';x.fillText('LEARN • ASK • GROW',540,275);x.fillStyle='#174b35';x.font='54px serif';let words=main.split(/\s+/),line='',y=700;for(let w of words){let t=line?line+' '+w:w;if(x.measureText(t).width>850){x.fillText(line,540,y);y+=85;line=w}else line=t}if(line)x.fillText(line,540,y);x.fillStyle='#405b49';x.font='38px Arial';let arr=meaning.split(/\s+/);line='';y+=150;for(let w of arr){let t=line?line+' '+w:w;if(x.measureText(t).width>820){x.fillText(line,540,y);y+=60;line=w}else line=t}if(line)x.fillText(line,540,y);x.fillStyle='#9a7536';x.font='26px Arial';x.fillText(ref,540,1660);x.fillStyle='#174b35';x.font='28px Arial';x.fillText('A reminder from DeenAI',540,1780)};window.nfDownloadWallpaper=function(){let c=$('nfWallCanvas');if(!c.toDataURL||!$('nfWallMain').value.trim()&&!$('nfWallMeaning').value.trim())return alert('Create your wallpaper first.');let a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='DeenAI-Islamic-Wallpaper.png';a.click()};
 window.nfAddFamily=function(){let n=$('nfFamilyName').value.trim();if(!n)return alert('Enter a profile name.');let a=safeGet('family',[]);a.push({id:Date.now(),name:n,level:$('nfFamilyLevel').value});safeSet('family',a);$('nfFamilyName').value='';nfRenderFamily()};window.nfRenderFamily=function(){let a=safeGet('family',[]);$('nfFamilyList').innerHTML=a.map(x=>`<div class="nf-entry"><strong>${esc(x.name)}</strong> — ${esc(x.level)}<button onclick="nfDeleteFamily(${x.id})">Remove</button></div>`).join('')||'<p class="notice">No family profiles yet.</p>'};window.nfDeleteFamily=function(id){safeSet('family',safeGet('family',[]).filter(x=>x.id!==id));nfRenderFamily()};
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+})();
+</script>
+
+
+<script id="deenai-premium-home-dashboard-js">
+(function(){
+ const dailyLabels=['ഫജർ നമസ്കാരം','ഖുർആൻ പാരായണം','രാവിലെ ദിക്റ്','ളുഹർ നമസ്കാരം','അസർ നമസ്കാരം','വൈകുന്നേര ദിക്റ്','മഗ്‌രിബ് നമസ്കാരം','ഇശാ നമസ്കാരം','ഇസ്തിഗ്ഫാർ'];
+ function dayKey(){const d=new Date();return 'deenai_home_ibadah_'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+ function getDone(){try{return JSON.parse(localStorage.getItem(dayKey())||'[]')}catch(e){return []}}
+ function renderIbadah(){const root=document.getElementById('homeIbadahList');if(!root)return;const done=getDone();root.innerHTML=dailyLabels.map((label,i)=>`<label><input type="checkbox" data-home-ibadah="${i}" ${done.includes(i)?'checked':''}>${label}</label>`).join('');const n=done.length;document.getElementById('homeIbadahCount').textContent=n+' / 9';document.getElementById('homeIbadahBar').style.width=(n/9*100)+'%';root.querySelectorAll('input').forEach(el=>el.addEventListener('change',()=>{let a=getDone().filter(x=>x!==Number(el.dataset.homeIbadah));if(el.checked)a.push(Number(el.dataset.homeIbadah));localStorage.setItem(dayKey(),JSON.stringify(a));renderIbadah()}))}
+ function renderHadith(){if(!Array.isArray(window.hadiths)&&typeof hadiths==='undefined')return;const list=typeof hadiths!=='undefined'?hadiths:window.hadiths;if(!list||!list.length)return;const d=new Date();const h=list[(Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())).getTime()/86400000)*7)%list.length];document.getElementById('homeHadithArabic').textContent=h.ar||'';document.getElementById('homeHadithMeaning').textContent=h.ml||h.en||'';document.getElementById('homeHadithSource').textContent='ഉറവിടം: '+(h.source||'')}
+ function renderReminder(){const d=new Date();const notes=['നമസ്കാരം സമയത്ത് നിർവഹിക്കാൻ ശ്രദ്ധിക്കൂ.','ഇന്ന് കുറച്ച് സമയം ഖുർആൻ പാരായണത്തിനായി മാറ്റിവെക്കൂ.','നാവിനെ നല്ല വാക്കുകൾക്കായി ഉപയോഗിക്കൂ.','ദിക്റും ദുആയും കൊണ്ട് ഹൃദയത്തെ സജീവമാക്കൂ.','മറ്റുള്ളവരോട് കരുണയും സൗമ്യതയും പുലർത്തൂ.'];document.getElementById('homeReminderText').textContent=notes[d.getDate()%notes.length]}
+ window.updateDeenAIHomePrayer=function(t){try{const names=[['Fajr','ഫജർ'],['Dhuhr','ളുഹർ'],['Asr','അസർ'],['Maghrib','മഗ്‌രിബ്'],['Isha','ഇശാ']];const now=new Date();let next=null;for(const [key,label] of names){const raw=String(t[key]||'').split(' ')[0];const parts=raw.split(':').map(Number);if(parts.length<2)continue;const at=new Date();at.setHours(parts[0],parts[1],0,0);if(at>now){next={label,time:raw,at};break}}if(!next){const raw=String(t.Fajr||'05:00').split(' ')[0],p=raw.split(':').map(Number),at=new Date();at.setDate(at.getDate()+1);at.setHours(p[0],p[1],0,0);next={label:'ഫജർ',time:raw,at}}document.getElementById('homeNextPrayer').textContent=next.label;document.getElementById('homeNextPrayerTime').textContent='സമയം: '+next.time;const mins=Math.max(0,Math.floor((next.at-now)/60000));document.getElementById('homePrayerCountdown').textContent=mins<60?`ഇനി ${mins} മിനിറ്റ്`:`ഇനി ${Math.floor(mins/60)} മണിക്കൂർ ${mins%60} മിനിറ്റ്`; }catch(e){}}
+ document.addEventListener('DOMContentLoaded',()=>{renderIbadah();renderHadith();renderReminder()});
 })();
 </script>
 
