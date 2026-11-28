@@ -55,6 +55,78 @@ select{background:var(--panel);color:var(--white);border:1px solid var(--border)
 @media(max-width:600px){.kids-stats{gap:6px}.kids-stats>div{padding:10px 4px}.kids-stats strong{font-size:20px}}
 
 </style>
+
+<style id="deenai-premium-refinement">
+:root{--bg:#041711;--panel:#0a261d;--panel2:#10382a;--gold:#d8b45f;--gold2:#f4e2ad;--white:#fbf8ef;--muted:#aebfb2;--border:rgba(216,180,95,.23)}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:radial-gradient(ellipse at 78% 0%,rgba(27,83,58,.24),transparent 42%),linear-gradient(145deg,#03130e,#061e16 55%,#041711);letter-spacing:.01em}
+.sidebar{background:linear-gradient(180deg,#03140e,#061d15 70%,#04160f);border-right:1px solid rgba(216,180,95,.24);box-shadow:12px 0 40px rgba(0,0,0,.14)}
+.brand{padding:5px 3px 15px;border-bottom:1px solid rgba(216,180,95,.14)}
+.brand img{filter:drop-shadow(0 4px 12px rgba(216,180,95,.16))}
+.brand h2,.topbar h2{letter-spacing:.02em;text-shadow:0 2px 18px rgba(216,180,95,.12)}
+.new-btn,.gold-btn{box-shadow:0 7px 22px rgba(182,138,53,.17);transition:transform .2s ease,box-shadow .2s ease}
+.new-btn:hover,.gold-btn:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(182,138,53,.25)}
+.section-label{font-weight:700;letter-spacing:2.3px;font-size:10px}
+.history-item{transition:background .18s ease,border-color .18s ease,transform .18s ease}
+.history-item:hover{transform:translateX(2px)}
+.sidebar-footer{margin-top:auto;padding-top:16px;border-top:1px solid rgba(216,180,95,.15);display:flex;flex-direction:column;gap:12px}
+.sidebar-signature{display:flex;align-items:center;gap:8px;color:var(--gold2);font-size:12px;line-height:1.5}
+.sidebar-signature span{color:var(--muted)}
+.clear-history-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;padding:10px 12px;border:1px solid rgba(216,180,95,.22);border-radius:10px;background:linear-gradient(135deg,rgba(16,56,42,.85),rgba(7,34,24,.9));color:#d9c89e;font-size:12px;font-weight:600;letter-spacing:.02em;transition:all .2s ease}
+.clear-history-btn:hover{border-color:rgba(216,180,95,.5);background:rgba(94,44,36,.22);color:#f0c4b9}
+.main{background:radial-gradient(ellipse at 50% 0%,rgba(30,83,58,.10),transparent 52%)}
+.hero{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% -15%,rgba(218,185,105,.16),transparent 58%),linear-gradient(145deg,#123c2d,#09251b 72%);border:1px solid rgba(216,180,95,.3);box-shadow:0 18px 48px rgba(0,0,0,.17),inset 0 1px rgba(255,255,255,.035)}
+.hero:after{content:"";position:absolute;inset:8px;border:1px solid rgba(216,180,95,.09);border-radius:14px;pointer-events:none}
+.hero h1{letter-spacing:.015em;text-shadow:0 3px 24px rgba(244,226,173,.12)}
+.features{gap:13px}
+.feature{position:relative;overflow:hidden;min-height:112px;background:linear-gradient(145deg,rgba(13,47,35,.98),rgba(7,33,24,.98));border-color:rgba(216,180,95,.19);box-shadow:0 7px 20px rgba(0,0,0,.12);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.feature:hover{transform:translateY(-3px);border-color:rgba(216,180,95,.48);box-shadow:0 12px 28px rgba(0,0,0,.2)}
+.feature .emoji{filter:drop-shadow(0 2px 8px rgba(216,180,95,.12))}
+.chat-panel,.content-card,.ayah-card,.surah-card,.category-card,.prayer-tile{box-shadow:0 8px 24px rgba(0,0,0,.10)}
+select,input{outline:none}select:focus,input:focus{border-color:rgba(216,180,95,.65)!important;box-shadow:0 0 0 3px rgba(216,180,95,.09)}
+#deenaiAiFab{box-shadow:0 10px 30px rgba(0,0,0,.42),0 0 0 5px rgba(216,180,95,.07);transition:transform .2s ease,box-shadow .2s ease}
+#deenaiAiFab:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.48),0 0 0 7px rgba(216,180,95,.09)}
+@media(max-width:600px){
+ .sidebar{border-right:0;border-bottom:1px solid rgba(216,180,95,.2);box-shadow:0 8px 24px rgba(0,0,0,.14)}
+ .sidebar-footer{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:8px;padding-top:9px;margin-top:2px}
+ .sidebar-signature{font-size:10px;min-width:0}.sidebar-signature span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .clear-history-btn{width:auto;flex:0 0 auto;padding:8px 10px;font-size:10px}
+ .feature{min-height:100px}
+}
+</style>
+
+<style id="deenai-premium-light-theme">
+:root{--bg:#f6f4eb;--panel:#fffefa;--panel2:#e8f0e7;--gold:#b28a3e;--gold2:#174b35;--white:#183b2d;--muted:#68796d;--border:rgba(35,91,62,.16)}
+html,body{background:#f6f4eb!important;color:#183b2d!important}
+body{background:linear-gradient(145deg,#fbfaf5 0%,#f2f4eb 52%,#eaf1e8 100%)!important;color:#183b2d!important}
+.sidebar{background:linear-gradient(180deg,#fffefa,#f0f4ec)!important;border-color:rgba(35,91,62,.16)!important;box-shadow:8px 0 28px rgba(29,67,45,.06)!important}
+.brand{border-color:rgba(35,91,62,.14)!important}.brand h2,.topbar h2,.hero h1,.module-header h1,.quran-intro h2,.module-intro h2,.reader-title h2,.content-card h3,.surah-info strong,.category-card strong,.chat-heading h3{color:#174b35!important;text-shadow:none!important}
+.brand small,.sidebar-signature span,.sidebar-footer,.section-label,.hero p,.module-intro p,.quran-intro p,.reader-title p,.notice,.quran-note,.item-note,.prayer-meta{color:#68796d!important}
+.section-label{color:#548064!important}
+.new-btn,.gold-btn{background:linear-gradient(135deg,#245f43,#174b35)!important;color:#fffdf5!important;box-shadow:0 7px 18px rgba(23,75,53,.16)!important}
+.history-item{color:#244b38!important}.history-item.active,.history-item:hover{background:#e8f0e7!important;border-color:rgba(35,91,62,.18)!important}
+.sidebar-footer{border-color:rgba(35,91,62,.14)!important}.sidebar-signature{color:#b28a3e!important}
+.clear-history-btn{background:#fffefa!important;color:#8b6730!important;border-color:rgba(178,138,62,.28)!important}.clear-history-btn:hover{background:#f7efe0!important;color:#795421!important}
+.main{background:transparent!important}
+.hero,.quran-intro,.module-intro,.qibla-box{background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.9),transparent 60%),linear-gradient(145deg,#e6efe4,#f8f7ef 78%)!important;border-color:rgba(35,91,62,.16)!important;box-shadow:0 14px 36px rgba(35,74,49,.08)!important}
+.hero:after{border-color:rgba(35,91,62,.09)!important}.hero .crescent{color:#b28a3e!important}.hero p{color:#596f60!important}.tagline{color:#9a7536!important}
+.features .feature,.feature{background:linear-gradient(145deg,#fffefa,#edf3eb)!important;color:#214a35!important;border-color:rgba(35,91,62,.14)!important;box-shadow:0 7px 22px rgba(35,74,49,.07)!important}
+.feature strong{color:#214a35!important}.feature:hover{background:#e5efe4!important;border-color:rgba(35,91,62,.34)!important;box-shadow:0 12px 26px rgba(35,74,49,.11)!important}
+.chat-panel,.content-card,.ayah-card,.surah-card,.category-card,.prayer-tile,.reader-settings,.translation-settings,.audio-box,.reader-title,.tasbih-card,.kids-stats>div,.kids-qa-item{background:#fffefa!important;color:#244735!important;border-color:rgba(35,91,62,.15)!important;box-shadow:0 7px 22px rgba(35,74,49,.06)!important}
+.chat-heading{border-color:rgba(35,91,62,.13)!important}.chat-heading button{color:#64796a!important}
+.messages{background:#f6f8f2!important}.message.user{background:#dcebdd!important;color:#174b35!important}.message.bot{background:#fffefa!important;color:#244735!important;border-color:rgba(35,91,62,.15)!important}.message small,.ayah-number,.item-source{color:#987333!important}
+.input-area{border-color:rgba(35,91,62,.14)!important;background:#fffefa!important}.input-area input,.quran-tools input,.module-tools input{background:#fffefa!important;color:#183b2d!important;border-color:rgba(35,91,62,.2)!important}.input-area input::placeholder,.quran-tools input::placeholder,.module-tools input::placeholder{color:#829087!important}
+select,.reader-settings select,.translation-settings select,.tasbih-card select{background:#fffefa!important;color:#214a35!important;border-color:rgba(35,91,62,.2)!important}
+.icon-btn,.back-btn,.secondary-btn,.item-actions button,.audio-controls button,.prayer-actions button,.tasbih-actions button{background:#e8f0e7!important;color:#24583d!important;border-color:rgba(35,91,62,.17)!important}
+.send-btn,.audio-controls .play,.tasbih-actions .tasbih-main{background:linear-gradient(135deg,#245f43,#174b35)!important;color:#fffefa!important}
+.status,.footer{color:#718075!important}.ayah-arabic,.item-arabic{color:#234b37!important}.ayah-translation,.item-translation,.kids-qa-answer{color:#405b49!important;border-color:rgba(35,91,62,.13)!important}.item-pronunciation{color:#8b6a35!important}
+.surah-card:hover,.category-card:hover{background:#eaf2e8!important}.surah-number{border-color:#b28a3e!important;color:#8b6730!important}.audio-box{background:linear-gradient(135deg,#edf4eb,#fffefa)!important}.audio-box h3{color:#174b35!important}#audioStatus{color:#68796d!important}
+.compass{background:radial-gradient(circle,#edf4eb,#fffefa)!important;border-color:#b28a3e!important}.compass-needle{color:#245f43!important}
+.kids-progress{background:#e2eae0!important}.kids-progress span{background:#b28a3e!important}.kids-quiz-options button{background:#edf3eb!important;color:#244735!important;border-color:rgba(35,91,62,.17)!important}
+#deenaiAiFab{background:linear-gradient(135deg,#245f43,#174b35)!important;color:#fffefa!important;border-color:rgba(178,138,62,.5)!important;box-shadow:0 10px 28px rgba(23,75,53,.24)!important}
+#deenaiAiOverlay{background:rgba(22,43,30,.42)!important}#deenaiAiWindow{background:#f6f4eb!important;border-color:rgba(35,91,62,.24)!important;box-shadow:0 18px 60px rgba(24,55,36,.2)!important}#deenaiAiClose{color:#174b35!important;border-color:rgba(35,91,62,.2)!important}
+@media(max-width:600px){.sidebar{background:linear-gradient(180deg,#fffefa,#f0f4ec)!important;border-bottom-color:rgba(35,91,62,.16)!important}.sidebar-footer{border-top:1px solid rgba(35,91,62,.14)!important}.history-list{background:transparent!important}}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -62,8 +134,10 @@ select{background:var(--panel);color:var(--white);border:1px solid var(--border)
  <div class="brand"><img src="deenai-logo.png" alt="DeenAI Logo"><div><h2>DeenAI</h2><small>Learn • Ask • Grow</small></div></div>
  <button class="new-btn" onclick="newChat()">＋ New Chat</button>
  <div class="section-label">CHAT HISTORY</div><div id="history" class="history-list"></div>
- <button class="icon-btn" onclick="clearHistory()">Clear All History</button>
- <div class="sidebar-footer">☪ Your Islamic Knowledge Companion</div>
+ <div class="sidebar-footer">
+  <div class="sidebar-signature">☪ <span>Your Islamic Knowledge Companion</span></div>
+  <button class="clear-history-btn" type="button" onclick="clearHistory()">⌫ <span>Clear All History</span></button>
+ </div>
 </aside>
 <main class="main">
  <div class="topbar"><h2>السلام عليكم ورحمة الله وبركاته</h2><select id="language" aria-label="Website language"><option value="Malayalam">മലയാളം</option><option value="English">English</option><option value="Hindi">हिन्दी</option><option value="Arabic">العربية</option></select></div>
